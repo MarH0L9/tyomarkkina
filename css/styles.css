@@ -1,0 +1,77 @@
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+/*contenerdor del header superior*/
+.navbar {
+    background-color:#a4eea6 !important;    
+}
+
+.nav-link {
+    color:black;
+    font-size:22px;
+}
+.nav-link:hover {
+    color:rgb(9, 63, 9) !important;
+    font-size:24px;
+}
+
+/* Estilos personalizados para el formulario de búsqueda */
+.custom-search {
+    border: 1px solid #e2e2e2; /* Borde sólido */
+    border-radius: 3px; /* Redondeo de bordes */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombreado */
+    padding: 30px;
+    background-color: #fff; /* Fondo blanco */
+    
+    
+}
+
+.custom-card {
+    border: 1px solid #e2e2e2; /* Borde sólido */
+    border-radius: 3px; /* Redondeo de bordes */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombreado */
+    padding: 30px;
+    background-color: #fff; /* Fondo blanco */
+    
+}
+
+.custom-card a {
+    font-size: 20px;
+    color:#000;
+    text-decoration: none;
+}
+
+.custom-input {
+    border: none; /* Elimina el borde del input */
+    border-radius: 3; /* Elimina el redondeo del input */
+}
+
+/* Estilo personalizado para el botón */
+.custom-button {
+    background-color: #118341 !important; /* Cambia este color al que desees */
+    color: #fff; /* Color del texto en el botón */
+}
+
+/* Estilo para el botón cuando se le pasa el mouse */
+.custom-button:hover {
+    background-color: #43b472 !important; /* Cambia este color al que desees para el hover */
+    color: #fff !important; /* Cambia el color del borde del botón en hover (si deseas cambiarlo) */
+}
+
+/* Estilo personalizado para los botones primary */
+.custom-primary-button {
+    background-color: #066133 !important; /* Color de fondo personalizado */
+    border: none !important; /* Eliminar el borde */
+    color: #fff !important; /* Color del texto */
+    padding: 10px 20px !important; /* Espaciado interior */
+    border-radius: 5px !important; /* Bordes redondeados */
+    transition: background-color 0.3s !important; /* Transición suave para el color de fondo */
+}
+
+/* Estilo para el botón Kirjaudu sisään al pasar el mouse */
+.custom-primary-button:hover {
+    background-color: #099b52 !important; /* Cambiar el color de fondo al pasar el mouse */
+}
+
