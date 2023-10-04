@@ -22,6 +22,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php"><i class="fa-solid fa-house"></i></a>
+                </li>
                 <li class="nav-item d-block "> <!-- Muestra el icono de "briefcase" en dispositivos pequeños -->
                     <a class="nav-link" href="avoinmet_tyopaikat.php"><i class="fa-solid fa-briefcase d-lg-none"></i> Työpaikat</a> <!-- Oculta el icono de "briefcase" en dispositivos grandes -->
                 </li>
