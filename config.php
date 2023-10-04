@@ -34,7 +34,7 @@ if ($conexionLocal) {
 
     // Iterar a través de los resultados y mostrarlos
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo "Título: " . $row['Otsitkko'] . "<br>";
+        echo "Título: " . $row['Otsikko'] . "<br>";
         echo "Kuvaus: " . $row['Kuvaus'] . "<br>";
         echo "<hr>";
     }
