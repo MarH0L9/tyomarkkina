@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <html lang="fi">
 <head>
     <title>Detalles de la Oferta de Empleo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css"> <!-- Agrega tus estilos CSS personalizados aquí si es necesario -->
 </head>
 <body>
@@ -32,13 +32,15 @@
                     if ($result->num_rows > 0) {
                         // Muestra los detalles de la oferta
                         $row = $result->fetch_assoc();
-                        echo '<h1>' . $row['Otsikko'] . '</h1>';
-                        echo '<p><strong>Sijainti:</strong> ' . $row['Sijainti'] . '</p>';
-                        echo '<p><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
-                        echo '<p><strong>Ala:</strong> ' . $row['Ala'] . '</p>';
-                        echo '<p><strong>Palkka:</strong> ' . number_format($row['Palkka'], 2) . ' €</p>';
-                        echo '<p><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['Julkaisupaiva'])) . '</p>';
-                        echo '<p><strong>Voimassaolo Päivä:</strong> ' . date('d.m.Y', strtotime($row['VoimassaoloPaiva'])) . '</p>';
+                        echo '<h1 class="title-bg">' . $row['Otsikko'] . '</h1>';
+                        echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
+                        echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
+                        echo '<div class="row">';
+                        echo '<div class="col-md-6 date-icon"><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['Julkaisupaiva'])) . '</div>';
+                        echo '<div class="col-md-6 date-icon"><strong>Voimassaolo Päivä:</strong> ' . date('d.m.Y', strtotime($row['VoimassaoloPaiva'])) . '</div>';
+                        echo '</div>';
+                        echo '<p><strong>Kuvaus:</strong></p>';
+                        echo '<p>' . nl2br($row['Kuvaus']) . '</p>';
                         echo '<p><strong>Vaatimukset:</strong></p>';
                         echo '<p>' . nl2br($row['Vaatimukset']) . '</p>';
                         if (!empty($row['YrityksenLinkki'])) {
