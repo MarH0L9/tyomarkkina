@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\Projects\tunnukset.php';
+/*include 'C:\xampp\htdocs\Projects\tunnukset.php'; */
 include 'config.php';
 include 'functions/functions.php';
 
