@@ -26,6 +26,8 @@ if ($conexionLocal) {
         $pdo = new PDO($dsn, $username, $password);
         // Configurar el manejo de errores de PDO si es necesario
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+echo "Conexión a la base de datos exitosa. Todo Funciona"; // Mensaje de conexión exitosa
     } catch (PDOException $e) {
         // Registrar el error en un archivo
         file_put_contents("errors.txt", "Error de conexión a Azure: " . $e->getMessage() . "\n", FILE_APPEND);
