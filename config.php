@@ -28,7 +28,18 @@ if ($conexionLocal) {
         $pdo = new PDO($dsn, $username, $password);
         // Configurar el manejo de errores de PDO si es necesario
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  // Realizar una consulta SELECT, por ejemplo, para obtener ofertas
+    $sql = "SELECT * FROM offers";
+    $stmt = $pdo->query($sql);
 
+    // Iterar a través de los resultados y mostrarlos
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo "Título: " . $row['Otsitkko'] . "<br>";
+        echo "Kuvaus: " . $row['Kuvaus'] . "<br>";
+        echo "<hr>";
+    }
+    // Cerrar la conexión cuando hayas terminado de usarla
+    $pdo = null; // Esto cierra la conexión
 echo "Conexión a la base de datos exitosa. Todo Funciona"; // Mensaje de conexión exitosa
     } catch (PDOException $e) {
         // Registrar el error en un archivo
