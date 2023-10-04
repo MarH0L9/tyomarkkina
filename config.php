@@ -1,7 +1,7 @@
 <?php
 
 // Define una variable para determinar si la conexión debe ser local o a Azure
-$conexionLocal = true;
+$conexionLocal = false;
 
 // Verifica si la conexión debe ser local (por ejemplo, si estás en un entorno de desarrollo)
 if ($conexionLocal) {
