@@ -1,7 +1,5 @@
 
 <?php
-// Incluye el archivo de configuración local
-include 'C:\xampp\htdocs\Projects\tunnukset.php';
 include 'config.php';
 include 'functions/functions.php';
 
