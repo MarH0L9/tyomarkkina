@@ -10,21 +10,18 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
-<div class="container mt-5">
-    <h1>Tervetuloa Työportaaliin</h1>
-    <h3>Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
+<div class="container mt-5" >
+    <h1 style="color:#0B3B0B">Tervetuloa Työportaaliin</h1>
+    <h3 style="color:#088A4B">Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
     <div class="row justify-content-center mt-5">
     
-            <h1 class="display-4">Avoinmet Työpaikat</h1>
+            <h1 style="color:#088A4B">Avoinmet Työpaikat</h1>
             <!-- Agregado el eslogan en un div -->
-            <div class="intro-text">
-                <p>Tietoa, Palveluita ja Työpaikkoja - Kaikki yhdestä Työportaalista! Luo Työnhakuprofiili tai Työpaikkailmoitus ja Ota Askel Kohti Unelmiesi Työura!</p>
-            </div>
-            <div class="col-md-8 custom-search" >
+            <div class="col-md-8">
             <form action="#" method="GET" class="input-group mb-3 ">
                 <div class="input-group">
-                    <input type="search" class="form-control rounded" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" />
-                    <button type="button" class="btn btn-primary custom-button">Näytä työpaikat</button>
+                    <input type="search" class="form-control form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="button" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>

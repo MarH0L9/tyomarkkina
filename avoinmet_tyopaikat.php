@@ -1,3 +1,82 @@
+<?php
+include 'C:\xampp\htdocs\Projects\tunnukset.php';
+include 'config.php';
+
+// Inicializa la variable que almacenará los resultados
+$searchResults = '';
+
+// Si se envió el formulario de búsqueda
+if (isset($_GET['jobSearchText'])) {
+    // Obtén la palabra clave de búsqueda desde la URL
+    $keyword = $_GET['jobSearchText'];
+
+    // Inicializa un array para almacenar los filtros seleccionados
+    $filters = [];
+
+    // Procesar los filtros de búsqueda
+    if (isset($_GET['sijainti']) && !empty($_GET['sijainti'])) {
+        $filters[] = "Sijainti = '" . $_GET['sijainti'] . "'";
+    }
+
+    if (isset($_GET['julkaistu']) && !empty($_GET['julkaistu'])) {
+        $filters[] = "julkaisupaiva = '" . $_GET['julkaistu'] . "'";
+    }
+
+    if (isset($_GET['continuity']) && !empty($_GET['continuity'])) {
+        $filters[] = "Jatkuvuus = '" . $_GET['continuity'] . "'";
+    }
+
+    if (isset($_GET['language']) && !empty($_GET['language'])) {
+        $filters[] = "TyoKieli = '" . $_GET['language'] . "'";
+    }
+
+    if (isset($_GET['workTime']) && !empty($_GET['workTime'])) {
+        $filters[] = "Tyoaika = '" . $_GET['workTime'] . "'";
+    }
+
+    if (isset($_GET['employment']) && !empty($_GET['employment'])) {
+        $filters[] = "PalveluSsuhde = '" . $_GET['employment'] . "'";
+    }
+
+    // Conecta a la base de datos (asegúrate de tener la configuración en config.php)
+    $conn = new mysqli($server, $username, $password, $database);
+
+    // Verifica la conexión
+    if ($conn->connect_error) {
+        die("La conexión a la base de datos falló: " . $conn->connect_error);
+    }
+
+    // Construye la parte de la consulta SQL para los filtros seleccionados
+    $filterClause = '';
+    if (!empty($filters)) {
+        $filterClause = " AND " . implode(" AND ", $filters);
+    }
+
+    // Consulta SQL para buscar anuncios que contengan la palabra clave y cumplan con los filtros seleccionados
+    $sql = "SELECT * FROM offers WHERE (Otsikko LIKE '%$keyword%' OR Kuvaus LIKE '%$keyword%' OR Sijainti LIKE '%$keyword%' OR YrityksenNimi LIKE '%$keyword%' OR Ala LIKE '%$keyword%' OR Vaatimukset LIKE '%$keyword%' OR YrityksenLinkki LIKE '%$keyword%')$filterClause";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Construye los resultados de la búsqueda
+        $searchResults .= '<h2>Resultados de la búsqueda:</h2>';
+        $searchResults .= '<ul id="resultsList">';
+        while ($row = $result->fetch_assoc()) {
+            $searchResults .= '<li>';
+            $searchResults .= '<h3><a href="detalle_oferta.php?id=' . $row['ID'] . '">' . $row['Otsikko'] . '</a></h3>';
+            $searchResults .= '<p><strong>Sijainti:</strong> ' . $row['Sijainti'] . '</p>';
+            // Puedes mostrar más detalles aquí si lo deseas
+            $searchResults .= '</li>';
+        }
+        $searchResults .= '</ul>';
+    } else {
+        $searchResults .= '<p>No se encontraron resultados para la búsqueda: ' . $keyword . '</p>';
+    }
+
+    // Cierra la conexión a la base de datos
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -16,109 +95,106 @@
 <div class="container mx-auto mt-5">
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
-            <h1 class="display-4">Avoin Met Työpaikat</h1>
-            <form action="#" method="GET" class="input-group mb-3">
+            <h1 class="display-4">Avoinmet Työpaikat</h1>
+            <form action="avoinmet_tyopaikat.php" method="GET" class="input-group mb-3">
                 <div class="input-group">
-                    <input type="search" class="form-control rounded" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" />
-                    <button type="button" class="btn btn-primary custom-button">Näytä työpaikat</button>
+                    <input type="search" class="form-control form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" id="jobSearchText" name="jobSearchText">
+                    <button type="submit" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <form>
-                <div class="mb-3">
-                    <label for="sijainti" class="form-label" style="font-weight:bold;">Valitse sijainti:</label>
-                    <select class="form-select" id="sijainti" name="sijainti">
-                        <option value="">Valitse sijainti</option>
-                        <?php
-                            foreach ($maakunnat as $maakunta) {
-                                $maakuntaName = $maakunta['classificationItemNames'][0]['name'];
-                                echo '<option value="maakunta-' . $maakuntaName . '">' . $maakuntaName . '</option>';
-                            }
-                        ?>
-                    </select>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form>
-                <div class="mb-3">
-                    <label for="julkaistu" class="form-label"  style="font-weight:bold;">Julkaistu:</label>
-                    <select class="form-select" id="julkaistu" name="julkaistu">
-                        <option value="">Valitse aika</option>
-                        <option value="24h">24 tuntia</option>
-                        <option value="3d">3 päivää</option>
-                        <option value="1w">Viikko</option>
-                    </select>
-                </div>
-                <button type="button" class="btn btn-primary">Hae</button>
-            </form>
-        </div>
-    </div>
+    <!-- Filtros debajo de la barra de búsqueda en filas -->
+    <div class="row mt-4">
+        <div class="col-md-2">
+            <label for="sijainti" class="form-label" style="font-weight:bold;">Valitse sijainti:</label>
+            <select class="form-select" id="sijainti" name="sijainti">
+    <option value="">Valitse sijainti</option>
+    <?php
+    // Decodificar el JSON de maakunnat y kunnat
+    $jsonString = '...'; // Reemplaza con el contenido completo del JSON que creamos anteriormente
+    $locations = json_decode($jsonString, true);
 
-    <!-- Botón para mostrar/ocultar los filtros adicionales -->
-    <div class="row mt-3">
+    if ($locations) {
+        // Iterar a través de las maakunnat y sus kunnat
+        foreach ($locations['Maakunnat'] as $maakunta => $kunnat) {
+            echo '<optgroup label="' . $maakunta . '">';
+            foreach ($kunnat as $kunta) {
+                echo '<option value="' . $maakunta . '-' . $kunta . '">' . $kunta . '</option>';
+            }
+            echo '</optgroup>';
+        }
+    }
+    ?>
+</select>
+        </div>
+        <div class="col-md-2">
+    <label for="julkaistu">Julkaistu:</label>
+    <select class="form-select" id="julkaistu" name="julkaistu">
+        <option value="">Valitse aika</option>
+        <option value="24h">24 tuntia</option>
+        <option value="3d">3 päivää</option>
+        <option value="1w">Viikko</option>
+    </select>
+    </div>
+    <div class="col-md-2">
+        <label for="ala">Ala:</label>
+        <select class="form-select" id="ala" name="ala">
+            <option value="">Valitse ala</option>
+            <!-- Agrega opciones específicas del sector aquí -->
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="tyoaika">Työaika:</label>
+        <select class="form-select" id="tyoaika" name="tyoaika">
+            <option value="">Valitse työaika</option>
+            <option value="fullTime">Kokopäivätyö</option>
+            <option value="partTime">Osapäivätyö</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="tyonkieli">Työn kieli:</label>
+        <select class="form-select" id="tyonkieli" name="tyonkieli">
+            <option value="">Valitse työn kieli</option>
+            <!-- Agrega opciones específicas de idioma aquí -->
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="palvelusuhde">Palvelusuhde:</label>
+        <select class="form-select" id="palvelusuhde" name="palvelusuhde">
+            <option value="">Valitse palvelusuhde</option>
+            <!-- Agrega opciones específicas de relación de empleo aquí -->
+        </select>
+    </div>
+        </div>
+
+    <!-- Resultados de la búsqueda debajo de los filtros -->
+    <div class="row mt-5" id="searchResults">
         <div class="col-md-12">
-            <span> Lisää hakuehtoja</span>
-            <button type="button" class="btn btn-light" id="toggleFiltersButton"><i class="fa-solid fa-square-plus fa-lg" style="color: #050505;"></i></button>
-        </div>
+            <ul id="resultsList">
+            <?php echo $searchResults; ?>
     </div>
+</div>
 
-    <!-- Filtros adicionales ocultos por defecto -->
-    <div class="row mt-3" id="additionalFilters" style="display: none;">
-        <div class="col-md-6">
-            <label for="continuity">Työn jatkuvuus:</label>
-            <select class="form-select" id="continuity" name="continuity">
-                <option value="">Valitse työn jatkuvuus</option>
-                <option value="continuous">Jatkuva</option>
-                <option value="temporary">Määräaikainen</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="language">Työkieli:</label>
-            <select class="form-select" id="language" name="language">
-                <option value="">Valitse työkieli</option>
-                <option value="finnish">Suomi</option>
-                <option value="english">Englanti</option>
-            </select>
-        </div>
+    <!-- Paginación para resultados -->
+    <div class="row mt-3" id="pagination">
+    <div class="col-md-12">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Edellinen</a></li>
+                <!-- Genera dinámicamente los números de página aquí -->
+                <li class="page-item"><a class="page-link" href="#">Seuraava</a></li>
+            </ul>
+        </nav>
     </div>
-    <div class="row mt-3" id="hiddenFilters" style="display: none;">
-        <div class="col-md-6">
-            <label for="workTime">Työaika:</label>
-            <select class="form-select" id="workTime" name="workTime">
-                <option value="">Valitse työaika</option>
-                <option value="fullTime">Kokopäivätyö</option>
-                <option value="partTime">Osapäivätyö</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="employment">Palvelussuhde:</label>
-            <select class="form-select" id="employment" name="employment">
-                <option value="">Valitse palvelussuhde</option>
-                <option value="permanent">Vakituinen</option>
-                <option value="temporary">Määräaikainen</option>
-            </select>
-        </div>
-    </div>
-    <div class="row mt-3" id="additionalFilters2" style="display: none;">
-        <div class="col-md-6">
-            <label for="workingTime">Työskentelyaika:</label>
-            <select class="form-select" id="workingTime" name="workingTime">
-                <option value="">Valitse työskentelyaika</option>
-                <option value="dayShift">Päivävuoro</option>
-                <option value="nightShift">Yövuoro</option>
-            </select>
-        </div>
-    </div>
+</div>
 </div>
 </div>
 </div>
 <?php include 'footer.html'; ?>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="scripts/haku_filter.js"></script>
+<script src="scripts/filtro.js"></script>
 
 </body>
 </html>

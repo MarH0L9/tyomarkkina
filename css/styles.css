@@ -1,6 +1,6 @@
-body {
+* {
     font-family:Arial, Helvetica, sans-serif;
-    margin: 0;
+    
 }
 
 /*contenerdor del header superior*/
@@ -18,15 +18,10 @@ body {
 }
 
 /* Estilos personalizados para el formulario de búsqueda */
-.custom-search {
-    border: 1px solid #e2e2e2; /* Borde sólido */
-    border-radius: 3px; /* Redondeo de bordes */
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombreado */
-    padding: 30px;
-    background-color: #fff; /* Fondo blanco */
-    
-    
-}
+
+.form-control {
+    border-radius:1rem  0 0 1rem !important; /* Redondeo de bordes - barra search*/
+    }
 
 .custom-card {
     border: 1px solid #e2e2e2; /* Borde sólido */
@@ -39,19 +34,21 @@ body {
 
 .custom-card a {
     font-size: 20px;
-    color:#000;
+    color:#000000;
     text-decoration: none;
 }
 
 .custom-input {
     border: none; /* Elimina el borde del input */
     border-radius: 3; /* Elimina el redondeo del input */
+    
 }
 
 /* Estilo personalizado para el botón */
 .custom-button {
     background-color: #118341 !important; /* Cambia este color al que desees */
     color: #fff; /* Color del texto en el botón */
+    border-radius: 0 1rem 1rem 0 !important; /* Redondeo de bordes */
 }
 
 /* Estilo para el botón cuando se le pasa el mouse */
