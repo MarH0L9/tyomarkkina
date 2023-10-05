@@ -69,7 +69,7 @@ if (isset($_GET['jobSearchText'])) {
             
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) { // Utiliza FETCH_ASSOC para obtener un array asociativo
                 // Utiliza la función generateJobCard para generar la tarjeta de resultado
-                $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
+                $searchResults .= '<div class="job-list-item">' . generateJobListItem($row) . '</div>';
             }
             
         } else {
