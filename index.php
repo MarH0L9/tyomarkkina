@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
-<div class="container mt-5" >
+<div class="container mt-4" style="background-color:#a4eea6; text-align:center;"  >
     <h1 style="color:#0B3B0B">Tervetuloa Työportaaliin</h1>
     <h3 style="color:#088A4B">Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
     <div class="row justify-content-center mt-5">
@@ -26,6 +26,8 @@
             </form>
         </div>
     </div>
+</div>
+<div class="container mt-5">
     <div class="row mt-5">
         <div class="col-md-6">
             <h2>TE-palveluiden Oma asiointi</h2>
@@ -36,7 +38,6 @@
             <img src="resources/images/te-logo.png" alt="TE-palvelut" class="img-fluid" style="width:350px;">
         </div>
     </div>
-
     <!-- Cuadros interactivos -->
     <div class="row mt-5">
     <div class="col-md-6 col-sm-12 mb-3 custom-card">
