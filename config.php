@@ -1,7 +1,9 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Define una variable para determinar si la conexión debe ser local o a Azure
-$conexionLocal = true;
+$conexionLocal = false;
 
 // Verifica si la conexión debe ser local (por ejemplo, si estás en un entorno de desarrollo)
 if ($conexionLocal) {
@@ -26,6 +28,10 @@ if ($conexionLocal) {
         $pdo = new PDO($dsn, $username, $password);
         // Configurar el manejo de errores de PDO si es necesario
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 
+    // Cerrar la conexión cuando hayas terminado de usarla
+    $pdo = null; // Esto cierra la conexión
+echo "Conexión a la base de datos exitosa. Todo Funciona"; // Mensaje de conexión exitosa
     } catch (PDOException $e) {
         // Registrar el error en un archivo
         file_put_contents("errors.txt", "Error de conexión a Azure: " . $e->getMessage() . "\n", FILE_APPEND);
