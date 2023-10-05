@@ -156,8 +156,8 @@ if (isset($_GET['jobSearchText'])) {
             <label for="tyoaika" class="form-label"  style="font-weight:bold;">Työaika:</label>
             <select class="form-select" id="tyoaika" name="tyoaika">
                 <option value="">Valitse työaika</option>
-                <option value="fullTime">Kokopäivätyö</option>
-                <option value="partTime">Osapäivätyö</option>
+                <option value="fullTime">Kokoaikainen</option>
+                <option value="partTime">Osa-aikainen</option>
             </select>
         </div>
         <div class="col-md-2">
