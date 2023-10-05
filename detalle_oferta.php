@@ -25,7 +25,7 @@
                     // Reutiliza la conexión desde config.php
                     $result = $pdo->query($sql);
 
-                    if ($result->num_rows > 0) {
+                    if ($result->rowCount() > 0) {
                         // Muestra los detalles de la oferta
                         $row = $result->fetch(PDO::FETCH_ASSOC);
                         echo '<h1 class="title-bg">' . $row['Otsikko'] . '</h1>';
@@ -42,6 +42,9 @@
                         if (!empty($row['YrityksenLinkki'])) {
                             echo '<p><strong>Yrityksen Linkki:</strong> <a href="' . $row['YrityksenLinkki'] . '" target="_blank">' . $row['YrityksenLinkki'] . '</a></p>';
                         }
+                    } else {
+                        echo '<p>Työn ID ei löydy.</p>';
+                    }
                 } else {
                     echo '<p>Työn ID ei löydy.</p>';
                 }
