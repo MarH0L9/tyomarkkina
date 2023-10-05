@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include 'config.php'; // Incluye el archivo de configuración que contiene la conexión a la base de datos
 include 'functions/functions.php';
 
 // Inicializa la variable que almacenará los resultados
@@ -16,10 +16,7 @@ if (isset($_GET['submit'])) {
     $tyoaika = isset($_GET['TyoAika']) ? $_GET['TyoAika'] : '';
     $vaatimukset = isset($_GET['Vaatimukset']) ? $_GET['Vaatimukset'] : '';
 
-    // Verifica la conexión
-    if ($conn->connect_error) {
-        die("La conexión a la base de datos falló: " . $conn->connect_error);
-    }
+    // No es necesario verificar la conexión aquí, ya que se ha establecido en config.php
 
     // Construye la consulta SQL basada en los filtros seleccionados
     $sql = "SELECT * FROM Offers WHERE 1 = 1"; // Inicializa la consulta
@@ -34,13 +31,13 @@ if (isset($_GET['submit'])) {
     // Agrega las demás condiciones según los filtros aquí...
 
     // Ejecuta la consulta SQL
-    $result = $conn->query($sql);
+    $result = $pdo->query($sql); // Utiliza la conexión $pdo que se definió en config.php
 
-    if ($result->num_rows > 0) {
+    if ($result->rowCount() > 0) { // Cambio de $result->num_rows a $result->rowCount()
         // Construye los resultados de la búsqueda
         $searchResults .= '<h2>Tyopaikat:</h2>';
         
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) { // Utiliza PDO::FETCH_ASSOC para obtener un arreglo asociativo
             // Utiliza la función generateJobCard para generar la tarjeta de resultado
             $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
         }
@@ -48,12 +45,11 @@ if (isset($_GET['submit'])) {
     } else {
         $searchResults .= '<p>No se encontraron resultados para la búsqueda.</p>';
     }
-
-    // Cierra la conexión a la base de datos
-    $conn->close();
 }
-?>
 
+// No es necesario cerrar la conexión aquí, ya que se cerrará automáticamente cuando el script termine
+
+?>
 <!DOCTYPE html>
 <html lang="fi">
 <head>
