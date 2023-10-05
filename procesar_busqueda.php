@@ -1,4 +1,3 @@
-
 <?php
 include 'config.php';
 include 'functions/functions.php';
@@ -84,12 +83,21 @@ try {
 
     if ($stmt->rowCount() > 0) {
         // Construye los resultados de la búsqueda
-
         foreach ($results as $row) {
-            // Utiliza la función generateJobCard para generar la tarjeta de resultado
-            $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
+            $searchResults .= '<div class="job-list-item">';
+            $searchResults .= '<h2>' . $row['Otsikko'] . '</h2>';
+            $searchResults .= '<p><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
+            $searchResults .= '<p><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
+            $searchResults .= '<p><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['Julkaisupaiva'])) . '</p>';
+            $searchResults .= '<p><strong>Kuvaus:</strong></p>';
+            $searchResults .= '<p>' . nl2br($row['Kuvaus']) . '</p>';
+            $searchResults .= '<p><strong>Vaatimukset:</strong></p>';
+            $searchResults .= '<p>' . nl2br($row['Vaatimukset']) . '</p>';
+            if (!empty($row['YrityksenLinkki'])) {
+                $searchResults .= '<p><strong>Yrityksen Linkki:</strong> <a href="' . $row['YrityksenLinkki'] . '" target="_blank">' . $row['YrityksenLinkki'] . '</a></p>';
+            }
+            $searchResults .= '</div>';
         }
-
     } else {
         $searchResults .= '<p>No se encontraron resultados para la búsqueda.</p>';
     }
