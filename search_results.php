@@ -19,7 +19,7 @@ if (isset($_GET['submit'])) {
     // No es necesario verificar la conexión aquí, ya que se ha establecido en config.php
 
     // Construye la consulta SQL basada en los filtros seleccionados
-    $sql = "SELECT * FROM Offers WHERE 1 = 1"; // Inicializa la consulta
+    $sql = "SELECT * FROM offers WHERE 1 = 1"; // Inicializa la consulta
 
     // Agrega condiciones según los filtros seleccionados
     if (!empty($keyword)) {
