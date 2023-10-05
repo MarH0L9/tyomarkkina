@@ -31,6 +31,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Työhakuvinkit</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_results.php">Search</a>
+                </li>
             </ul>
         </div>
         <div class="ml-2">
