@@ -16,16 +16,13 @@ if (isset($_GET['submit'])) {
     $tyoaika = isset($_GET['TyoAika']) ? $_GET['TyoAika'] : '';
     $vaatimukset = isset($_GET['Vaatimukset']) ? $_GET['Vaatimukset'] : '';
 
-    // Conecta a la base de datos (asegúrate de tener la configuración en config.php)
-    $conn = new mysqli($server, $username, $password, $database);
-
     // Verifica la conexión
     if ($conn->connect_error) {
         die("La conexión a la base de datos falló: " . $conn->connect_error);
     }
 
     // Construye la consulta SQL basada en los filtros seleccionados
-    $sql = "SELECT * FROM offers WHERE 1 = 1"; // Inicializa la consulta
+    $sql = "SELECT * FROM Offers WHERE 1 = 1"; // Inicializa la consulta
 
     // Agrega condiciones según los filtros seleccionados
     if (!empty($keyword)) {
