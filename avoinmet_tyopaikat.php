@@ -95,6 +95,9 @@ if (isset($_GET['jobSearchText'])) {
     <script src="https://kit.fontawesome.com/07bb6b2702.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/haku_filter.js"></script>
+    <script src="scripts/filtro.js"></script>
     <?php include 'config.php'; ?>
     <?php include 'maakunnat.php'; ?>
 </head>
@@ -206,8 +209,5 @@ if (isset($_GET['jobSearchText'])) {
     </div>
 </div>
 <?php include 'footer.html'; ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="scripts/haku_filter.js"></script>
-<script src="scripts/filtro.js"></script>
 </body>
 </html>
