@@ -1,3 +1,4 @@
+<!Doctype html>
 <html lang="fi">
 <head>
     <title>Detalles de la Oferta de Empleo</title>
