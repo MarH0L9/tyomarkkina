@@ -20,6 +20,8 @@ try {
 
     // Configurar el manejo de errores de PDO si es necesario
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ // Configurar la codificación de caracteres a utf8mb4
+    $pdo->exec("set names utf8mb4");
 } catch (PDOException $e) {
     // Manejo de errores
     echo "Error de conexión a Azure: " . $e->getMessage();
