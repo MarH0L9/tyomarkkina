@@ -1,6 +1,5 @@
 <?php
-/*include 'C:\xampp\htdocs\Projects\tunnukset.php'; */
-include 'config.php';
+include 'config.php'; // Incluye la configuración de la conexión a la base de datos
 include 'functions/functions.php';
 
 // Inicializa la variable que almacenará los resultados
@@ -51,13 +50,6 @@ if (isset($_GET['jobSearchText'])) {
         $filters[] = "PalveluSuhde = '" . $_GET['employment'] . "'";
     }
 
-    // Conecta a la base de datos (asegúrate de tener la configuración en config.php)
-    $conn = new mysqli($server, $username, $password, $database);
-
-    // Verifica la conexión
-    if ($conn->connect_error) {
-        die("La conexión a la base de datos falló: " . $conn->connect_error);
-    }
 
     // Construye la parte de la consulta SQL para los filtros seleccionados
     $filterClause = '';
@@ -65,25 +57,28 @@ if (isset($_GET['jobSearchText'])) {
         $filterClause = " AND " . implode(" AND ", $filters);
     }
 
-    // Consulta SQL para buscar anuncios que contengan la palabra clave y cumplan con los filtros seleccionados
+   // Consulta SQL para buscar anuncios que contengan la palabra clave y cumplan con los filtros seleccionados
     $sql = "SELECT * FROM offers WHERE (Otsikko LIKE '%$keyword%' OR Kuvaus LIKE '%$keyword%' OR Sijainti LIKE '%$keyword%' OR Kunta LIKE '%$keyword%'  OR YrityksenNimi LIKE '%$keyword%' OR Ala LIKE '%$keyword%' OR Vaatimukset LIKE '%$keyword%' OR YrityksenLinkki LIKE '%$keyword%' )$filterClause";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Construye los resultados de la búsqueda
-        $searchResults .= '<h2>Tyopaikat:</h2>';
+    
+    try {
+        $result = $pdo->query($sql); // Utiliza la conexión PDO en lugar de crear una nueva conexión
         
-        while ($row = $result->fetch_assoc()) {
-            // Utiliza la función generateJobCard para generar la tarjeta de resultado
-            $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
+        if ($result->rowCount() > 0) { // Utiliza rowCount en lugar de num_rows con PDO
+            // Construye los resultados de la búsqueda
+            $searchResults .= '<h2>Tyopaikat:</h2>';
+            
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) { // Utiliza FETCH_ASSOC para obtener un array asociativo
+                // Utiliza la función generateJobCard para generar la tarjeta de resultado
+                $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
+            }
+            
+        } else {
+            $searchResults .= '<p>No se encontraron resultados para la búsqueda: ' . $keyword . '</p>';
         }
-        
-    } else {
-        $searchResults .= '<p>No se encontraron resultados para la búsqueda: ' . $keyword . '</p>';
+    } catch (PDOException $e) {
+        // Manejo de errores de la consulta
+        echo "Error en la consulta: " . $e->getMessage();
     }
-
-    // Cierra la conexión a la base de datos
-    $conn->close();
 }
 ?>
 
