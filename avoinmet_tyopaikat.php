@@ -187,31 +187,10 @@ if (isset($_GET['jobSearchText'])) {
     <!-- Resultados de la búsqueda debajo de los filtros -->
   <div class="row mt-5" id="searchResults">
     <div class="col-md-12">
-        <?php
-        if (!empty($searchResults)) {
-            echo '<h2>Tyopaikat:</h2>';
-            echo '<ul>'; // Abre una lista no ordenada
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) { // Cambia $results a $result
-                echo '<li>';
-                echo '<h3>' . $row['Otsikko'] . '</h3>';
-                echo '<p><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
-                echo '<p><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
-                echo '<p><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['Julkaisupaiva'])) . '</p>';
-                echo '<p><strong>Kuvaus:</strong></p>';
-                echo '<p>' . nl2br($row['Kuvaus']) . '</p>';
-                echo '<p><strong>Vaatimukset:</strong></p>';
-                echo '<p>' . nl2br($row['Vaatimukset']) . '</p>';
-                if (!empty($row['YrityksenLinkki'])) {
-                    echo '<p><strong>Yrityksen Linkki:</strong> <a href="' . $row['YrityksenLinkki'] . '" target="_blank">' . $row['YrityksenLinkki'] . '</a></p>';
-                }
-                echo '</li>';
-            }
-            echo '</ul>'; // Cierra la lista no ordenada
-        } else {
-            echo '<p>No se encontraron resultados para la búsqueda.</p>';
-        }
-        ?>
-    </div>
+       <div class="col-md-12">
+            <?php echo $searchResults; ?>
+
+        </div>
 </div>
     <!-- Paginación para resultados -->
     <div class="row mt-3" id="pagination">
