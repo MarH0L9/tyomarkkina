@@ -185,13 +185,13 @@ if (isset($_GET['jobSearchText'])) {
     </div>
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
-    <div class="row mt-5" id="searchResults">
+   <div class="row mt-5" id="searchResults">
     <div class="col-md-12">
         <?php
         if (!empty($searchResults)) {
             echo '<h2>Tyopaikat:</h2>';
             echo '<ul>'; // Abre una lista no ordenada
-            foreach ($results as $row) {
+            foreach ($result as $row) { // Cambia $results a $result
                 echo '<li>';
                 echo '<h3>' . $row['Otsikko'] . '</h3>';
                 echo '<p><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
