@@ -1,49 +1,38 @@
-
 <?php
-var_dump($_POST);
-// Incluye el archivo de configuración local
+
+// Incluye el archivo de configuración local y las funciones
 include 'config.php';
 include 'functions/functions.php';
 
-// Inicializa la variable que almacenará los resultados
-$searchResults = '';
-
+$dsn = "mysql:host=$server;port=$port;dbname=$database";
+$pdo = new PDO($dsn, $username, $password);
 // Obtén los valores de los filtros desde la solicitud Ajax
-$keyword = isset($_POST['jobSearchText']) ? $_POST['jobSearchText'] : '';
-$sijainti = isset($_POST['Sijainti']) ? $_POST['Sijainti'] : '';
-$julkaistu = isset($_POST['Julkaistu']) ? $_POST['Julkaistu'] : '';
-$palvelusuhde = isset($_POST['PalveluSuhde']) ? $_POST['PalveluSuhde'] : '';
-$tyokieli = isset($_POST['TyoKieli']) ? $_POST['TyoKieli'] : '';
-$tyoaika = isset($_POST['TyoAika']) ? $_POST['TyoAika'] : '';
-$vaatimukset = isset($_POST['Vaatimukset']) ? $_POST['Vaatimukset'] : '';
-$ala = isset($_POST['Ala']) ? $_POST['Ala'] : '';
-
-// Conecta a la base de datos (asegúrate de tener la configuración en config.php)
-$conn = new mysqli($server, $username, $password, $database);
-
-// Verifica la conexión
-if ($conn->connect_error) {
-    die("La conexión a la base de datos falló: " . $conn->connect_error);
-}
-
-// Inicializa la variable para la fecha límite
-$dateLimit = '';
-
-// Calcula la fecha límite en función de la categoría seleccionada
+$keyword = $_POST['jobSearchText'] ?? '';
+$sijainti = $_POST['Sijainti'] ?? '';
+$julkaistu = $_POST['Julkaistu'] ?? '';
+$palvelusuhde = $_POST['PalveluSuhde'] ?? '';
+$tyokieli = $_POST['TyoKieli'] ?? '';
+$tyoaika = $_POST['TyoAika'] ?? '';
+$vaatimukset = $_POST['Vaatimukset'] ?? '';
+$ala = $_POST['Ala'] ?? '';
 
 // Construye la consulta SQL basada en los filtros seleccionados
 $sql = "SELECT * FROM jobs WHERE 1 = 1"; // Inicializa la consulta
 
+$params = []; // Esta será nuestra matriz de parámetros
 
 // Agrega condiciones según los filtros seleccionados
 if (!empty($keyword)) {
-    $sql .= " AND (Otsikko LIKE '%$keyword%' OR Kunta LIKE '%$keyword%' OR Sijainti LIKE '%$keyword%' OR YrityksenNimi LIKE '%$keyword%')";
+    $sql .= " AND (Otsikko LIKE :keyword OR Kunta LIKE :keyword OR Sijainti LIKE :keyword OR YrityksenNimi LIKE :keyword)";
+    $params['keyword'] = '%' . $keyword . '%';
 }
 if (!empty($sijainti)) {
-    $sql .= " AND Sijainti = '$sijainti'";
+    $sql .= " AND Sijainti = :sijainti";
+    $params['sijainti'] = $sijainti;
 }
 
 if (!empty($julkaistu)) {
+    $dateLimit = ''; // inicializar
     if ($julkaistu === '24h') {
         $dateLimit = date('Y-m-d H:i:s', strtotime('-1 day'));
     } elseif ($julkaistu === '3d') {
@@ -51,43 +40,42 @@ if (!empty($julkaistu)) {
     } elseif ($julkaistu === '1w') {
         $dateLimit = date('Y-m-d H:i:s', strtotime('-7 days'));
     }
-    $sql .= " AND julkaistu >= '$dateLimit'";
+    $sql .= " AND julkaistu >= :dateLimit";
+    $params['dateLimit'] = $dateLimit;
 }
+// Repetir este patrón para el resto de tus variables/filtros
 if (!empty($palvelusuhde)) {
-    $sql .= " AND PalveluSuhde = '$palvelusuhde'";
+    $sql .= " AND PalveluSuhde = :palvelusuhde";
+    $params['palvelusuhde'] = $palvelusuhde;
 }
 if (!empty($tyokieli)) {
-    $sql .= " AND TyoKieli = '$tyokieli'";
+    $sql .= " AND TyoKieli = :tyokieli";
+    $params['tyokieli'] = $tyokieli;
 }
 if (!empty($tyoaika)) {
-    $sql .= " AND TyoAika = '$tyoaika'";
-}
-if (!empty($vaatimukset)) {
-    $sql .= " AND Vaatimukset = '$vaatimukset'";
+    $sql .= " AND TyoAika = :tyoaika";
+    $params['tyoaika'] = $tyoaika;
 }
 if (!empty($ala)) {
-    $sql .= " AND Ala = '$ala'";
+    $sql .= " AND Ala = :ala";
+    $params['ala'] = $ala;
 }
-
 // Ejecuta la consulta SQL
-$result = $conn->query($sql);
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
 
-if ($result->num_rows > 0) {
-    // Construye los resultados de la búsqueda
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($results) {
     $searchResults = '';
     
-    while ($row = $result->fetch_assoc()) {
-        // Utiliza la función generateJobCard para generar la tarjeta de resultado
+    foreach ($results as $row) {
         $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
     }
-     // Devuelve los resultados como respuesta Ajax
-     echo $searchResults;
     
+    echo $searchResults;
 } else {
     echo 'No se encontraron resultados para la búsqueda.';
 }
-
-// Cierra la conexión a la base de datos
-$conn->close();
 
 ?>
