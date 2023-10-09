@@ -1,4 +1,8 @@
+
 <?php
+var_dump($_GET);
+// Incluye el archivo de configuración local
+include 'C:\xampp\htdocs\Projects\tunnukset.php';
 include 'config.php';
 include 'functions/functions.php';
 
@@ -6,106 +10,85 @@ include 'functions/functions.php';
 $searchResults = '';
 
 // Obtén los valores de los filtros desde la solicitud Ajax
-$keyword = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
-$sijainti = isset($_GET['Sijainti']) ? $_GET['Sijainti'] : '';
-$julkaistu = isset($_GET['Julkaistu']) ? $_GET['Julkaistu'] : '';
-$palvelusuhde = isset($_GET['PalveluSuhde']) ? $_GET['PalveluSuhde'] : '';
-$tyokieli = isset($_GET['TyoKieli']) ? $_GET['TyoKieli'] : '';
-$tyoaika = isset($_GET['TyoAika']) ? $_GET['TyoAika'] : '';
-$vaatimukset = isset($_GET['Vaatimukset']) ? $_GET['Vaatimukset'] : '';
+$keyword = isset($_POST['jobSearchText']) ? $_POST['jobSearchText'] : '';
+$sijainti = isset($_POST['Sijainti']) ? $_POST['Sijainti'] : '';
+$julkaistu = isset($_POST['Julkaistu']) ? $_POST['Julkaistu'] : '';
+$palvelusuhde = isset($_POST['PalveluSuhde']) ? $_POST['PalveluSuhde'] : '';
+$tyokieli = isset($_POST['TyoKieli']) ? $_POST['TyoKieli'] : '';
+$tyoaika = isset($_POST['TyoAika']) ? $_POST['TyoAika'] : '';
+$vaatimukset = isset($_POST['Vaatimukset']) ? $_POST['Vaatimukset'] : '';
+$ala = isset($_POST['Ala']) ? $_POST['Ala'] : '';
 
-try {
-    // Construye la consulta SQL basada en los filtros seleccionados
-    $sql = "SELECT * FROM offers WHERE 1 = 1"; // Inicializa la consulta
+// Conecta a la base de datos (asegúrate de tener la configuración en config.php)
+$conn = new mysqli($server, $username, $password, $database);
 
-    // Agrega condiciones según los filtros seleccionados
-    if (!empty($keyword)) {
-        $sql .= " AND (Otsikko LIKE :keyword OR Kuvaus LIKE :keyword  OR Kunta LIKE :keyword OR Sijainti LIKE :keyword OR YrityksenNimi LIKE :keyword OR Ala LIKE :keyword OR Vaatimukset LIKE :keyword OR YrityksenLinkki LIKE :keyword)";
-    }
-    if (!empty($sijainti)) {
-        $sql .= " AND Sijainti = :sijainti";
-    }
-
-    if (!empty($julkaistu)) {
-        if ($julkaistu === '24h') {
-            $dateLimit = date('Y-m-d H:i:s', strtotime('-1 day'));
-        } elseif ($julkaistu === '3d') {
-            $dateLimit = date('Y-m-d H:i:s', strtotime('-3 days'));
-        } elseif ($julkaistu === '1w') {
-            $dateLimit = date('Y-m-d H:i:s', strtotime('-7 days'));
-        }
-        $sql .= " AND Julkaisupaiva >= :dateLimit";
-    }
-    if (!empty($palvelusuhde)) {
-        $sql .= " AND PalveluSuhde = :palvelusuhde";
-    }
-    if (!empty($tyokieli)) {
-        $sql .= " AND TyoKieli = :tyokieli";
-    }
-    if (!empty($tyoaika)) {
-        $sql .= " AND TyoAika = :tyoaika";
-    }
-    if (!empty($vaatimukset)) {
-        $sql .= " AND Vaatimukset = :vaatimukset";
-    }
-
-    // Preparar la consulta
-    $stmt = $pdo->prepare($sql);
-
-    // Asignar valores a los parámetros
-    if (!empty($keyword)) {
-        $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
-    }
-    if (!empty($sijainti)) {
-        $stmt->bindValue(':sijainti', $sijainti, PDO::PARAM_STR);
-    }
-    if (!empty($julkaistu)) {
-        $stmt->bindValue(':dateLimit', $dateLimit, PDO::PARAM_STR);
-    }
-    if (!empty($palvelusuhde)) {
-        $stmt->bindValue(':palvelusuhde', $palvelusuhde, PDO::PARAM_STR);
-    }
-    if (!empty($tyokieli)) {
-        $stmt->bindValue(':tyokieli', $tyokieli, PDO::PARAM_STR);
-    }
-    if (!empty($tyoaika)) {
-        $stmt->bindValue(':tyoaika', $tyoaika, PDO::PARAM_STR);
-    }
-    if (!empty($vaatimukset)) {
-        $stmt->bindValue(':vaatimukset', $vaatimukset, PDO::PARAM_STR);
-    }
-
-    // Ejecutar la consulta
-    $stmt->execute();
-
-    // Obtener los resultados
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($stmt->rowCount() > 0) {
-        // Construye los resultados de la búsqueda
-        foreach ($results as $row) {
-            $searchResults .= '<div class="job-list-item">';
-            $searchResults .= '<h2>' . $row['Otsikko'] . '</h2>';
-            $searchResults .= '<p><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
-            $searchResults .= '<p><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
-            $searchResults .= '<p><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['Julkaisupaiva'])) . '</p>';
-            $searchResults .= '<p><strong>Kuvaus:</strong></p>';
-            $searchResults .= '<p>' . nl2br($row['Kuvaus']) . '</p>';
-            $searchResults .= '<p><strong>Vaatimukset:</strong></p>';
-            $searchResults .= '<p>' . nl2br($row['Vaatimukset']) . '</p>';
-            if (!empty($row['YrityksenLinkki'])) {
-                $searchResults .= '<p><strong>Yrityksen Linkki:</strong> <a href="' . $row['YrityksenLinkki'] . '" target="_blank">' . $row['YrityksenLinkki'] . '</a></p>';
-            }
-            $searchResults .= '</div>';
-        }
-    } else {
-        $searchResults .= '<p>No se encontraron resultados para la búsqueda.</p>';
-    }
-} catch (PDOException $e) {
-    // Manejo de errores de PDO
-    $searchResults .= '<p>Error en la consulta: ' . $e->getMessage() . '</p>';
+// Verifica la conexión
+if ($conn->connect_error) {
+    die("La conexión a la base de datos falló: " . $conn->connect_error);
 }
 
-// Devuelve los resultados como respuesta Ajax
-echo $searchResults;
+// Inicializa la variable para la fecha límite
+$dateLimit = '';
+
+// Calcula la fecha límite en función de la categoría seleccionada
+
+// Construye la consulta SQL basada en los filtros seleccionados
+$sql = "SELECT * FROM jobs WHERE 1 = 1"; // Inicializa la consulta
+
+
+// Agrega condiciones según los filtros seleccionados
+if (!empty($keyword)) {
+    $sql .= " AND (Otsikko LIKE '%$keyword%' OR Kunta LIKE '%$keyword%' OR Sijainti LIKE '%$keyword%' OR YrityksenNimi LIKE '%$keyword%')";
+}
+if (!empty($sijainti)) {
+    $sql .= " AND Sijainti = '$sijainti'";
+}
+
+if (!empty($julkaistu)) {
+    if ($julkaistu === '24h') {
+        $dateLimit = date('Y-m-d H:i:s', strtotime('-1 day'));
+    } elseif ($julkaistu === '3d') {
+        $dateLimit = date('Y-m-d H:i:s', strtotime('-3 days'));
+    } elseif ($julkaistu === '1w') {
+        $dateLimit = date('Y-m-d H:i:s', strtotime('-7 days'));
+    }
+    $sql .= " AND julkaistu >= '$dateLimit'";
+}
+if (!empty($palvelusuhde)) {
+    $sql .= " AND PalveluSuhde = '$palvelusuhde'";
+}
+if (!empty($tyokieli)) {
+    $sql .= " AND TyoKieli = '$tyokieli'";
+}
+if (!empty($tyoaika)) {
+    $sql .= " AND TyoAika = '$tyoaika'";
+}
+if (!empty($vaatimukset)) {
+    $sql .= " AND Vaatimukset = '$vaatimukset'";
+}
+if (!empty($ala)) {
+    $sql .= " AND Ala = '$ala'";
+}
+
+// Ejecuta la consulta SQL
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Construye los resultados de la búsqueda
+    $searchResults = '';
+    
+    while ($row = $result->fetch_assoc()) {
+        // Utiliza la función generateJobCard para generar la tarjeta de resultado
+        $searchResults .= '<div class="res-card">' . generateJobCard($row) . '</div>';
+    }
+     // Devuelve los resultados como respuesta Ajax
+     echo $searchResults;
+    
+} else {
+    echo 'No se encontraron resultados para la búsqueda.';
+}
+
+// Cierra la conexión a la base de datos
+$conn->close();
+
 ?>

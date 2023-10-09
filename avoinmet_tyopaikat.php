@@ -1,86 +1,3 @@
-<?php
-include 'config.php'; // Incluye la configuración de la conexión a la base de datos
-include 'functions/functions.php';
-
-// Inicializa la variable que almacenará los resultados
-$searchResults = '';
-
-// Si se envió el formulario de búsqueda
-if (isset($_GET['jobSearchText'])) {
-    // Obtén la palabra clave de búsqueda desde la URL
-    $keyword = $_GET['jobSearchText'];
-
-    // Inicializa un array para almacenar los filtros seleccionados
-    $filters = [];
-
-    // Procesar los filtros de búsqueda
-    if (isset($_GET['sijainti']) && !empty($_GET['sijainti'])) {
-        $filters[] = "Sijainti = '" . $_GET['sijainti'] . "'";
-    }
-
-    if (isset($_GET['kunta']) && !empty($_GET['kunta'])) {
-        $filters[] = "Kunta = '" . $_GET['kunta'] . "'";
-    }
-
-    if (!empty($julkaistu)) {
-        $dateLimit = '';
-    
-        if ($julkaistu === '24h') {
-            $dateLimit = date('Y-m-d H:i:s', strtotime('-1 day'));
-        } elseif ($julkaistu === '3d') {
-            $dateLimit = date('Y-m-d H:i:s', strtotime('-3 days'));
-        } elseif ($julkaistu === '1w') {
-            $dateLimit = date('Y-m-d H:i:s', strtotime('-7 days'));
-        }
-    }
-
-    if (isset($_GET['continuity']) && !empty($_GET['continuity'])) {
-        $filters[] = "PalveluSuhde = '" . $_GET['continuity'] . "'";
-    }
-
-    if (isset($_GET['language']) && !empty($_GET['language'])) {
-        $filters[] = "TyoKieli = '" . $_GET['language'] . "'";
-    }
-
-    if (isset($_GET['workTime']) && !empty($_GET['workTime'])) {
-        $filters[] = "Tyoaika = '" . $_GET['workTime'] . "'";
-    }
-
-    if (isset($_GET['employment']) && !empty($_GET['employment'])) {
-        $filters[] = "PalveluSuhde = '" . $_GET['employment'] . "'";
-    }
-
-
-    // Construye la parte de la consulta SQL para los filtros seleccionados
-    $filterClause = '';
-    if (!empty($filters)) {
-        $filterClause = " AND " . implode(" AND ", $filters);
-    }
-
-   // Consulta SQL para buscar anuncios que contengan la palabra clave y cumplan con los filtros seleccionados
-    $sql = "SELECT * FROM offers WHERE (Otsikko LIKE '%$keyword%' OR Kuvaus LIKE '%$keyword%' OR Sijainti LIKE '%$keyword%' OR Kunta LIKE '%$keyword%'  OR YrityksenNimi LIKE '%$keyword%' OR Ala LIKE '%$keyword%' OR Vaatimukset LIKE '%$keyword%' OR YrityksenLinkki LIKE '%$keyword%' )$filterClause";
-    
-    try {
-        $result = $pdo->query($sql); // Utiliza la conexión PDO en lugar de crear una nueva conexión
-        
-        if ($result->rowCount() > 0) { // Utiliza rowCount en lugar de num_rows con PDO
-            // Construye los resultados de la búsqueda
-            $searchResults .= '<h2>Tyopaikat:</h2>';
-            
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) { // Utiliza FETCH_ASSOC para obtener un array asociativo
-                // Utiliza la función generateJobCard para generar la tarjeta de resultado
-                $searchResults .= '<div class="job-list-item">' . generateJobListItem($row) . '</div>';
-            }
-            
-        } else {
-            $searchResults .= '<p>No se encontraron resultados para la búsqueda: ' . $keyword . '</p>';
-        }
-    } catch (PDOException $e) {
-        // Manejo de errores de la consulta
-        echo "Error en la consulta: " . $e->getMessage();
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="fi">
@@ -93,8 +10,8 @@ if (isset($_GET['jobSearchText'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/07bb6b2702.js" crossorigin="anonymous"></script>
-    <script src="scripts/haku_filter.js"></script>
-    <script src="scripts/filtro.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
     <?php include 'config.php'; ?>
     <?php include 'maakunnat.php'; ?>
 </head>
@@ -102,15 +19,13 @@ if (isset($_GET['jobSearchText'])) {
 <?php include 'header.php'; ?>
 <div class="container mx-auto mt-5">
     <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
-            <h1 class="display-4">Avoinmet Työpaikat</h1>
-            <form action="avoinmet_tyopaikat.php" method="GET" class="input-group mb-3">
-                <div class="input-group">
-                    <input type="search" class="form-control form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon"  name="jobSearchText">
-                    <button type="submit" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
-                </div>
-            </form>
-        </div>
+    <div class="col-md-6">
+    <h1 class="display-4">Avoinmet Työpaikat</h1>            
+    <div class="input-group">
+        <input type="search" class="form-control form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" id="jobSearchText">
+        <button type="button" id="searchButton" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
+    </div>
+</div>
     </div>
     <!-- Filtros debajo de la barra de búsqueda en filas -->
     <div class="row mt-4">
@@ -149,6 +64,8 @@ if (isset($_GET['jobSearchText'])) {
             <label for="ala" class="form-label"  style="font-weight:bold;">Ala:</label>
             <select class="form-select" id="ala" name="ala">
                 <option value="">Valitse ala</option>
+                <option value="IT">IT</option>
+                <option value="Terveys">Terveys</option>
                 <!-- Agrega opciones específicas del sector aquí -->
             </select>
         </div>
@@ -156,8 +73,8 @@ if (isset($_GET['jobSearchText'])) {
             <label for="tyoaika" class="form-label"  style="font-weight:bold;">Työaika:</label>
             <select class="form-select" id="tyoaika" name="tyoaika">
                 <option value="">Valitse työaika</option>
-                <option value="fullTime">Kokoaikainen</option>
-                <option value="partTime">Osa-aikainen</option>
+                <option value="Kokoaikainen">Kokoainainen</option>
+                <option value="Osa-aikainen">Osa-aikainen</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -182,16 +99,14 @@ if (isset($_GET['jobSearchText'])) {
                 <option value="Muu">Muu</option>
             </select>
         </div>
+        <button id="clearFilters">Borrar Filtros</button>
     </div>
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
-  <div class="row mt-5" id="searchResults">
-    <div class="col-md-12">
-       <div class="col-md-12">
-            <?php echo $searchResults; ?>
-
+    <div class="row mt-5" id="searchResults">
+        <div class="col-md-12">
         </div>
-</div>
+    </div>
     <!-- Paginación para resultados -->
     <div class="row mt-3" id="pagination">
         <div class="col-md-12">
@@ -206,5 +121,30 @@ if (isset($_GET['jobSearchText'])) {
     </div>
 </div>
 <?php include 'footer.html'; ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="scripts/haku_filter.js"></script>
+<script src="scripts/filtro.js"></script>
+<script>
+$(document).ready(function () {
+    // Captura el evento de envío del formulario
+    $("#searchForm").submit(function (e) {
+        e.preventDefault(); // Evita que la página se recargue
+
+        // Obtiene el valor del campo de búsqueda
+        var keyword = $(this).find('input[name="jobSearchText"]').val();
+
+        // Envía el formulario a través de AJAX
+        $.ajax({
+            type: "GET",
+            url: "procesar_busqueda.php",
+            data: { jobSearchText: keyword },
+            success: function (response) {
+                // Muestra los resultados en el contenedor
+                $("#searchResultsContainer").html(response);
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
