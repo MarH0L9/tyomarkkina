@@ -4,7 +4,7 @@
 include 'config.php';
 include 'functions/functions.php';
 
-$dsn = "mysql:host=$server;port=$port;dbname=$database";
+$dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
 $pdo = new PDO($dsn, $username, $password);
 // Obtén los valores de los filtros desde la solicitud Ajax
 $keyword = $_POST['jobSearchText'] ?? '';
