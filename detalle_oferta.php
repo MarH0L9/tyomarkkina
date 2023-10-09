@@ -32,7 +32,7 @@
                         echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
                         echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
                         echo '<div class="row">';
-                        echo '<div class="col-md-6 date-icon"><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['Julkaistu'])) . '</div>';
+                        echo '<div class="col-md-6 date-icon"><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['julkaistu'])) . '</div>';
                         echo '<div class="col-md-6 date-icon"><strong>Voimassaolo Päivä:</strong> ' . date('d.m.Y', strtotime($row['VoimassaoloPaiva'])) . '</div>';
                         echo '</div>';
                         echo '<p><strong>Kuvaus:</strong></p>';
