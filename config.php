@@ -15,7 +15,7 @@ if (empty($server) || empty($port) || empty($username) || empty($password) || em
 
 // Intenta conectar a la base de datos de Azure
 try {
-    $dsn = "mysql:host=$server;port=$port;dbname=$database";
+    $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
     $pdo = new PDO($dsn, $username, $password);
 
     // Configurar el manejo de errores de PDO si es necesario
