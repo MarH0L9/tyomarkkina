@@ -1,4 +1,5 @@
 // Cargar el archivo JSON
+
 fetch('json/maakunnat.json')
 .then(response => response.json())
 .then(data => {
