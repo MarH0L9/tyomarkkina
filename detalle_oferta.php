@@ -20,7 +20,7 @@
 
                     // Consulta SQL para obtener los detalles de la oferta según el ID
                     $offer_id = $_GET['id'];
-                    $sql = "SELECT * FROM offers WHERE ID = $offer_id";
+                    $sql = "SELECT * FROM jobs WHERE ID = $offer_id";
 
                     // Reutiliza la conexión desde config.php
                     $result = $pdo->query($sql);
