@@ -1,6 +1,6 @@
 
 <?php
-var_dump($_GET);
+var_dump($_POST);
 // Incluye el archivo de configuración local
 include 'config.php';
 include 'functions/functions.php';
