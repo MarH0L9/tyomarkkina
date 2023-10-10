@@ -71,7 +71,7 @@
 }
 
 /* Estilo personalizado para los botones primary */
-.custom-primary-button {
+.custom-primary-button-log {
     background-color: #066133 !important; /* Color de fondo personalizado */
     border: none !important; /* Eliminar el borde */
     color: #fff !important; /* Color del texto */
