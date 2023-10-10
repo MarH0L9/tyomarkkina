@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Incluye el archivo de configuración local y las funciones
 include 'config.php';
 include 'functions/functions.php';
