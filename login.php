@@ -1,4 +1,5 @@
 <?php
+<?php session_start(); ?>
 require 'config.php'; 
 $title = 'Kirjaudu sisään';
 $css = 'css/styles.css';
