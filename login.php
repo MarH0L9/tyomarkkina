@@ -2,7 +2,7 @@
 require 'config.php'; 
 $title = 'Kirjaudu sisään';
 $css = 'css/styles.css';
-include "header.php";
+
 
 if (isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </head>
 <body>
-
+    <?php include "header.php"; ?>
     <div class="container login" style="margin-top: 200px;">
     <?php if (isset($_SESSION['login_success'])) {
     echo '<div class="alert alert-success" role="alert"> Kirjautuminen onnistui. Sinut ohjataan pääsivulle 2 sekunnin kuluttua...</div>';
