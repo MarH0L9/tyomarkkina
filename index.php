@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/styles.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <?php include 'config.php';?>
+<?php include 'header.php';?>    
+<?php include 'config.php';?>
 </head>
 <body>
-<?php include 'header.php'; ?>
+
 <div class="container mt-4" style="background-color:#a4eea6; text-align:center;"  >
     <h1 style="color:#0B3B0B">Tervetuloa Työportaaliin</h1>
     <h3 style="color:#088A4B">Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
