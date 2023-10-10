@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require 'config.php'; 
 
 $pdo = new PDO($dsn, $username, $password);
