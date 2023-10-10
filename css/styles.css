@@ -3,18 +3,6 @@
     
 }
 
-/* Estilo para el footer */
-.footer-page {
-    position:fixed;
-    margin-top:30px;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #a4eea6; /* Cambia el color de fondo según tus preferencias */
-    padding: 10px 0; /* Espaciado interno del footer */
-    text-align: center;
-}
-
 
 /*contenerdor del header superior*/
 .navbar {
