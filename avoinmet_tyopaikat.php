@@ -114,8 +114,9 @@
                 </select>
         </div>
         
-
-        <button id="clearFilters">Borrar Filtros</button>
+         <div class="text-center">       
+        <button id="clearFilters" type="button" class="btn btn-danger">Poista Filtterit</button>
+        </div>
         <div id="activeFilters" class="row mt-4"></div>
     </div>
 
