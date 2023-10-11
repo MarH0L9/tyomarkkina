@@ -62,8 +62,11 @@ function displaySessionMessage() {
 }
 
 
-
-
-
-
+//Funktio joka kertoo onko käyttäjä kirjautunut ulos
+function checkSessionClosed() {
+    if (isset($_GET['session_closed']) && $_GET['session_closed'] == 'true') {
+        return "Olet kirjautunut olus.";
+    }
+    return null;
+}
 ?>
