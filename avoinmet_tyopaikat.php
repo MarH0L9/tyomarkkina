@@ -1,8 +1,4 @@
-<?php 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -26,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="col-md-6">
     <h1 class="display-4">Avoinmet Työpaikat</h1>            
     <div class="input-group">
-        <input type="search" class="form-control form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" id="jobSearchText">
+        <input type="search" class="form-control  custom-border form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" id="jobSearchText">
         <button type="button" id="searchButton" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
     </div>
 </div>
@@ -76,9 +72,11 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="col-md-2">
             <label for="tyoaika" class="form-label"  style="font-weight:bold;">Työaika:</label>
             <select class="form-select" id="tyoaika" name="tyoaika">
-                <option value="">Valitse työaika</option>
+                <option value="">Valitse Työpaikan tyyppi:</option>
                 <option value="Kokoaikainen">Kokoainainen</option>
                 <option value="Osa-aikainen">Osa-aikainen</option>
+                <option value="Vakituinen">Vakituinen</option>
+                <option value="Maaraaikainen">Määräaikainen</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -100,10 +98,23 @@ if (session_status() == PHP_SESSION_NONE) {
                 <option value="tyoharjottelu">Työharjottelu</option>
                 <option value="oppisopimus">Oppisopimus</option>
                 <option value="franchasing">Franchasing</option>
+                <option value="Vakituinen">Vakituinen</option>
+                <option value="Projektityo">Projektityö</option>
                 <option value="Muu">Muu</option>
             </select>
         </div>
+        <div class="col-md-2">
+        <label for="offersPerPage" style="font-weight:bold;">offers per page:</label>
+                <select class="form-select" id="offersPerPageDropdown">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                </select>
+        </div>
+        
+
         <button id="clearFilters">Borrar Filtros</button>
+        <div id="activeFilters" class="row mt-4"></div>
     </div>
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
@@ -116,9 +127,9 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="col-md-12">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Edellinen</a></li>
+                    <li class="page-item"><button id="prevPageButton">Edellinen</button></li>
                     <!-- Genera dinámicamente los números de página aquí -->
-                    <li class="page-item"><a class="page-link" href="#">Seuraava</a></li>
+                    <li class="page-item"><button id="nextPageButton">seuraava</button></li>
                 </ul>
             </nav>
         </div>
@@ -130,6 +141,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <script src="scripts/filtro.js"></script>
 <script>
 $(document).ready(function () {
+    let currentPage = 1;
     // Captura el evento de envío del formulario
     $("#searchForm").submit(function (e) {
         e.preventDefault(); // Evita que la página se recargue
@@ -139,7 +151,7 @@ $(document).ready(function () {
 
         // Envía el formulario a través de AJAX
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "procesar_busqueda.php",
             data: { jobSearchText: keyword },
             success: function (response) {
@@ -148,6 +160,19 @@ $(document).ready(function () {
             }
         });
     });
+// Paginacion de resultados
+$("#offersPerPageDropdown").change(fetchJobs);
+    $("#nextPageButton").on("click", function() {
+        currentPage++;
+        fetchJobs();
+    });
+    $("#prevPageButton").on("click", function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchJobs();
+        }
+    });
+
 });
 </script>
 </body>

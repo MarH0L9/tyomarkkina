@@ -1,11 +1,8 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 require 'config.php'; 
 $title = 'Kirjaudu sisään';
 $css = 'css/styles.css';
-
+include "header.php";
 
 if (isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -28,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($Password, $user['pwd'])) { // Use password_verify() for password hashing
+        session_regenerate_id(true);  
         $_SESSION['user_id'] = $user['ID'];
         $_SESSION['login_success'] = true;
         
@@ -49,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </head>
 <body>
-    <?php include "header.php"; ?>
+
     <div class="container login" style="margin-top: 200px;">
     <?php if (isset($_SESSION['login_success'])) {
     echo '<div class="alert alert-success" role="alert"> Kirjautuminen onnistui. Sinut ohjataan pääsivulle 2 sekunnin kuluttua...</div>';
@@ -69,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="login.php" method="POST">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control dos" id="email" name="email" required>
                     <label class="form-label" for="email">Sähköposti</label>
                 </div>
                 <!-- Password input -->

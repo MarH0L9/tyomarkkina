@@ -36,7 +36,7 @@
                 </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="profile.php">Oma profiili</a>
+                    <a class="nav-link" href="oma_profiili.php">Oma profiili</a>
                 </li>
                 <?php endif; ?>
             </ul>
@@ -47,7 +47,7 @@
         <a href="login.php" class="btn btn-primary rounded-pill custom-primary-button-log"><i class="fa-solid fa-right-to-bracket fa-lg"></i> Kirjaudu sisään</a>
     <?php else: ?>
         <!-- Si el usuario ya ha iniciado sesión -->
-        <a href="logout.php" class="btn btn-danger rounded-pill custom-primary-button">Cerrar sesión</a>
+        <a href="logout.php" class="btn btn-danger rounded-pill custom-primary-button-out">Kirjaudu Ulos</a>
     <?php endif; ?>
 </div>
     </div>
