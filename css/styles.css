@@ -3,28 +3,33 @@
     
 }
 
-
 /*contenerdor del header superior*/
 .navbar {
     background-color:#a4eea6 !important;    
 }
 
 .nav-link {
-    color:black;
+    color:black !important;
     font-size:22px;
 }
 .nav-link:hover {
-    color:rgb(9, 63, 9) !important;
-    font-size:24px;
+    color:rgb(26, 160, 26) !important;
+    
 }
 
 /* Estilos personalizados para el formulario de búsqueda */
 
 .form-control {
-    border-radius:1rem  0 0 1rem !important; /* Redondeo de bordes - barra search*/
+    border-radius:1rem  1rem 1rem 1rem !important; /* Redondeo de bordes - barra search*/
     }
 
-.job-list-item {
+.custom-border {
+    border-radius: 1rem 0 0 1rem !important;
+}    
+
+
+
+.custom-card {
     border: 1px solid #e2e2e2; /* Borde sólido */
     border-radius: 3px; /* Redondeo de bordes */
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombreado */
@@ -33,7 +38,9 @@
     
 }
 
-.job-list-item a {
+
+
+.custom-card a {
     font-size: 20px;
     color:#000000;
     text-decoration: none;
@@ -45,17 +52,28 @@
     
 }
 
-/* Estilo personalizado para el botón */
+/* Estilo personalizado para el botón Kirjaudu */
 .custom-button {
     background-color: #066133 !important; /* Cambia este color al que desees */
     color: #fff; /* Color del texto en el botón */
     border-radius: 0 1rem 1rem 0 !important; /* Redondeo de bordes */
 }
 
-/* Estilo para el botón cuando se le pasa el mouse */
+/* Estilo para el botón cuando se le pasa el mouse por encima a kirjaudu */
 .custom-button:hover {
     background-color: #43b472 !important; /* Cambia este color al que desees para el hover */
     color: #fff !important; /* Cambia el color del borde del botón en hover (si deseas cambiarlo) */
+}
+
+.custom-save {
+    background-color: #066133 !important;
+    color: #fff; /* Esto es para asegurarse de que el texto sea blanco, puedes ajustar según tu preferencia */
+    border: none; /* Esto quita el borde por defecto que algunos navegadores añaden a los botones */
+}
+.custom-save:hover, 
+.custom-save:active {
+    background-color: #43b472 !important;
+    color: #fff;
 }
 
 /* Estilo personalizado para los botones primary */
@@ -68,9 +86,20 @@
     transition: background-color 0.3s !important; /* Transición suave para el color de fondo */
 }
 
+
 /* Estilo para el botón Kirjaudu sisään al pasar el mouse */
 .custom-primary-button:hover {
     background-color: #099b52 !important; /* Cambiar el color de fondo al pasar el mouse */
+}
+
+/*Kirjaudu ulos Boton*/
+
+.custom-primary-button-out {
+    background-color: #c31a1a !important; /* Cambiar el color de fondo al pasar el mouse */
+}
+
+.custom-primary-button-out:hover {
+    background-color: #fc0303 !important; /* Cambiar el color de fondo al pasar el mouse */
 }
 
 /* Estilo para separar las tarjetas de resultados */
@@ -115,6 +144,10 @@
 border-color:#1bea22 !important;
 }
 
+.filtro-activo {
+    border-color:#121312;
+    border: #000000;
+}
 
 /*pagina detalle_oferta*/
 /* Estilo para el título con fondo verde claro */
