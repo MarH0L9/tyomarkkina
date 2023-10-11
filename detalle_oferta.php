@@ -1,3 +1,7 @@
+<?php if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+} ?>
+
 <html lang="fi">
 <head>
     <title>Detalles de la Oferta de Empleo</title>
