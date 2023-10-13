@@ -6,30 +6,33 @@ function fetchJobs() {
     var palvelusuhde = $("#palvelusuhde").val();
     var tyonkieli = $("#tyonkieli").val();
     var tyoaika = $("#tyoaika").val();
-    var ala = $("#ala").val();
+    var tehtava = $("#tehtava").val();
+    var offersPerPage = $("#offersPerPage").val(); // Agregamos esta línea
 
     // Realizar solicitud Ajax para procesar la búsqueda y los filtros
     $.ajax({
-        type: "POST",  // Cambiado a POST
+        type: "POST",
         url: "procesar_busqueda.php",
         data: {
             jobSearchText: keyword,
-            Sijainti: sijainti,
-            Julkaistu: julkaistu,
-            PalveluSuhde: palvelusuhde,
-            TyoKieli: tyonkieli,
-            TyoAika: tyoaika,
-            Ala: ala
+            sijainti: sijainti,
+            julkaistu: julkaistu,
+            palvelusuhde: palvelusuhde,
+            tyokieli: tyonkieli,
+            tyoaika: tyoaika,
+            tehtava: tehtava,
+            OffersPerPage: offersPerPage // Agregamos esta línea
         },
         success: function (response) {
-            // Actualizar los resultados de la búsqueda en la página
             $("#searchResults").html(response);
         }
     });
 }
 
+$("#offersPerPage").change(fetchJobs); // Agregamos un listener para el desplegable
+
 $("#searchButton").on("click", fetchJobs);
-$("#sijainti, #julkaistu, #palvelusuhde, #tyonkieli, #tyoaika, #vaatimukset, #ala").on("input", fetchJobs);
+$("#sijainti, #julkaistu, #palvelusuhde, #tyonkieli, #tyoaika, #vaatimukset, #tehtava").on("input", fetchJobs);
 
 // Función para limpiar todos los filtros
 function clearFilters() {
@@ -39,7 +42,7 @@ function clearFilters() {
     $("#palvelusuhde").val(''); // limpia el filtro palvelusuhde
     $("#tyonkieli").val(''); // limpia el filtro tyonkieli
     $("#tyoaika").val(''); // limpia el filtro tyoaika
-    $("#ala").val(''); // limpia el filtro ala
+    $("#tehtava").val(''); // limpia el filtro ala
     // ... (Haz lo mismo para cualquier otro filtro que tengas)
 
     fetchJobs(); // Vuelve a cargar todos los trabajos sin filtros
