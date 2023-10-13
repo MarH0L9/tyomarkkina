@@ -15,7 +15,7 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
-
+<main>
     <div class="text-center">
             <?php
                 $session_closed_message = checkSessionClosed();
@@ -79,6 +79,7 @@
 </div>
 </div>
 </div>
+</main>
 <?php include 'footer.html'; ?>
 </body>
 </html>
