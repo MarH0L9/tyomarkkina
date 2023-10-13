@@ -10,26 +10,26 @@ $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
 $pdo = new PDO($dsn, $username, $password);
 // Obtén los valores de los filtros desde la solicitud Ajax
 $keyword = $_POST['jobSearchText'] ?? '';
-$sijainti = $_POST['Sijainti'] ?? '';
-$julkaistu = $_POST['Julkaistu'] ?? '';
-$palvelusuhde = $_POST['PalveluSuhde'] ?? '';
-$tyokieli = $_POST['TyoKieli'] ?? '';
-$tyoaika = $_POST['TyoAika'] ?? '';
-$vaatimukset = $_POST['Vaatimukset'] ?? '';
-$ala = $_POST['Ala'] ?? '';
+$sijainti = $_POST['sijainti'] ?? '';
+$julkaistu = $_POST['julkaistu'] ?? '';
+$palvelusuhde = $_POST['palveluSuhde'] ?? '';
+$tyokieli = $_POST['tyokieli'] ?? '';
+$tyoaika = $_POST['tyoaika'] ?? '';
+$vaatimukset = $_POST['vaatimukset'] ?? '';
+$tehtava = $_POST['tehtava'] ?? '';
 
 // Construye la consulta SQL basada en los filtros seleccionados
-$sql = "SELECT * FROM jobs WHERE 1 = 1"; // Inicializa la consulta
+$sql = "SELECT * FROM jobs WHERE 1 = 1 AND hyvaksytty = 1"; // Inicializa la consulta
 
 $params = []; // Esta será nuestra matriz de parámetros
 
 // Agrega condiciones según los filtros seleccionados
 if (!empty($keyword)) {
-    $sql .= " AND (Otsikko LIKE :keyword OR Kunta LIKE :keyword OR Sijainti LIKE :keyword OR YrityksenNimi LIKE :keyword)";
+    $sql .= " AND (otsikko LIKE :keyword OR kunta LIKE :keyword OR sijainti LIKE :keyword OR yrityksenNimi LIKE :keyword)";
     $params['keyword'] = '%' . $keyword . '%';
 }
 if (!empty($sijainti)) {
-    $sql .= " AND Sijainti = :sijainti";
+    $sql .= " AND sijainti = :sijainti";
     $params['sijainti'] = $sijainti;
 }
 
@@ -47,20 +47,20 @@ if (!empty($julkaistu)) {
 }
 // Repetir este patrón para el resto de tus variables/filtros
 if (!empty($palvelusuhde)) {
-    $sql .= " AND PalveluSuhde = :palvelusuhde";
+    $sql .= " AND palvelusuhde = :palvelusuhde";
     $params['palvelusuhde'] = $palvelusuhde;
 }
 if (!empty($tyokieli)) {
-    $sql .= " AND TyoKieli = :tyokieli";
+    $sql .= " AND tyokieli = :tyokieli";
     $params['tyokieli'] = $tyokieli;
 }
 if (!empty($tyoaika)) {
-    $sql .= " AND TyoAika = :tyoaika";
+    $sql .= " AND tyoaika = :tyoaika";
     $params['tyoaika'] = $tyoaika;
 }
-if (!empty($ala)) {
-    $sql .= " AND Ala = :ala";
-    $params['ala'] = $ala;
+if (!empty($tehtava)) {
+    $sql .= " AND tehtava = :tehtava";
+    $params['tehtava'] = $tehtava;
 }
 // Ejecuta la consulta SQL
 $stmt = $pdo->prepare($sql);
