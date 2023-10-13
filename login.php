@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && password_verify($Password, $user['pwd'])) {
+    if ($user && is_array($user) && password_verify($Password, $user['pwd'])) {
         
         if($user['is_admin'] == 1) { /*tarkistaa onko admin*/
             $_SESSION['is_admin'] = true;
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $businessStmt->execute();
             $businessUser = $businessStmt->fetch(PDO::FETCH_ASSOC);
     
-            if($businessUser['hyvaksytty'] == 1) {
+          if($businessUser && is_array($businessUser) && $businessUser['hyvaksytty'] == 1) {
                 session_regenerate_id(true);  
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_type'] = $user['user_type'];
