@@ -19,6 +19,7 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
+<main>
 <div class="container mx-auto mt-5">
     <div class="row justify-content-center mt-5">
     <div class="col-md-6">
@@ -28,7 +29,7 @@
         <button type="button" id="searchButton" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
     </div>
 </div>
-    </div>
+    </div><hr>
     <!-- Filtros debajo de la barra de búsqueda en filas -->
     <div class="row mt-4">
         <div class="col-md-2">
@@ -63,13 +64,34 @@
             </select>
         </div>
         <div class="col-md-2">
-            <label for="ala" class="form-label"  style="font-weight:bold;">Ala:</label>
-            <select class="form-select" id="ala" name="ala">
-                <option value="">Valitse ala</option>
-                <option value="IT">IT</option>
-                <option value="Terveys">Terveys</option>
-                <!-- Agrega opciones específicas del sector aquí -->
-            </select>
+             <label for="tehtava" class="form-label">Tehtävä</label>
+                 <select class="form-select" id="tehtava" name="tehtava">:
+                    <option value="">Valitse tehtävä-ala:</option>
+                    <option value="Asennus, huolto ja kunnossapito">Asennus, huolto ja kunnossapito</option>
+                    <option value="Asiakaspalvelu">Asiakaspalvelu</option>
+                    <option value="Asiantuntijatyö ja konsultointi">Asiantuntijatyö ja konsultointi</option>
+                    <option value="Hallinto ja yleiset toimistotyöt">Hallinto ja yleiset toimistotyöt</option>
+                    <option value="Henkilöstöala">Henkilöstöala</option>
+                    <option value="Hyvinvointi- ja henkilöpalvelut">Hyvinvointi- ja henkilöpalvelut</option>
+                    <option value="Johtotehtävät">Johtotehtävät</option>
+                    <option value="Julkinen sektori ja järjestöt">Julkinen sektori ja järjestöt</option>
+                    <option value="Kiinteistöala">Kiinteistöala</option>
+                    <option value="Kuljetus, logistiikka ja liikenne">Kuljetus, logistiikka ja liikenne</option>
+                    <option value="Kulttuuri-, viihde- ja taidealat">Kulttuuri-, viihde- ja taidealat</option>
+                    <option value="Lakiala">Lakiala</option>
+                    <option value="Markkinointi">Markkinointi</option>
+                    <option value="Markkinointi, mainonta, media ja viestintä">Markkinointi, mainonta, media ja viestintä</option>
+                    <option value="Myynti- ja kaupan ala">Myynti- ja kaupan ala</option>
+                    <option value="Opetusala">Opetusala</option>
+                    <option value="Opiskelijoiden työpaikat">Opiskelijoiden työpaikat</option>
+                    <option value="Rakennusala">Rakennusala</option>
+                    <option value="Ravintola- ja matkailuala">Ravintola- ja matkailuala</option>
+                    <option value="Siivous, puhtaanapito ja jätehuolto">Siivous, puhtaanapito ja jätehuolto</option>
+                    <option value="Sosiaali- ja hoiva-ala">Sosiaali- ja hoiva-ala</option>
+                    <option value="Taloushallinto ja pankkiala">Taloushallinto ja pankkiala</option>
+                    <option value="Teollisuus ja teknologia">Teollisuus ja teknologia</option>
+                    <option value="Terveys- ja sosiaalipalvelut">Terveys- ja sosiaalipalvelut</option>
+                 </select>
         </div>
         <div class="col-md-2">
             <label for="tyoaika" class="form-label"  style="font-weight:bold;">Työaika:</label>
@@ -77,8 +99,6 @@
                 <option value="">Valitse Työpaikan tyyppi:</option>
                 <option value="Kokoaikainen">Kokoainainen</option>
                 <option value="Osa-aikainen">Osa-aikainen</option>
-                <option value="Vakituinen">Vakituinen</option>
-                <option value="Maaraaikainen">Määräaikainen</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -112,11 +132,12 @@
                 <option value="10">10</option>
                 <option value="15">15</option>
                 </select>
-        </div>
+        </div>        
         
-         <div class="text-center">       
+        <div class="text-center">       
         <button id="clearFilters" type="button" class="btn btn-danger">Poista Filtterit</button>
         </div>
+        
         <div id="activeFilters" class="row mt-4"></div>
     </div>
 
@@ -125,19 +146,21 @@
         <div class="col-md-12">
         </div>
     </div>
-    <!-- Paginación para resultados -->
+    <!-- Pagination  -->
     <div class="row mt-3" id="pagination">
         <div class="col-md-12">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li class="page-item"><button id="prevPageButton">Edellinen</button></li>
-                    <!-- Genera dinámicamente los números de página aquí -->
+                    <!-- Generate numbers -->
                     <li class="page-item"><button id="nextPageButton">seuraava</button></li>
                 </ul>
             </nav>
         </div>
     </div>
 </div>
+</div>
+</main>
 <?php include 'footer.html'; ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="scripts/haku_filter.js"></script>
