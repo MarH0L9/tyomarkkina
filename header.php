@@ -1,6 +1,7 @@
 <?php if (session_status() == PHP_SESSION_NONE) {
     session_start();
 } ?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -18,8 +19,8 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-        <a class="navbar-brand" href="index.php"><img src="resources/images/logo/logo4.png" style="width:80%;"></a>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php"><img src="resources/images/logo/logo4.png" style="width:70%;"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,11 +36,20 @@
                     <a class="nav-link" href="#">Työhakuvinkit</a>
                 </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="oma_profiili.php">Oma profiili</a>
-                </li>
+                <?php if ($_SESSION['user_type'] == 'normal'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="oma_profiili.php">Oma profiili</a>
+                    </li>
+                <?php elseif ($_SESSION['user_type'] == 'yritys'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="yrityksen_profiili.php">Yrityksen profiili</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="luo_ilmotus.php">Luo ilmotus</a>
+                    </li>
                 <?php endif; ?>
-            </ul>
+            <?php endif; ?>
+                        </ul>
         </div>
         <div class="ml-2">
     <?php if (!isset($_SESSION['user_id'])): ?>
@@ -50,7 +60,7 @@
         <a href="logout.php" class="btn btn-danger rounded-pill custom-primary-button-out">Kirjaudu Ulos</a>
     <?php endif; ?>
 </div>
-    </div>
+</div>   
 </nav>
 </body>
 </html>
