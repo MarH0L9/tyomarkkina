@@ -3,6 +3,23 @@
     
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Hace que el contenido principal crezca y ocupe todo el espacio disponible */
+main {
+    flex: 1 0 auto;
+}
+
+/* Tu footer ya tiene algunos estilos, pero asegurémonos de que no sea flexible en su crecimiento */
+.footer {
+    flex-shrink: 0;
+}
+
+
 /*contenerdor del header superior*/
 .navbar {
     background-color:#a4eea6 !important;    
@@ -48,8 +65,8 @@
     background-repeat: no-repeat;
 }
 .centrado {
-    position: absolute;
-    top: 40%;
+    position:absolute;
+    top: 32%;
     left: 50%;
     transform: translate(-50%, -50%); /* Esta técnica es conocida para centrar contenido en el centro exacto de un contenedor. */
     display: flex;
@@ -198,6 +215,27 @@ border-color:#1bea22 !important;
     content: "\f073"; /* El código Unicode del icono de calendario en Font Awesome */
     font-family: "Font Awesome 6 Free";
     margin-right: 5px;
+}
+
+
+/* admin panel*/
+
+.offer-list .offer-item, .user-list .user-item {
+    padding: 10px;
+    border: 1px solid #0b0b0b;
+    border-radius: 5px;
+    background-color: #57c285;
+}
+
+.offer-list .offer-item:hover {
+    background-color: #ada7a7; /* Un color de fondo ligeramente más oscuro al pasar el ratón por encima */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Una sombra sutil para dar sensación de elevación */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transición suave de los cambios */
+    border-color:#1313e3;
+}
+
+.offer-list .offer-item:not(:last-child), .user-list .user-item:not(:last-child) {
+    margin-bottom: 15px;
 }
 
 @media (max-width: 767px) {
