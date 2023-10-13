@@ -13,6 +13,7 @@
 </head>
 <body style="background-color=grey;">
     <?php include 'header.php'; ?>
+     <main>
     <div class="container mx-auto mt-5" >
         <div class="row justify-content-center mt-5" >
             <div class="col-md-8">
@@ -30,28 +31,32 @@
 
                     // Consulta SQL para obtener los detalles de la oferta según el ID
                     $offer_id = $_GET['id'];
-                    $sql = "SELECT * FROM jobs WHERE ID = $offer_id";
+                    $sql = "SELECT * FROM jobs WHERE id = $offer_id";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                         // Muestra los detalles de la oferta
                         $row = $result->fetch_assoc();
-                        echo '<h1 class="title-bg">' . $row['Otsikko'] . '</h1>';
-                        echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['Sijainti'] . ', ' . $row['Kunta'] . '</p>';
-                        echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['YrityksenNimi'] . '</p>';
+                        echo '<h1 class="title-bg">' . $row['otsikko'] . '</h1>';
+                        echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['sijainti'] . ', ' . $row['kunta'] . '</p>';
+                        echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['yrityksennimi'] . '</p>';
                         echo '<div class="row">';
                         echo '<div class="col-md-6 date-icon"><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['julkaistu'])) . '</div>';
-                        echo '<div class="col-md-6 date-icon"><strong>Voimassaolo Päivä:</strong> ' . date('d.m.Y', strtotime($row['VoimassaoloPaiva'])) . '</div>';
+                        echo '<div class="col-md-6 date-icon"><strong>Voimassaolo Päivä:</strong> ' . date('d.m.Y', strtotime($row['voimassaolopaiva'])) . '</div>';
                         echo '</div>';
                         echo '<p><strong>Kuvaus:</strong></p>';
-                        echo '<p>' . nl2br($row['Kuvaus']) . '</p>';
+                        echo '<p>' . nl2br($row['kuvaus']) . '</p>';
                         echo '<p><strong>Tarkka Kuvaus:</strong></p>';
                         echo '<p>' . nl2br($row['tarkkakuvaus']) . '</p>';
                         echo '<p><strong>Vaatimukset:</strong></p>';
-                        echo '<p>' . nl2br($row['Vaatimukset']) . '</p>';
-                        if (!empty($row['YrityksenLinkki'])) {
-                            if (!empty($row['YrityksenLinkki'])) {
-                                echo '<a href="' . $row['YrityksenLinkki'] . '" target="_blank" class="btn btn-primary">Hae työpaikkaa</a>';
+                        echo '<p>' . nl2br($row['vaatimukset']) . '</p>';
+                        if (!empty($row['yrityksenlinkki'])) {
+                            if (!empty($row['yrityksenlinkki'])) {
+                                echo '<div class="mb-3">';
+                                echo '<div class="text-center">';
+                                echo '<a href="' . $row['yrityksenlinkki'] . '" target="_blank" class="btn btn-primary"><i class="fa-regular fa-square-check fa-lg"></i> Hae työpaikkaa</a>';
+                                echo '</div>';
+                                echo '</div>';
                             }
                         }
                         
@@ -68,6 +73,7 @@
             </div>
         </div>
     </div>
+    </main>
     <?php include 'footer.html'; ?>
 </body>
 </html>
