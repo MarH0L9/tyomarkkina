@@ -1,28 +1,31 @@
 <?php
 
-//Functio joka luo työpaikka kortin
+//Functio joka luo työpaikka kortin listaan
 function generateJobCard($jobData) {
     $card = '<div class="col-md-12">';
-    $card .= '<a href="detalle_oferta.php?id=' . $jobData['ID'] . '" style="text-decoration: none; color: inherit;" target="_blank">'; // Enlace que envuelve toda la tarjeta
+    $card .= '<a href="detalle_oferta.php?id=' . $jobData['id'] . '" style="text-decoration: none; color: inherit;" target="_blank">'; // Enlace que envuelve toda la tarjeta
     $card .= '<div class="card-body my-custom-card">';
     
     // Title
-    $card .= '<h3 class="card-title"><strong>' . $jobData['Otsikko'] . '</strong></h3>';
+    $card .= '<h3 class="card-title"><strong>' . $jobData['otsikko'] . '</strong></h3>';
     
     // Row for Sijainti, kunta left, tyosuhde right
     $card .= '<div class="row">';
-    $card .= '<div class="col-md-6">';
-    $card .= '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i></i><strong> Sijainti:</strong> ' . $jobData['Sijainti'] . ', ' . $jobData['Kunta'] . '</p>';
+    $card .= '<div class="col">';
+    $card .= '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i></i><strong> Sijainti:</strong> ' . $jobData['sijainti'] . ', ' . $jobData['kunta'] . '</p>';
     $card .= '</div>';
-    $card .= '<div class="col-md-6">';
-    $card .= '<p><strong>Palvelusuhde:</strong> ' . $jobData['palvelusuhde'] . '</p>';
+    $card .= '<div class="col">';
+    $card .= '<p><strong>Yritys:</strong> ' . $jobData['yrityksennimi'] . '</p>';
+    $card .= '</div>';
+    $card .= '<div class="col">';
+    $card .= '<p><strong>Tehtävä:</strong> ' . $jobData['tehtava'] . '</p>';
     $card .= '</div>';
     $card .= '</div>';
     
     // row for kuvaus
     $card .= '<div class="row">';
     $card .= '<div class="col-md-12">';
-    $card .= '<p><strong>Kuvaus:</strong> ' . $jobData['Kuvaus'] . '</p>';
+    $card .= '<p><strong>Kuvaus:</strong> ' . $jobData['kuvaus'] . '</p>';
     $card .= '</div>';
     $card .= '<p><strong>Julkaistu:</strong> ' . $jobData['julkaistu'] . '</p>';
     $card .= '</div>';
@@ -52,7 +55,7 @@ function setSessionMessage($isSuccessful, $errorMessage = null) {
 }
 
 
-//Functio joka näyttää session viestin kuin tallennetaan tietoja
+//Funktio joka näyttää session viestin kuin tallennetaan tietoja
 function displaySessionMessage() {
     if (isset($_SESSION['message'])) {
         echo '<div class="alert alert-' . $_SESSION['message']['type'] . '">' . $_SESSION['message']['text'] . '</div>';
@@ -65,8 +68,19 @@ function displaySessionMessage() {
 //Funktio joka kertoo onko käyttäjä kirjautunut ulos
 function checkSessionClosed() {
     if (isset($_GET['session_closed']) && $_GET['session_closed'] == 'true') {
-        return "Olet kirjautunut olus.";
+        return "Olet onnistuneesti kirjautunut ulos. Toivottavasti näemme sinut pian uudelleen!";
     }
     return null;
 }
+
+// Función para mostrar un mensaje de éxito
+function showSuccessMessage($message) {
+    echo '<div class="alert alert-success" role="alert">' . $message . '</div>';
+}
+
+// Función para mostrar un mensaje de error
+function showErrorMessage($message) {
+    echo '<div class="alert alert-danger" role="alert">' . $message . '</div>';
+}
+
 ?>
