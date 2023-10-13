@@ -1,7 +1,9 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
+ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+
 require 'config.php'; 
 
 $pdo = new PDO($dsn, $username, $password);
@@ -64,49 +66,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include 'header.php'; ?>
 </head>
 <body>
-<div class="container regi" style="margin-top: 100px;">
+    <main>
     <fieldset>
-        <legend>Rekisteröinti</legend>
+        
         <?php if (!empty($message)) : ?>
             <div class="alert <?php echo (strpos($message, "virhe") !== false) ? 'alert-danger' : 'alert-success'; ?>" role="alert">
                 <?php echo $message; ?>
             </div>
         <?php endif; ?>
         <div class="container mt-5" style="margin-top: 10px;">
+        <div>
+        
+        <p>Oletko Yritys?<a href="Register_yritys.php">Luo tili tästä</a></p>
+        </div>
+        <div class="row justify-content-center">
+            
+        <div class="col-md-6">
+        <legend>Rekisteröinti</legend> 
+        
             <form action="register.php" method="POST" class="needs-validation" id="registrationForm" novalidate>
                 <div class="mb-3">
-                    <label for="validationCustomUsername" class="form-label">Sähköposti</label>
+                    <label for="validationCustomUsername" class="form-label">Sähköposti*</label>
                     <div class="input-group has-validation">
                         <input type="email" class="form-control" id="validationCustomUsername" name="email" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" placeholder="nimisukunimi@palvelu.fi"  required value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
                         <div class="invalid-feedback">
                             Kirjoita sähköposti osoite "user@email.".
-                        </div>
-                        
+                        </div>                        
                     </div>
                 </div>
+
                 <div class="mb-3">
-                    <label for="validationCustom03" class="form-label">Salasana</label>
+                    <label for="repeatEmail" class="form-label">Toista sähköposti*</label>
+                    <div class="input-group has-validation">
+                        <input type="email" class="form-control" id="repeatEmail" name="repeatEmail" required value="<?php echo isset($_POST['repeatEmail']) ? $_POST['repeatEmail'] : ''; ?>">
+                        <div class="invalid-feedback">
+                            Sähköpostiosoitteet eivät ole samat.
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="validationCustom03" class="form-label">Salasana*</label>
                     <input type="password" class="form-control" id="validationCustom03" name="pssw" minlength="8" required>
                     <div class="invalid-feedback">
                         Salasana pitää olla vähintään 8 merkkiä pitkä.
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="validationCustom04" class="form-label">Salasana uudestaan</label>
+                    <label for="validationCustom04" class="form-label">Salasana uudestaan*</label>
                     <input type="password" class="form-control" id="validationCustom04" name="confirm_password"  placeholder="Kirjoita salasana uudestaan" minlength="8" required>
                     <div class="invalid-feedback">
                         Salasanat eivät ole samallai.
                     </div>
                 </div>
                 <div class="mb-3">
-                <label for="etunimi" class="form-label">Etunimi:</label>
+                <label for="etunimi" class="form-label">Etunimi*</label>
                 <input type="text" class="form-control" id="etunimi" name="etunimi" required>
                 <div class="invalid-feedback">
                     Kirjoita sinun etunimi.
                 </div>
             </div>
             <div class="mb-3">
-                <label for="sukunimi" class="form-label">Sukunimi</label>
+                <label for="sukunimi" class="form-label">Sukunimi*</label>
                 <input type="text" class="form-control" id="sukunimi" name="sukunimi" required>
                 <div class="invalid-feedback">
                     Kirjoita sinun sukunimi.
@@ -121,74 +143,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
                 <div class="mb-3">
+                    <div class="text-center">
                     <button class="btn btn-primary" type="submit">Rekisteröidy</button>
+                    </div>
                 </div>
             </form>
         </div>
-    </fieldset>
+    </div>
 </div>
+    </fieldset>
+    </main>
+    <?php include 'footer.html'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"> </script> 
-    <script>
-        // lisää tapahtumankuuntelija kaikille vaadituille kentille
-        const form = document.getElementById('registrationForm');
-        const inputs = form.querySelectorAll('input[required]');
-
-        inputs.forEach((input) => {
-            input.addEventListener('input', function () {
-                if (input.checkValidity()) {
-                    input.classList.add('is-valid');
-                    input.classList.remove('is-invalid');
-                } else {
-                    input.classList.add('is-invalid');
-                    input.classList.remove('is-valid');
-                }
-            });
-        });
-
-        form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-
-          // Tarkista onko sähköposti jo käytössä
-    const warningMessage = document.querySelector('.alert.alert-warning');
+    <script src="scripts/registration_validation.js"></script>
     
-    if (warningMessage) {
-        // Jos sähköposti on jo käytössä, siirrä kursori sähköposti kenttään
-        const emailInput = document.getElementById('validationCustomUsername');
-        if (emailInput) {
-            emailInput.focus();
-        }
-    }
-
-
-        //Salasanojen tarkistus
-        const passwordInput = document.getElementById('validationCustom03');
-        const confirmPasswordInput = document.getElementById('validationCustom04');
-
-        // Funktio joka tarkistaa onko salasanat samallaisia livenä
-        function checkPasswordMatch() {
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
-
-            if (password === confirmPassword) {
-                confirmPasswordInput.setCustomValidity('');
-                confirmPasswordInput.classList.remove('is-invalid');
-                confirmPasswordInput.classList.add('is-valid');
-            } else {
-                confirmPasswordInput.setCustomValidity('Salasanat ei ole samallaisia, yritä uudestaan.');
-                confirmPasswordInput.classList.add('is-invalid');
-                confirmPasswordInput.classList.remove('is-valid');
-            }
-        }
-
-        // Tapahtumankuuntelija salasanojen tarkistusta varten
-        passwordInput.addEventListener('input', checkPasswordMatch);
-        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
-    </script>
 </body>
-<?php include 'footer.html'; ?>
+
 </html>
