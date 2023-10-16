@@ -22,15 +22,15 @@ main {
 
 /*contenerdor del header superior*/
 .navbar {
-    background-color:#a4eea6 !important;    
+    background-color:#003e29 !important;    
 }
 
 .nav-link {
-    color:black !important;
+    color:#fff !important;
     font-size:22px;
 }
 .nav-link:hover {
-    color:rgb(26, 160, 26) !important;
+    color:#07a757 !important;
     
 }
 
@@ -123,7 +123,7 @@ main {
 
 /* Estilo personalizado para los botones primary */
 .custom-primary-button-log {
-    background-color: #066133 !important; /* Color de fondo personalizado */
+    background-color: #0da358 !important; /* Color de fondo personalizado */
     border: none !important; /* Eliminar el borde */
     color: #fff !important; /* Color del texto */
     padding: 10px 20px !important; /* Espaciado interior */
@@ -134,7 +134,8 @@ main {
 
 /* Estilo para el botón Kirjaudu sisään al pasar el mouse */
 .custom-primary-button-log:hover {
-    background-color: #099b52 !important; /* Cambiar el color de fondo al pasar el mouse */
+    background-color: #ade6b9 !important; /* Cambiar el color de fondo al pasar el mouse */
+    color:#000000 !important;
 }
 
 /*Kirjaudu ulos Boton*/
@@ -149,24 +150,26 @@ main {
 
 /* Estilo para separar las tarjetas de resultados */
 .res-card {
-    width:100% !important;
+    width:90% !important;
     border: 1px solid #e2e2e2;
-    background-color: rgb(246, 249, 247) !important;
+    background-color: #fff !important;
     border-radius: 3px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px; /* Agrega un margen inferior entre las tarjetas */
 }
 
 .card-title {
-    background-color:#96ebc3;
+    background-color:#fff;
+    color: #033f21;    
     padding: 5px 0;
-    text-align:justify;
+    
+    
 }
 
 .res-card:hover {
     background-color: #fff !important; /* Cambia el color de fondo al pasar el mouse */
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3); /* Cambia el sombreado al pasar el mouse */
-    border-color:#1bea22;
+    border-color:#0d1bda;
 }
 .res-card a {
     font-size: 20px;
@@ -186,13 +189,15 @@ main {
 }
 
 .form-select:hover {
-border-color:#1bea22 !important;
+border-color:#037807 !important;
 }
 
 .filtro-activo {
     border-color:#121312;
     border: #000000;
 }
+
+
 
 /*pagina detalle_oferta*/
 /* Estilo para el título con fondo verde claro */
@@ -202,6 +207,18 @@ border-color:#1bea22 !important;
     display: inline-block;
     border-radius: 5px;
 }
+
+/* Login box */
+
+.shadow-box {
+    color:#0B3B0B;
+    background-color: #b6f1b8 !important;
+    padding: 20px; 
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.07);
+    border-radius: 10px;
+    border: #000000;
+}
+
 
 /* Estilo para la empresa con el icono de edificio */
 .company-icon::before {
@@ -221,14 +238,15 @@ border-color:#1bea22 !important;
 /* admin panel*/
 
 .offer-list .offer-item, .user-list .user-item {
+    color: #000000;
     padding: 10px;
     border: 1px solid #0b0b0b;
     border-radius: 5px;
-    background-color: #57c285;
+    background-color: #dfe8df;
 }
 
 .offer-list .offer-item:hover {
-    background-color: #ada7a7; /* Un color de fondo ligeramente más oscuro al pasar el ratón por encima */
+    background-color: #6db86d; /* Un color de fondo ligeramente más oscuro al pasar el ratón por encima */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Una sombra sutil para dar sensación de elevación */
     transition: background-color 0.3s, box-shadow 0.3s; /* Transición suave de los cambios */
     border-color:#1313e3;
@@ -237,6 +255,8 @@ border-color:#1bea22 !important;
 .offer-list .offer-item:not(:last-child), .user-list .user-item:not(:last-child) {
     margin-bottom: 15px;
 }
+
+
 
 @media (max-width: 767px) {
     .my-custom-card {        
