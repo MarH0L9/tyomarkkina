@@ -36,7 +36,7 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2>Profiili</h2><br>
+            <h2>Oma Profiili</h2><hr>
             <form action="oma_profiili_update.php" method="POST" class="mt-4">
                 <h3>Perustiedot</h3><br>
 
