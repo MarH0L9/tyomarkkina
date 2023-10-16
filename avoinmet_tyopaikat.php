@@ -1,6 +1,11 @@
 <?php if (session_status() == PHP_SESSION_NONE) {
     session_start();
-} ?>
+
+}
+    $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
+?>
+
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -10,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="https://kit.fontawesome.com/07bb6b2702.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
@@ -19,23 +24,25 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
+
 <main>
 <div class="container mx-auto mt-5">
     <div class="row justify-content-center mt-5">
     <div class="col-md-6">
     <h1 class="display-4">Avoinmet Työpaikat</h1>            
     <div class="input-group">
-        <input type="search" class="form-control  custom-border form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" id="jobSearchText">
+        <input type="search" class="form-control  custom-border form-rounded-3" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" id="jobSearchText" value="<?php echo $searchTerm;?>">
         <button type="button" id="searchButton" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
     </div>
+
 </div>
-    </div><hr>
     <!-- Filtros debajo de la barra de búsqueda en filas -->
     <div class="row mt-4">
         <div class="col-md-2">
-            <label for="sijainti" class="form-label" style="font-weight:bold;">Valitse sijainti:</label>
+        
+            <label for="sijainti" class="form-label" style="font-weight:bold;">Valitse maakunta:</label>
             <select class="form-select" id="sijainti" name="sijainti">
-                <option value="">Valitse sijainti</option>
+                <option value="">Kaikki</option>
                 <?php
                 // Decodificar el JSON de maakunnat y kunnat
                 $jsonString = '...'; // Reemplaza con el contenido completo del JSON que creamos anteriormente
@@ -57,16 +64,16 @@
         <div class="col-md-2">
             <label for="julkaistu" class="form-label"  style="font-weight:bold;">Julkaistu:</label>
             <select class="form-select" id="julkaistu" name="julkaistu">
-                <option value="">Valitse aika</option>
+                <option value="">Kaikki</option>
                 <option value="24h">24 tuntia</option>
                 <option value="3d">3 päivää</option>
                 <option value="1w">Viikko</option>
             </select>
         </div>
         <div class="col-md-2">
-             <label for="tehtava" class="form-label">Tehtävä</label>
+             <label for="tehtava" class="form-label">Kaikki</label>
                  <select class="form-select" id="tehtava" name="tehtava">:
-                    <option value="">Valitse tehtävä-ala:</option>
+                    <option value="">Kaikki</option>
                     <option value="Asennus, huolto ja kunnossapito">Asennus, huolto ja kunnossapito</option>
                     <option value="Asiakaspalvelu">Asiakaspalvelu</option>
                     <option value="Asiantuntijatyö ja konsultointi">Asiantuntijatyö ja konsultointi</option>
@@ -96,7 +103,7 @@
         <div class="col-md-2">
             <label for="tyoaika" class="form-label"  style="font-weight:bold;">Työaika:</label>
             <select class="form-select" id="tyoaika" name="tyoaika">
-                <option value="">Valitse Työpaikan tyyppi:</option>
+                <option value="">Kaikki</option>
                 <option value="Kokoaikainen">Kokoainainen</option>
                 <option value="Osa-aikainen">Osa-aikainen</option>
             </select>
@@ -104,16 +111,19 @@
         <div class="col-md-2">
             <label for="tyonkieli" class="form-label"  style="font-weight:bold;">Työn kieli:</label>
             <select class="form-select" id="tyonkieli" name="tyonkieli">
-                <option value="">Valitse työn kieli</option>
+                <option value="">Kaikki kielet</option>
                 <option value="Suomi">Suomi</option>
                 <option value="Ruotsi">Ruotsi</option>
                 <option value="Englanti">Englanti</option>
+                <option value="Eesti">Eesti</option>
+                <option value="Espanja">Espanja</option>
+                <option value="Muu">Muu</option>
             </select>
         </div>
         <div class="col-md-2">
             <label for="palvelusuhde" class="form-label"  style="font-weight:bold;">Palvelusuhde:</label>
             <select class="form-select" id="palvelusuhde" name="palvelusuhde">
-                <option value="">Valitse palvelusuhde</option>
+                <option value="">Kaikki</option>
                 <option value="tyosuhde">Työsuhde</option>
                 <option value="virkasuhde">Virkasuhde</option>
                 <option value="vuokratyo">Vuokratyö</option>
@@ -161,32 +171,43 @@
 </div>
 </div>
 </main>
+
+<div class="footer">
 <?php include 'footer.html'; ?>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="scripts/haku_filter.js"></script>
 <script src="scripts/filtro.js"></script>
 <script>
+let searchTerm = "<?php echo $searchTerm; ?>";
+if (searchTerm !== "") {
+    $(window).on('load', function() {
+        $("#searchButton").click();
+    });
+}
+
+
 $(document).ready(function () {
     let currentPage = 1;
-    // Captura el evento de envío del formulario
+    // Lähetä haku lomake
     $("#searchForm").submit(function (e) {
         e.preventDefault(); // Evita que la página se recargue
 
-        // Obtiene el valor del campo de búsqueda
+        // Saa hakusanan
         var keyword = $(this).find('input[name="jobSearchText"]').val();
 
-        // Envía el formulario a través de AJAX
+        // Lähetä hakusana Ajaxilla
         $.ajax({
             type: "POST",
             url: "procesar_busqueda.php",
             data: { jobSearchText: keyword },
             success: function (response) {
-                // Muestra los resultados en el contenedor
+                // Tulosta vastaus
                 $("#searchResultsContainer").html(response);
             }
         });
     });
-// Paginacion de resultados
+// Pagination
 $("#offersPerPageDropdown").change(fetchJobs);
     $("#nextPageButton").on("click", function() {
         currentPage++;
