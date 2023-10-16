@@ -15,34 +15,41 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
+
 <main>
     <div class="text-center">
-            <?php
-                $session_closed_message = checkSessionClosed();
-                if ($session_closed_message) {            
-                    echo "<div class='alert alert-success'>$session_closed_message</div>";            
-                }
-            ?>
+        <?php
+            $session_closed_message = checkSessionClosed();
+            if ($session_closed_message) {            
+                echo "<div class='alert alert-warning'>$session_closed_message</div>"; 
+                echo '<script>
+                        setTimeout(function() {
+                            window.location.href = "index.php";
+                        }, 2000);
+                    </script>';           
+            }
+        ?>
     </div>
     <div class="divConImagen"></div>
     <!-- Contenido centrado -->
     <div class="centrado">
         <div class="text-center">
             <h1 style="color:#0B3B0B">Tervetuloa Työportaaliin</h1>
-            <h3 style="color:#0B3B0B">Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
+            <h3 style="color:#0B3B0B; background-color:#a4eea6; padding:5px;">Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
         </div>
         
             <div class="contenido">
                 <div class="text-center">
                     <h1 style="color:#088A4B">Avoinmet Työpaikat</h1>
                 </div>           
+        </div>
     </div>
 
-    <div class="container mt-5">
-                <form action="#" method="GET">
+    <div class="container mt-5 search">
+                <form action="avoinmet_tyopaikat.php" method="GET">
                     <div class="input-group index">
-                        <input type="search" class="form-control custom-border" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" />
-                        <button type="button" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
+                        <input type="search" name="jobSearchText" class="form-control custom-border" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="submit" class="btn btn-primary custom-button">Hae <i class="fas fa-search"></i></button>
                     </div>
                 </form>
     </div>
@@ -56,7 +63,7 @@
             <p>Oma asioinnissa voit asioida TE-palveluiden kanssa. Voit ilmoittautua työnhakijaksi, ilmoittaa muutoksesta työtilanteessasi tai hakea starttirahaa. Työnantajana voit hakea palkkatukea ja tehdä maksatushakemuksen.</p>
         </div>
         <div class="col-md-6">
-            <!-- Imagen -->
+            <!-- Image -->
             <img src="resources/images/te-logo.png" alt="TE-palvelut" class="img-fluid" style="width:350px;">
         </div>
     </div>
@@ -80,6 +87,8 @@
 </div>
 </div>
 </main>
+
+
 <?php include 'footer.html'; ?>
 </body>
 </html>
