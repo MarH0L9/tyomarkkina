@@ -4,7 +4,7 @@
 
 <html lang="fi">
 <head>
-    <title>Detalles de la Oferta de Empleo</title>
+    <title>Työtarjouksen tiedot</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +13,7 @@
 </head>
 <body style="background-color=grey;">
     <?php include 'header.php'; ?>
-     <main>
+    <main>
     <div class="container mx-auto mt-5" >
         <div class="row justify-content-center mt-5" >
             <div class="col-md-8">
@@ -22,21 +22,21 @@
                 // Verifica si se proporciona un ID válido en la URL
                 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     // Conecta a la base de datos (asegúrate de tener la configuración en config.php)
-                    $conn = new mysqli($server, $username, $password, $database);
+                    $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
 
                     // Verifica la conexión
-                    if ($conn->connect_error) {
-                        die("La conexión a la base de datos falló: " . $conn->connect_error);
-                    }
+                try {
+                        $pdo = new PDO($dsn, $username, $password);
 
                     // Consulta SQL para obtener los detalles de la oferta según el ID
                     $offer_id = $_GET['id'];
-                    $sql = "SELECT * FROM jobs WHERE id = $offer_id";
-                    $result = $conn->query($sql);
+                    $stmt = $pdo->prepare("SELECT * FROM jobs WHERE id = :id");
+                    $stmt->bindParam(':id', $offer_id, PDO::PARAM_INT);
+                    $stmt->execute();
 
-                    if ($result->num_rows > 0) {
-                        // Muestra los detalles de la oferta
-                        $row = $result->fetch_assoc();
+                    if ($stmt->rowCount() > 0) {
+                        // Työtarjouksen tiedot
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
                         echo '<h1 class="title-bg">' . $row['otsikko'] . '</h1>';
                         echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['sijainti'] . ', ' . $row['kunta'] . '</p>';
                         echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['yrityksennimi'] . '</p>';
@@ -59,17 +59,17 @@
                                 echo '</div>';
                             }
                         }
-                        
-
-                        // Cierra la conexión a la base de datos
-                        $conn->close();
+                    
                     } else {
                         echo '<p>No se encontraron detalles para la oferta de empleo.</p>';
                     }
-                } else {
-                    echo '<p>ID de oferta no válido.</p>';
+                } catch (PDOException $e) {
+                    die("La conexión a la base de datos falló: " . $e->getMessage());
                 }
-                ?>
+            } else {
+                echo '<p>ID de oferta no válido.</p>';
+            }
+            ?>
             </div>
         </div>
     </div>
