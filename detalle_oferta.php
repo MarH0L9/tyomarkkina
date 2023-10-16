@@ -38,6 +38,7 @@
                         // Työtarjouksen tiedot
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                         echo '<h1 class="title-bg">' . $row['otsikko'] . '</h1>';
+                        echo '<hr>';
                         echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['sijainti'] . ', ' . $row['kunta'] . '</p>';
                         echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['yrityksennimi'] . '</p>';
                         echo '<div class="row">';
