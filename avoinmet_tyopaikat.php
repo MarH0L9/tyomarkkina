@@ -2,7 +2,7 @@
     session_start();
 
 }
-    $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
+    $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';    
 ?>
 
 
@@ -15,7 +15,6 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
     <script src="https://kit.fontawesome.com/07bb6b2702.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
@@ -37,7 +36,7 @@
 
 </div>
     <!-- Filtros debajo de la barra de búsqueda en filas -->
-    <div class="row mt-4">
+    <div class="row mt-4 ">
         <div class="col-md-2">
         
             <label for="sijainti" class="form-label" style="font-weight:bold;">Valitse maakunta:</label>
@@ -138,35 +137,34 @@
         <div class="col-md-2">
         <label for="offersPerPage" style="font-weight:bold;">offers per page:</label>
                 <select class="form-select" id="offersPerPageDropdown">
+                <option value="">kaikki</option>
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="15">15</option>
                 </select>
-        </div>        
+        </div><br>        
+        
         
         <div class="text-center">       
         <button id="clearFilters" type="button" class="btn btn-danger">Poista Filtterit</button>
         </div>
         
-        <div id="activeFilters" class="row mt-4"></div>
-    </div>
+        <div class="row mt-5 mt-4" >
+            <div class="col-md-12" id="active-filters">
+            </div>
+        </div>
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
     <div class="row mt-5" id="searchResults">
         <div class="col-md-12">
         </div>
     </div>
-    <!-- Pagination  -->
-    <div class="row mt-3" id="pagination">
-        <div class="col-md-12">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item"><button id="prevPageButton">Edellinen</button></li>
-                    <!-- Generate numbers -->
-                    <li class="page-item"><button id="nextPageButton">seuraava</button></li>
-                </ul>
-            </nav>
-        </div>
+    <div class="row mt-5">
+    <div id="paginationContainer">
+    <button id="prevButton" disabled>Previous</button>
+    <button id="nextButton">Next</button>
+</div>
+</div>
     </div>
 </div>
 </div>
@@ -177,8 +175,10 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="scripts/haku_filter.js"></script>
+<script src="scripts/individual-filters.js"></script>
 <script src="scripts/filtro.js"></script>
 <script>
+
 let searchTerm = "<?php echo $searchTerm; ?>";
 if (searchTerm !== "") {
     $(window).on('load', function() {
@@ -186,39 +186,24 @@ if (searchTerm !== "") {
     });
 }
 
-
 $(document).ready(function () {
-    let currentPage = 1;
-    // Lähetä haku lomake
-    $("#searchForm").submit(function (e) {
-        e.preventDefault(); // Evita que la página se recargue
-
-        // Saa hakusanan
-        var keyword = $(this).find('input[name="jobSearchText"]').val();
-
-        // Lähetä hakusana Ajaxilla
-        $.ajax({
-            type: "POST",
-            url: "procesar_busqueda.php",
-            data: { jobSearchText: keyword },
-            success: function (response) {
-                // Tulosta vastaus
-                $("#searchResultsContainer").html(response);
-            }
-        });
-    });
-// Pagination
-$("#offersPerPageDropdown").change(fetchJobs);
-    $("#nextPageButton").on("click", function() {
-        currentPage++;
-        fetchJobs();
-    });
-    $("#prevPageButton").on("click", function() {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchJobs();
+function fetchResults() {
+    var keyword = $('input[name="jobSearchText"]').val();
+    $.ajax({
+        type: "POST",
+        url: "procesar_busqueda.php",
+        data: { 
+            jobSearchText: keyword,
+            
+        },
+        success: function (response) {
+            $("#searchResultsContainer").html(response);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#searchResultsContainer").html("Error fetching results. Please try again later.");
         }
     });
+}
 
 });
 </script>
