@@ -255,7 +255,28 @@ border-color:#037807 !important;
 .offer-list .offer-item:not(:last-child), .user-list .user-item:not(:last-child) {
     margin-bottom: 15px;
 }
+.filter-tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
 
+.active-filter {
+    display: inline-block;
+    padding: 5px 10px; /* un pequeño padding alrededor del texto y la X */
+    background-color: #e0e0e0; /* un color de fondo para visualizar el div */
+    border-radius: 5px; /* bordes redondeados */
+    margin-right: 5px; /* espacio entre múltiples filtros */
+}
+
+.active-filter .close-icon {
+    margin-left: 5px; /* espacio entre el texto y la X */
+}
+.active-filter:hover {
+    background-color: #f0f0f0 !important;
+}
 
 
 @media (max-width: 767px) {
