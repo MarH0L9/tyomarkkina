@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <?php include 'header.php'; ?>
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <div class="mb-3">
-                    <label for="repeatEmail" class="form-label">Toista sähköposti*</label>
+                    <label for="repeatEmail" class="form-label">Sähköposti uudestaan*</label>
                     <div class="input-group has-validation">
                         <input type="email" class="form-control" id="repeatEmail" name="repeatEmail" required value="<?php echo isset($_POST['repeatEmail']) ? $_POST['repeatEmail'] : ''; ?>">
                         <div class="invalid-feedback">
@@ -122,23 +122,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="mb-3">
                 <label for="etunimi" class="form-label">Etunimi*</label>
-                <input type="text" class="form-control" id="etunimi" name="etunimi" required>
+                <input type="text" class="form-control" id="etunimi" name="etunimi" required pattern="^[A-Za-z\s]+$">
                 <div class="invalid-feedback">
                     Kirjoita sinun etunimi.
                 </div>
             </div>
             <div class="mb-3">
                 <label for="sukunimi" class="form-label">Sukunimi*</label>
-                <input type="text" class="form-control" id="sukunimi" name="sukunimi" required>
+                <input type="text" class="form-control" id="sukunimi" name="sukunimi" required pattern="^[A-Za-z\s]+$">
                 <div class="invalid-feedback">
-                    Kirjoita sinun sukunimi.
+                    Kirjoita oikein sinun etunimi (vain kirjaimia).
                 </div>
             </div>
             <div class="mb-3">
                 <label for="puhelin" class="form-label">Puhelin</label>
                 <input type="puh" class="form-control" id="puhelin" name="puhelin" >
                 <div class="invalid-feedback">
-                    Kirjoita sinun puhelinnumero.
+                Kirjoita oikein sinun sukunimi (vain kirjaimia).
                 </div>
             </div>
 
