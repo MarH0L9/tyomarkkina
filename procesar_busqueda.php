@@ -76,8 +76,11 @@ if ($results) {
     }
     
     echo $searchResults;
-} else {
-    echo 'No se encontraron resultados para la búsqueda.';
+}  else {
+    echo '<div class="alert alert-danger" role="alert">';
+    echo '<i class="fas fa-exclamation-triangle"></i>';
+    echo ' Näillä hakuehdoilla ei löytynyt työtarjouksia. Kokeile uudestaan.';
+    echo '</div>';
 }
 
 ?>
