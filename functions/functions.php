@@ -1,10 +1,14 @@
 <?php
 
-//Functio joka luo työpaikka kortin listaan
+//Funktio joka luo työpaikka kortin listaan
 function generateJobCard($jobData) {
+    $formattedDate = date('d-m-Y', strtotime($jobData['julkaistu']));
+    $formattedDate2 = date('d-m-Y', strtotime($jobData['voimassaolopaiva']));
+
+
     $card = '<div class="col-md-12">';
     $card .= '<a href="detalle_oferta.php?id=' . $jobData['id'] . '" style="text-decoration: none; color: inherit;" target="_blank">'; // Enlace que envuelve toda la tarjeta
-    $card .= '<div class="card-body my-custom-card">';
+    $card .= '<div class="card-body">';
     
     // Title
     $card .= '<h3 class="card-title"><strong>' . $jobData['otsikko'] . '</strong></h3>';
@@ -18,7 +22,7 @@ function generateJobCard($jobData) {
     $card .= '<p><strong>Yritys:</strong> ' . $jobData['yrityksennimi'] . '</p>';
     $card .= '</div>';
     $card .= '<div class="col">';
-    $card .= '<p><strong>Tehtävä:</strong> ' . $jobData['tehtava'] . '</p>';
+    $card .= '<p><strong>Julkaistu:</strong> ' .  $formattedDate . '</p>';
     $card .= '</div>';
     $card .= '</div>';
     
@@ -27,8 +31,17 @@ function generateJobCard($jobData) {
     $card .= '<div class="col-md-12">';
     $card .= '<p><strong>Kuvaus:</strong> ' . $jobData['kuvaus'] . '</p>';
     $card .= '</div>';
-    $card .= '<p><strong>Julkaistu:</strong> ' . $jobData['julkaistu'] . '</p>';
+    $card .= '<div class="col">';
+    $card .= '<p><strong>Tehtävä:</strong> ' . $jobData['tehtava'] . '</p>';
     $card .= '</div>';
+    $card .= '<div class="col">';
+    $card .= '</div>';
+    $card .= '</div>';
+    $card .= '<div class="col">';
+    $card .= '<p><strong>Viimeinen hakupäivä:</strong> ' . $formattedDate2 . '</p>';
+    $card .= '</div>';
+    $card .= '</div>';
+
     
     // Kortin sulkeminen
     $card .= '</div>';
@@ -37,6 +50,7 @@ function generateJobCard($jobData) {
 
     return $card;
 }
+
 
 
 //Functio joka tallentaa viestin sessioniin kuin tallennetaan tietoja
