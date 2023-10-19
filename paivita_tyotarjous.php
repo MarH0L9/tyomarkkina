@@ -2,7 +2,7 @@
 require 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Capturar datos desde el formulario
+    // Ottaa vastaan lomakkeen tiedot
     $otsikko = $_POST['otsikko'];
     $kuvaus = $_POST['kuvaus'];
     $tarkkakuvaus = $_POST['tarkkakuvaus'];
@@ -20,18 +20,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pdo = new PDO($dsn, $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Consulta para actualizar la oferta de trabajo
-        $query = "UPDATE jobs SET otsikko = ?, kuvaus = ?, tarkkakuvaus = ?, sijainti = ?, kunta = ?, tehtava = ?, tyoaika = ?, palkka = ?, voimassaolopaiva = ?, yrityksenlinkki = ?  WHERE id = ?";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$otsikko, $kuvaus, $tarkkakuvaus, $sijainti, $kunta, $tehtava, $tyoaika, $palkka, $voimassaolopaiva, $yrityksenlinkki, $jobId]);
+         // Tarkistaa jos käyttäjä on ladannut uuden kuvan
+         if (!empty($_FILES['kuva']['name'])) {
+            $image_name = 'resources/images/companies/';
+            $image_url = $image_name . basename($_FILES['kuva']['name']);
 
-        // Redireccionar al usuario a yrityksen_profiili.php con un mensaje
+            // Siirrä ladattu kuva kansioon
+            if (move_uploaded_file($_FILES['kuva']['tmp_name'], $image_url)) {
+                // Kuva on ladattu onnistuneesti, päivitä tietokanta
+                $query = "UPDATE jobs SET otsikko = ?, kuvaus = ?, tarkkakuvaus = ?, sijainti = ?, kunta = ?, tehtava = ?, tyoaika = ?, palkka = ?, voimassaolopaiva = ?, yrityksenlinkki = ?, kuva = ? WHERE id = ?";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute([$otsikko, $kuvaus, $tarkkakuvaus, $sijainti, $kunta, $tehtava, $tyoaika, $palkka, $voimassaolopaiva, $yrityksenlinkki, $image_url, $jobId]);
+            } else {
+                echo "Virhe kuvaa ladattaessa.";
+            }
+        } else {
+            // Kuva ei ole ladattu, päivitä tietokanta ilman kuvaa
+            $query = "UPDATE jobs SET otsikko = ?, kuvaus = ?, tarkkakuvaus = ?, sijainti = ?, kunta = ?, tehtava = ?, tyoaika = ?, palkka = ?, voimassaolopaiva = ?, yrityksenlinkki = ? WHERE id = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$otsikko, $kuvaus, $tarkkakuvaus, $sijainti, $kunta, $tehtava, $tyoaika, $palkka, $voimassaolopaiva, $yrityksenlinkki, $jobId]);
+        }
+
+        // Uudelleenohjaus yrityksen_profiili.php-sivulle
         $_SESSION['message'] = "Päivitys onnistui. Kentät on päivitetty.";
         header('Location: yrityksen_profiili.php?updated=true');
         exit();
 
     } catch (PDOException $e) {
-        echo "Error de base de datos: " . $e->getMessage();
+        echo "Virhe tietokannassa: " . $e->getMessage();
     }
 }
-?>
