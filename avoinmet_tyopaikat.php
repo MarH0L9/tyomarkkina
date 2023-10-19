@@ -2,7 +2,9 @@
     session_start();
 
 }
-    $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';    
+
+/*data from index.php search bar*/
+$searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';    
 ?>
 
 
@@ -108,8 +110,8 @@
             </select>
         </div>
         <div class="col-md-2">
-            <label for="tyonkieli" class="form-label"  style="font-weight:bold;">Työn kieli:</label>
-            <select class="form-select" id="tyonkieli" name="tyonkieli">
+            <label for="tyokieli" class="form-label"  style="font-weight:bold;">Työn kieli:</label>
+            <select class="form-select" id="tyokieli" name="tyokieli">
                 <option value="">Kaikki kielet</option>
                 <option value="Suomi">Suomi</option>
                 <option value="Ruotsi">Ruotsi</option>
@@ -134,40 +136,24 @@
                 <option value="Muu">Muu</option>
             </select>
         </div>
-        <div class="col-md-2">
-        <label for="offersPerPage" style="font-weight:bold;">offers per page:</label>
-                <select class="form-select" id="offersPerPageDropdown">
-                <option value="">kaikki</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                </select>
-        </div><br>        
+        </div>        
         
-        
-        <div class="text-center">       
-        <button id="clearFilters" type="button" class="btn btn-danger">Poista Filtterit</button>
-        </div>
-        
-        <div class="row mt-5 mt-4" >
+        <div class="row mt-5">
+        <div class="col-md-12 text-center">              
+        <button id="clearFilters" type="button" class="btn btn-danger" style="margin-bottom: 20px;">Poista Filtterit</button>
+        </div>        
             <div class="col-md-12" id="active-filters">
             </div>
         </div>
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
-    <div class="row mt-5" id="searchResults">
+    <div class="row mt-5" id="searchResults" style="margin-bottom: 20px;">
         <div class="col-md-12">
         </div>
     </div>
-    <div class="row mt-5">
-    <div id="paginationContainer">
-    <button id="prevButton" disabled>Previous</button>
-    <button id="nextButton">Next</button>
-</div>
-</div>
     </div>
 </div>
-</div>
+
 </main>
 
 <div class="footer">
@@ -177,8 +163,10 @@
 <script src="scripts/haku_filter.js"></script>
 <script src="scripts/individual-filters.js"></script>
 <script src="scripts/filtro.js"></script>
+
 <script>
 
+//script for search bar from index.php
 let searchTerm = "<?php echo $searchTerm; ?>";
 if (searchTerm !== "") {
     $(window).on('load', function() {
