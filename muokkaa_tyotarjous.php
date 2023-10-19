@@ -4,44 +4,43 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'yritys') {
-    // Si el usuario no es una empresa, redirige al inicio de sesión
+    // Jos käyttäjä ei ole kirjautunut sisään yritystunnuksilla, ohjaa kirjautumissivulle
     header('Location: login.php');
     exit();
 }
 
-// Incluye el archivo de configuración de la base de datos
 require 'config.php';
 
-// Verifica si se proporciona un ID de oferta de trabajo válido en la URL
+// Tarkistaa, onko URL-osoitteessa annettu voimassa oleva työtarjouksen tunnus.L
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $jobId = $_GET['id'];
 
     try {
-        // Establece una conexión a la base de datos
+        //Luo yhteyden tietokantaan
         $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
         $pdo = new PDO($dsn, $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Consulta para obtener los detalles de la oferta de trabajo
+        // työtarjouksen yksityiskohtiin
         $query = "SELECT * FROM jobs WHERE id = :job_id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':job_id', $jobId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Verifica si se encontró la oferta de trabajo
+        // Tarkista, löytyikö työtarjous
         if ($job = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // A continuación, puedes utilizar los datos de $job para mostrar el formulario de modificación
+            // Tämän jälkeen voit käyttää $job:n tietoja muutoslomakkeen näyttämiseen.
         } else {
-            // Si no se encontró la oferta de trabajo, puedes mostrar un mensaje de error o redirigir a otra página
-            echo "Oferta de trabajo no encontrada.";
+            // Jos työtarjousta ei löydy, voit näyttää virheilmoituksen tai ohjata toiselle sivulle.
+            echo "Työtarjousta ei löydy.";
         }
     } catch (PDOException $e) {
-        // Manejo de errores de la base de datos
+        
         echo "Error de base de datos: " . $e->getMessage();
     }
 } else {
-    // Si no se proporciona un ID de oferta de trabajo válido, puedes mostrar un mensaje de error o redirigir a otra página
-    echo "ID de oferta de trabajo no válido.";
+    // Jos voimassa olevaa työtarjouksen tunnusta ei ole annettu, voit näyttää virheilmoituksen tai ohjata toiselle sivulle.
+    echo '<div class="alert alert-warning" role="alert">Virheellinen työtarjouksen ID.</div>';
 }
 ?>
 
@@ -66,21 +65,28 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2><i class="fa-regular fa-edit fa-lm"></i> Muokkaa työtarjousta</h2><hr>
-            <form action="paivita_tyotarjous.php" method="POST" class="mt-4">
+            <form action="paivita_tyotarjous.php" method="POST" class="mt-4" enctype="multipart/form-data">
+
             <div class="mb-3">
-    <label for="otsikko" class="form-label">Otsikko</label>
-    <input type="text" class="form-control" id="otsikko" name="otsikko" value="<?php echo $job['otsikko']; ?>">
-</div>
+                <label for="kuva" class="form-label">Uusi kuva</label>
+                <input type="file" class="form-control" id="kuva" name="kuva">
+            </div>
 
-<div class="mb-3">
-    <label for="kuvaus" class="form-label">Kuvaus</label>
-    <textarea class="form-control" id="kuvaus" name="kuvaus"><?php echo $job['kuvaus']; ?></textarea>
-</div>
 
-<div class="mb-3">
-    <label for="tarkkakuvaus" class="form-label">Tarkka kuvaus</label>
-    <textarea class="form-control" id="tarkkakuvaus" name="tarkkakuvaus"><?php echo $job['tarkkakuvaus']; ?></textarea>
-</div>
+         <div class="mb-3">
+            <label for="otsikko" class="form-label">Otsikko</label>
+            <input type="text" class="form-control" id="otsikko" name="otsikko" value="<?php echo $job['otsikko']; ?>">
+        </div>
+
+        <div class="mb-3">
+            <label for="kuvaus" class="form-label">Kuvaus</label>
+            <textarea class="form-control" id="kuvaus" name="kuvaus"><?php echo $job['kuvaus']; ?></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="tarkkakuvaus" class="form-label">Tarkka kuvaus</label>
+            <textarea class="form-control" id="tarkkakuvaus" name="tarkkakuvaus"><?php echo $job['tarkkakuvaus']; ?></textarea>
+        </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="sijainti" class="form-label" style="font-weight:bold;">Sijainti:</label>
