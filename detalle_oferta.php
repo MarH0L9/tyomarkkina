@@ -1,7 +1,3 @@
-<?php if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-} ?>
-
 <html lang="fi">
 <head>
     <title>Työtarjouksen tiedot</title>
@@ -39,12 +35,21 @@
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                         echo '<h1 class="title-bg">' . $row['otsikko'] . '</h1>';
                         echo '<hr>';
+                        echo '<div class="image-container">';
+                        if (!empty($row['kuva'])) {
+                            echo '<img src="' . $row['kuva'] . '" alt="Kuva">';
+                        } else {
+                            echo '<p>No hay imagen disponible.</p>';
+                        }
+                        echo '</div>';
+                        echo '<hr>';
                         echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['sijainti'] . ', ' . $row['kunta'] . '</p>';
                         echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['yrityksennimi'] . '</p>';
                         echo '<div class="row">';
                         echo '<div class="col-md-6 date-icon"><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['julkaistu'])) . '</div>';
                         echo '<div class="col-md-6 date-icon"><strong>Voimassaolo Päivä:</strong> ' . date('d.m.Y', strtotime($row['voimassaolopaiva'])) . '</div>';
                         echo '</div>';
+                        echo '<hr>';
                         echo '<p><strong>Kuvaus:</strong></p>';
                         echo '<p>' . nl2br($row['kuvaus']) . '</p>';
                         echo '<p><strong>Tarkka Kuvaus:</strong></p>';
@@ -62,13 +67,13 @@
                         }
                     
                     } else {
-                        echo '<p>No se encontraron detalles para la oferta de empleo.</p>';
+                        echo '<p>Näillä hakuehdoilla ei löytynyt työtarjouksia. Kokeile uudestaan.</p>';
                     }
                 } catch (PDOException $e) {
                     die("La conexión a la base de datos falló: " . $e->getMessage());
                 }
             } else {
-                echo '<p>ID de oferta no válido.</p>';
+                echo '<p>ID on virheellinen.</p>';
             }
             ?>
             </div>
