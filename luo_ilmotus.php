@@ -32,9 +32,15 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2>Luo Uusi Työilmoitus</h2><hr>
-    <form action="process_uusi_ilmotus.php" method="post">
+    <form action="process_uusi_ilmotus.php" method="post"  enctype="multipart/form-data">
     
         <h5 class="title">Ilmoituksen tiedot</h5>
+        <div class="mb-3">
+            <label for="kuva" class="form-label">Kuva (Valinnainen)</label>
+            <input type="file" class="form-control" id="kuva" name="kuva">
+        </div>
+
+
         <div class="mb-3">
             <label for="otsikko" class="form-label">Otsikko</label>
             <input type="text" class="form-control" id="otsikko" name="otsikko" required>
@@ -61,11 +67,11 @@
             <select class="form-select" id="sijainti" name="sijainti">
                 <?php
                 // Decodificar el JSON de maakunnat y kunnat
-                $jsonString = '...'; // Reemplaza con el contenido completo del JSON que creamos anteriormente
+                $jsonString = '...'; // Korvaa aiemmin luodun JSON-tiedoston koko sisällön.
                 $locations = json_decode($jsonString, true);
 
                 if ($locations) {
-                    // Iterar a través de las maakunnat y sus kunnat
+                    // Maakunnatin ja sen kunnatin iterointi läpi
                     foreach ($locations['Maakunnat'] as $maakunta => $kunnat) {
                         echo '<optgroup label="' . $maakunta . '">';
                         foreach ($kunnat as $kunta) {
