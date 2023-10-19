@@ -39,6 +39,7 @@ main {
 .form-control {
     border-radius:1rem  1rem 1rem 1rem !important; /* Reunan pyöristys - hakupalkki*/
     
+    
     }
     .input-group.index {
         width: 50%; 
@@ -51,7 +52,7 @@ main {
 }
 
 .custom-border:hover {
-    border-color:#1313e3;
+    border-color:#037807;
     
 }
 
@@ -122,8 +123,8 @@ main {
 /* Mukautettu tyyli login painikkeelle */
 .custom-primary-button-log {
     background-color: #0da358 !important; 
-    border: none !important;
-    color: #fff !important; 
+    color: #fff !important;
+    border: 1px !important; 
     padding: 10px 20px !important; 
     border-radius: 5px !important; 
     transition: background-color 0.3s !important; 
@@ -133,7 +134,8 @@ main {
 /* Hoover login painikkeelle */
 .custom-primary-button-log:hover {
     background-color: #ade6b9 !important;
-    color:#000000 !important;
+    border-color: #fafafa !important;
+    color:#0B3B0B !important;
 }
 
 /*Kirjaudu ulos painike*/
@@ -159,13 +161,15 @@ main {
 .card-title {
     background-color:#fff;
     color: #033f21;    
-    padding: 5px 0;   
+    padding: 5px; 
+   
 }
 
 .res-card:hover {
     background-color: #fff !important; 
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3); 
-    border-color:#0d1bda;
+    border-color:#7ada8f;
+    border-left-width: 10px;
 }
 .res-card a {
     font-size: 20px;
@@ -244,7 +248,7 @@ border-color:#037807 !important;
     background-color: #6db86d; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
     transition: background-color 0.3s, box-shadow 0.3s; 
-    border-color:#1313e3;
+    border-color:#13e36d;
 }
 
 .offer-list .offer-item:not(:last-child), .user-list .user-item:not(:last-child) {
@@ -291,7 +295,7 @@ border-color:#037807 !important;
    
 
     .my-custom-card {        
-              width: 85%; 
+              width: 90%; 
               margin-right: 0; 
               margin-left: 0; 
             }
@@ -306,14 +310,14 @@ border-color:#037807 !important;
                margin:10px;
             }
             .res-card {
-                width:95% !important;
+                width:100% !important;
                 border: 1px solid #e2e2e2;
                 background-color: rgb(255, 255, 255) !important;
                 border-radius: 3px;
                 box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
                 margin-bottom: 10px; /* Agrega un margen inferior entre las tarjetas */
                 margin-top:10px;
-                margin-left:10px;
+                margin-left:1px !important;
             }
 
             .divConImagen {
