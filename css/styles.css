@@ -9,18 +9,18 @@ body {
     min-height: 100vh;
 }
 
-/* Hace que el contenido principal crezca y ocupe todo el espacio disponible */
+/* Aiheuttaa sen, että pääsisältö kasvaa ja vie kaiken käytettävissä olevan tilan. */
 main {
     flex: 1 0 auto;
 }
 
-/* Tu footer ya tiene algunos estilos, pero asegurémonos de que no sea flexible en su crecimiento */
+/* Footerissä on jo joitakin tyylejä, mutta varmistetaan, ettei se jousta kasvussaan. */
 .footer {
     flex-shrink: 0;
 }
 
 
-/*contenerdor del header superior*/
+/*Headerin ylempi container*/
 .navbar {
     background-color:#003e29 !important;    
 }
@@ -34,15 +34,15 @@ main {
     
 }
 
-/* Estilos personalizados para el formulario de búsqueda */
+/* Mukautetut tyylit hakulomakkeelle */
 
 .form-control {
-    border-radius:1rem  1rem 1rem 1rem !important; /* Redondeo de bordes - barra search*/
+    border-radius:1rem  1rem 1rem 1rem !important; /* Reunan pyöristys - hakupalkki*/
     
     }
     .input-group.index {
-        width: 50%; /* O el valor que prefieras */
-        margin: 0 auto; /* Para centrarlo */
+        width: 50%; 
+        margin: 0 auto; 
     }
     
 .custom-border {
@@ -56,10 +56,10 @@ main {
 }
 
 .divConImagen {
-    width: 50% ; /* Puedes ajustar esto según tus necesidades */
-    height: 400px; /* Ajusta esto según el alto que desees para la imagen */
+    width: 50% ; 
+    height: 400px; /* Säädä tämä kuvan halutun korkeuden mukaan.(indexin kuva) */
     
-    /* Usa múltiples fondos: primero el gradiente y luego la imagen */
+    /* Käytä useita taustoja: ensin kaltevuus ja sitten kuva. */
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255,255,255,1)), url('../resources/images/jobs.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -68,23 +68,21 @@ main {
     position:absolute;
     top: 32%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Esta técnica es conocida para centrar contenido en el centro exacto de un contenedor. */
+    transform: translate(-50%, -50%); /* Tämän tekniikan tiedetään keskittävän sisällön täsmälleen säiliön keskelle. */
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; /* Ocupa todo el ancho del contenedor principal. */
+    width: 100%; 
 }
 
 .custom-card {
-    border: 1px solid #e2e2e2; /* Borde sólido */
-    border-radius: 3px; /* Redondeo de bordes */
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombreado */
+    border: 1px solid #e2e2e2; 
+    border-radius: 3px; 
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Varjotus */
     padding: 30px;
-    background-color: #fff; /* Fondo blanco */
+    background-color: #fff; 
     
 }
-
-
 .custom-card a {
     font-size: 20px;
     color:#000000;
@@ -92,28 +90,28 @@ main {
 }
 
 .custom-input {
-    border: none; /* Elimina el borde del input */
-    border-radius: 3; /* Elimina el redondeo del input */
+    border: none; /* Poistaa syötteen reunan */
+    border-radius: 3; /*Poistaa syötteen pyöristämisen */
     
 }
 
-/* Estilo personalizado para el botón Kirjaudu */
+/*  Kirjaudu-painikkeen tyylit */
 .custom-button {
-    background-color: #066133 !important; /* Cambia este color al que desees */
-    color: #fff; /* Color del texto en el botón */
-    border-radius: 0 1rem 1rem 0 !important; /* Redondeo de bordes */
+    background-color: #066133 !important; 
+    color: #fff; 
+    border-radius: 0 1rem 1rem 0 !important; 
 }
 
-/* Estilo para el botón cuando se le pasa el mouse por encima a kirjaudu */
+/* Kirjaudu-painikkeen tyylit silloin kun hoover */
 .custom-button:hover {
-    background-color: #43b472 !important; /* Cambia este color al que desees para el hover */
-    color: #fff !important; /* Cambia el color del borde del botón en hover (si deseas cambiarlo) */
+    background-color: #43b472 !important; 
+    color: #fff !important;
 }
 
 .custom-save {
     background-color: #066133 !important;
-    color: #fff; /* Esto es para asegurarse de que el texto sea blanco, puedes ajustar según tu preferencia */
-    border: none; /* Esto quita el borde por defecto que algunos navegadores añaden a los botones */
+    color: #fff; 
+    border: none; 
 }
 .custom-save:hover, 
 .custom-save:active {
@@ -121,54 +119,52 @@ main {
     color: #fff;
 }
 
-/* Estilo personalizado para los botones primary */
+/* Mukautettu tyyli login painikkeelle */
 .custom-primary-button-log {
-    background-color: #0da358 !important; /* Color de fondo personalizado */
-    border: none !important; /* Eliminar el borde */
-    color: #fff !important; /* Color del texto */
-    padding: 10px 20px !important; /* Espaciado interior */
-    border-radius: 5px !important; /* Bordes redondeados */
-    transition: background-color 0.3s !important; /* Transición suave para el color de fondo */
+    background-color: #0da358 !important; 
+    border: none !important;
+    color: #fff !important; 
+    padding: 10px 20px !important; 
+    border-radius: 5px !important; 
+    transition: background-color 0.3s !important; 
 }
 
 
-/* Estilo para el botón Kirjaudu sisään al pasar el mouse */
+/* Hoover login painikkeelle */
 .custom-primary-button-log:hover {
-    background-color: #ade6b9 !important; /* Cambiar el color de fondo al pasar el mouse */
+    background-color: #ade6b9 !important;
     color:#000000 !important;
 }
 
-/*Kirjaudu ulos Boton*/
+/*Kirjaudu ulos painike*/
 
 .custom-primary-button-out {
-    background-color: #c31a1a !important; /* Cambiar el color de fondo al pasar el mouse */
+    background-color: #c31a1a !important; 
 }
 
 .custom-primary-button-out:hover {
-    background-color: #fc0303 !important; /* Cambiar el color de fondo al pasar el mouse */
+    background-color: #fc0303 !important;
 }
 
-/* Estilo para separar las tarjetas de resultados */
+/* Tuloskorttien erottelutyyli */
 .res-card {
     width:90% !important;
     border: 1px solid #e2e2e2;
     background-color: #fff !important;
     border-radius: 3px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px; /* Agrega un margen inferior entre las tarjetas */
+    margin-bottom: 10px; 
 }
 
 .card-title {
     background-color:#fff;
     color: #033f21;    
-    padding: 5px 0;
-    
-    
+    padding: 5px 0;   
 }
 
 .res-card:hover {
-    background-color: #fff !important; /* Cambia el color de fondo al pasar el mouse */
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3); /* Cambia el sombreado al pasar el mouse */
+    background-color: #fff !important; 
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3); 
     border-color:#0d1bda;
 }
 .res-card a {
@@ -177,12 +173,12 @@ main {
     text-decoration: none;
     
 }
-/* Estilo para el último elemento (para eliminar el margen inferior en el último elemento) */
+/* Viimeisen elementin tyyli (viimeisen elementin alareunan poistamiseksi). */
 .res-card:last-child {
     margin-bottom: 0;
 }
 
-/* Estilo para las etiquetas de los filtros */
+/* Haku filtterien tyylit */
 .form-label {
     font-weight: bold;
     
@@ -199,10 +195,9 @@ border-color:#037807 !important;
 
 
 
-/*pagina detalle_oferta*/
-/* Estilo para el título con fondo verde claro */
-.title-bg {
-    
+/* tarjouksen yksityiskohtainen sivu */
+/* otsikkotyyli*/
+.title-bg {    
     padding: 5px;
     display: inline-block;
     border-radius: 5px;
@@ -220,22 +215,22 @@ border-color:#037807 !important;
 }
 
 
-/* Estilo para la empresa con el icono de edificio */
+/* Yrityksen tyyli rakennuksen ikonit */
 .company-icon::before {
-    content: "\f1ad"; /* El código Unicode del icono de edificio en Font Awesome */
+    content: "\f1ad"; /* Font Awesomein rakennuskuvakkeen Unicode-koodi */
     font-family: "Font Awesome 6 Free";
     margin-right: 5px;
 }
 
-/* Estilo para las fechas con iconos de calendario */
+/*Tyyli päivämääriä varten kalenterikuvakkeilla*/
 .date-icon::before {
-    content: "\f073"; /* El código Unicode del icono de calendario en Font Awesome */
+    content: "\f073"; /* Kalenterikuvakkeen Unicode-koodi Font Awesomeissa */
     font-family: "Font Awesome 6 Free";
     margin-right: 5px;
 }
 
 
-/* admin panel*/
+/* Admin panel*/
 
 .offer-list .offer-item, .user-list .user-item {
     color: #000000;
@@ -246,15 +241,16 @@ border-color:#037807 !important;
 }
 
 .offer-list .offer-item:hover {
-    background-color: #6db86d; /* Un color de fondo ligeramente más oscuro al pasar el ratón por encima */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Una sombra sutil para dar sensación de elevación */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Transición suave de los cambios */
+    background-color: #6db86d; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    transition: background-color 0.3s, box-shadow 0.3s; 
     border-color:#1313e3;
 }
 
 .offer-list .offer-item:not(:last-child), .user-list .user-item:not(:last-child) {
     margin-bottom: 15px;
 }
+
 .filter-tag {
     display: inline-block;
     background-color: #e0e0e0;
@@ -265,10 +261,10 @@ border-color:#037807 !important;
 
 .active-filter {
     display: inline-block;
-    padding: 5px 10px; /* un pequeño padding alrededor del texto y la X */
-    background-color: #e0e0e0; /* un color de fondo para visualizar el div */
-    border-radius: 5px; /* bordes redondeados */
-    margin-right: 5px; /* espacio entre múltiples filtros */
+    padding: 5px 10px; /* pieni pehmuste tekstin ja X:n ympärille */
+    background-color: #e0e0e0; 
+    border-radius: 5px; 
+    margin-right: 5px; 
 }
 
 .active-filter .close-icon {
@@ -278,50 +274,64 @@ border-color:#037807 !important;
     background-color: #f0f0f0 !important;
 }
 
+#clear-filters {
+    margin-top: 10px;
+}
 
+.image-container {
+    max-width: 100%; 
+    height: auto; 
+}
+
+
+/*tyylit tabletteja ja mobiililaitteita varten */
 @media (max-width: 767px) {
-    .my-custom-card {        
-              width: 80%; /* Establece el ancho al 100% en dispositivos móviles */
-              margin-right: 0; /* Elimina el margen derecho en dispositivos móviles si es necesario */
-              margin-left: 0; /* Elimina el margen izquierdo en dispositivos móviles si es necesario */
-            }
 
-    .res-card {
-                    width:95% !important;
-                    border: 1px solid #e2e2e2;
-                    background-color: rgb(255, 255, 255) !important;
-                    border-radius: 3px;
-                    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-                    margin-bottom: 10px; /* Agrega un margen inferior entre las tarjetas */
-                    margin-top:10px;
-                    margin-left:10px;
-                }
+    /*Tilaa filtereille*/
+   
+
+    .my-custom-card {        
+              width: 85%; 
+              margin-right: 0; 
+              margin-left: 0; 
+            }
      .form-select {
-                width: 90% !important; /* Establece el ancho al 80% en dispositivos móviles (ajusta según tus necesidades) */
-                margin-right: 0; /* Elimina el margen derecho en dispositivos móviles si es necesario */
-                margin-left: 10px; /* Elimina el margen izquierdo en dispositivos móviles si es necesario */
+                width: 90% !important; /* Leveys */
+                margin-right: 0; /* Oikea marginaali */
+                margin-left: 10px; /* Vasen marginaali */
             }
             .col-md-2 {
                 margin-left:10px;
                align-items: center;
+               margin:10px;
             }
-            
+            .res-card {
+                width:95% !important;
+                border: 1px solid #e2e2e2;
+                background-color: rgb(255, 255, 255) !important;
+                border-radius: 3px;
+                box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 10px; /* Agrega un margen inferior entre las tarjetas */
+                margin-top:10px;
+                margin-left:10px;
+            }
+
             .divConImagen {
                 width: 100%;    
                 height: 200px;            
             }
         
             .centrado {
-                position: relative; /* Usa posicionamiento relativo o simplemente remuévelo */
-                transform: none; /* Remueve la transformación */
-                top: auto; /* Restaura las propiedades de top y left */
+                position: relative; 
+                transform: none; 
+                top: auto; 
                 left: auto;
-                margin-top: 20px; /* Agrega espacio en la parte superior */
+                margin-top: 20px; 
             }
 
             .input-group.index {
-                width: 100%; /* O el valor que prefieras */
-                margin: 0 auto; /* Para centrarlo */
+                width: 100%; 
+                margin: 0 auto; 
             }
         }
   
