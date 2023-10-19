@@ -6,6 +6,7 @@
 <html lang="fi">
 <head>
     <title>Sinun Työportaali</title>
+    <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/styles.css" rel="stylesheet">
@@ -63,7 +64,7 @@
             <p>Oma asioinnissa voit asioida TE-palveluiden kanssa. Voit ilmoittautua työnhakijaksi, ilmoittaa muutoksesta työtilanteessasi tai hakea starttirahaa. Työnantajana voit hakea palkkatukea ja tehdä maksatushakemuksen.</p>
         </div>
         <div class="col-md-6">
-            <!-- Image -->
+            <!-- Imagen -->
             <img src="resources/images/te-logo.png" alt="TE-palvelut" class="img-fluid" style="width:350px;">
         </div>
     </div>
