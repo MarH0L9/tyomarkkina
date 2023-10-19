@@ -18,6 +18,7 @@ $tyoaika = $_POST['tyoaika'] ?? '';
 $vaatimukset = $_POST['vaatimukset'] ?? '';
 $tehtava = $_POST['tehtava'] ?? '';
 
+
 // Construye la consulta SQL basada en los filtros seleccionados
 $sql = "SELECT * FROM jobs WHERE 1 = 1 AND hyvaksytty = 1"; // Inicializa la consulta
 
@@ -25,7 +26,7 @@ $params = []; // Esta será nuestra matriz de parámetros
 
 // Agrega condiciones según los filtros seleccionados
 if (!empty($keyword)) {
-    $sql .= " AND (otsikko LIKE :keyword OR kunta LIKE :keyword OR sijainti LIKE :keyword OR yrityksenNimi LIKE :keyword)";
+    $sql .= " AND (otsikko LIKE :keyword OR kunta LIKE :keyword OR sijainti LIKE :keyword OR tyokieli LIKE :keyword OR yrityksenNimi LIKE :keyword)";
     $params['keyword'] = '%' . $keyword . '%';
 }
 if (!empty($sijainti)) {
@@ -45,15 +46,18 @@ if (!empty($julkaistu)) {
     $sql .= " AND julkaistu >= :dateLimit";
     $params['dateLimit'] = $dateLimit;
 }
-// Repetir este patrón para el resto de tus variables/filtros
 if (!empty($palvelusuhde)) {
     $sql .= " AND palvelusuhde = :palvelusuhde";
     $params['palvelusuhde'] = $palvelusuhde;
 }
 if (!empty($tyokieli)) {
-    $sql .= " AND tyokieli = :tyokieli";
-    $params['tyokieli'] = $tyokieli;
+    // Utiliza el operador LIKE para buscar el idioma en la lista de idiomas
+    $sql .= " AND (tyokieli LIKE :tyokieli OR tyokieli LIKE :tyokieli2 OR tyokieli LIKE :tyokieli3)";
+    $params['tyokieli'] = '%' . $tyokieli . '%';                    // Etsii kieli joka puolella
+    $params['tyokieli2'] = '%' . $tyokieli . ',%';                   //kieli jos on ensinmäinen listalla
+    $params['tyokieli3'] = '%,' . $tyokieli;                        // Kieli jos on viimeinen listalla
 }
+
 if (!empty($tyoaika)) {
     $sql .= " AND tyoaika = :tyoaika";
     $params['tyoaika'] = $tyoaika;
@@ -62,6 +66,9 @@ if (!empty($tehtava)) {
     $sql .= " AND tehtava = :tehtava";
     $params['tehtava'] = $tehtava;
 }
+
+
+
 // Ejecuta la consulta SQL
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
@@ -76,7 +83,7 @@ if ($results) {
     }
     
     echo $searchResults;
-}  else {
+} else {
     echo '<div class="alert alert-danger" role="alert">';
     echo '<i class="fas fa-exclamation-triangle"></i>';
     echo ' Näillä hakuehdoilla ei löytynyt työtarjouksia. Kokeile uudestaan.';
