@@ -6,39 +6,41 @@ function generateJobCard($jobData) {
     $formattedDate2 = date('d-m-Y', strtotime($jobData['voimassaolopaiva']));
 
 
-    $card = '<div class="col-md-12">';
+    $card = '<div class="col-md-12 col-md-6 col-sm-12">';
     $card .= '<a href="detalle_oferta.php?id=' . $jobData['id'] . '" style="text-decoration: none; color: inherit;" target="_blank">'; // Enlace que envuelve toda la tarjeta
     $card .= '<div class="card-body">';
     
     // Title
-    $card .= '<h3 class="card-title"><strong>' . $jobData['otsikko'] . '</strong></h3>';
+    $card .= '<h3 class="card-title"><strong>' . $jobData['otsikko'] . ' - ' . $jobData['sijainti'] . '</strong></h3>';
     
     // Row for Sijainti, kunta left, tyosuhde right
     $card .= '<div class="row">';
-    $card .= '<div class="col">';
-    $card .= '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i></i><strong> Sijainti:</strong> ' . $jobData['sijainti'] . ', ' . $jobData['kunta'] . '</p>';
+    $card .= '<div class="col-sm-12 col-md-4">';
+    $card .= '<p><i class="fas fa-map-marker-alt" style="color: #033f21;"></i></i><strong> Sijainti:</strong> ' . $jobData['sijainti'] . ', ' . $jobData['kunta'] . '</p>';
     $card .= '</div>';
-    $card .= '<div class="col">';
-    $card .= '<p><strong>Yritys:</strong> ' . $jobData['yrityksennimi'] . '</p>';
+    $card .= '<div class="col-sm-12 col-md-4">';
+    $card .= '<p><i class="fa-solid fa-calendar-days fa-lg"></i><strong> Julkaistu:</strong> ' .  $formattedDate . '</p>';
     $card .= '</div>';
-    $card .= '<div class="col">';
-    $card .= '<p><strong>Julkaistu:</strong> ' .  $formattedDate . '</p>';
+    $card .= '<div class="col-sm-12 col-md-4">';
+    $card .= '<p><i class="fa-regular fa-clock fa-lg"></i><strong> Päättyy:</strong> ' . $formattedDate2 . '</p>';
     $card .= '</div>';
     $card .= '</div>';
     
     // row for kuvaus
     $card .= '<div class="row">';
-    $card .= '<div class="col-md-12">';
-    $card .= '<p><strong>Kuvaus:</strong> ' . $jobData['kuvaus'] . '</p>';
+    $card .= '<div class="col col-sm-12 col-md-4">'; // Ocupa las primeras 4 columnas (de un total de 12)
+    $card .= '<p><strong>Yritys:</strong> ' . $jobData['yrityksennimi'] . '</p>';
     $card .= '</div>';
-    $card .= '<div class="col">';
-    $card .= '<p><strong>Tehtävä:</strong> ' . $jobData['tehtava'] . '</p>';
+    $card .= '<div class="col col-sm-12 col-md-4">'; // Este espacio quedará vacío, creando una columna central sin contenido
     $card .= '</div>';
-    $card .= '<div class="col">';
+    $card .= '<div class="col col-sm-12 col-md-4">'; // Ocupa las últimas 4 columnas (de un total de 12)
+    $card .= '<p><strong>Tehtävä:</strong> ' . $jobData['tehtava'] . '</p>';  
     $card .= '</div>';
     $card .= '</div>';
-    $card .= '<div class="col">';
-    $card .= '<p><strong>Viimeinen hakupäivä:</strong> ' . $formattedDate2 . '</p>';
+
+    $card .= '<div class="row">';
+    $card .= '<div class="col-md-12 col-sm-12 col-md-4">';
+    $card .= '<p><strong>Kuvaus:</strong> ' . $jobData['kuvaus'] . '</p>';    
     $card .= '</div>';
     $card .= '</div>';
 
