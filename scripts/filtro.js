@@ -1,36 +1,56 @@
-// Esta función realiza la solicitud AJAX con los valores actuales de búsqueda y filtros.
-function fetchJobs() {
-    var keyword = $("#jobSearchText").val();
-    var sijainti = $("#sijainti").val();
-    var julkaistu = $("#julkaistu").val();
-    var palvelusuhde = $("#palvelusuhde").val();
-    var tyonkieli = $("#tyonkieli").val();
-    var tyoaika = $("#tyoaika").val();
-    var tehtava = $("#tehtava").val();
-    
-    
+function handleSearchAndFilters() {
+    // Obtén el término de búsqueda
+    var keyword = $('#jobSearchText').val();
 
-    // Realizar solicitud Ajax para procesar la búsqueda y los filtros
+    // Obtén los valores de los filtros
+    var sijainti = $('#sijainti').val();
+    var julkaistu = $('#julkaistu').val();
+    var tehtava = $('#tehtava').val();
+    var tyoaika = $('#tyoaika').val();
+    var tyokieli = $('#tyokieli').val();
+    var palvelusuhde = $('#palvelusuhde').val();
+
+
+    console.log('Sijainti:', sijainti);
+    console.log('Julkaistu:', julkaistu);
+    console.log('Tehtävä:', tehtava);
+    console.log('Työaika:', tyoaika);
+    console.log('Tyokieli:', tyokieli);
+    console.log('Palvelusuhde:', palvelusuhde);
+
+    // Realiza una solicitud AJAX al servidor para obtener resultados
     $.ajax({
-        type: "POST",
-        url: "procesar_busqueda.php",
+        type: 'POST',
+        url: 'procesar_busqueda.php',
         data: {
             jobSearchText: keyword,
             sijainti: sijainti,
             julkaistu: julkaistu,
-            palvelusuhde: palvelusuhde,
-            tyokieli: tyonkieli,
-            tyoaika: tyoaika,
             tehtava: tehtava,
-            
+            tyoaika: tyoaika,
+            tyokieli: tyokieli,
+            palvelusuhde: palvelusuhde
         },
-        success: function (response) {
-            $("#searchResults").html(response);
-    }
-});
+        success: function(response) {
+            // Actualiza el contenedor de resultados con la nueva información
+            $('#searchResults').html(response);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Maneja errores aquí
+        }
+    });
 }
 
-$("#offersPerPage").change(fetchJobs); // Agregamos un listener para el desplegable
+// Asocia el evento 'click' del botón de búsqueda al manejo de búsqueda y filtros
+$('#searchButton').click(function() {
+    handleSearchAndFilters();
+});
 
-$("#searchButton").on("click", fetchJobs);
-$("#sijainti, #julkaistu, #palvelusuhde, #tyonkieli, #tyoaika, #vaatimukset, #tehtava").on("input", fetchJobs);
+// Asocia el evento 'change' de los filtros al manejo de búsqueda y filtros
+$('.filter-select').change(function() {
+    handleSearchAndFilters();
+});
+
+$("#sijainti, #julkaistu, #palvelusuhde, #tyokieli, #tyoaika, #vaatimukset, #tehtava").on("input", handleSearchAndFilters);
+
+
