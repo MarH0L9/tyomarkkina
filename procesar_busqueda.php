@@ -66,7 +66,7 @@ if (!empty($tehtava)) {
     $sql .= " AND tehtava = :tehtava";
     $params['tehtava'] = $tehtava;
 }
-
+$sql .= " ORDER BY julkaistu DESC";
 
 
 // Ejecuta la consulta SQL
