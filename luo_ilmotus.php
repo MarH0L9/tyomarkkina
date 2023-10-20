@@ -11,6 +11,7 @@
     <title>Luo Työilmoitus</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -53,7 +54,7 @@
 
         <div class="mb-3">
             <label for="tarkkakuvaus" class="form-label">Tarkka Kuvaus</label>
-            <textarea class="form-control" id="tarkkakuvaus" name="tarkkakuvaus" required></textarea>
+            <textarea class="form-control" id="tarkkakuvaus" name="tarkkakuvaus"  rows="10" required></textarea>
         </div>
         
 
@@ -194,9 +195,17 @@
         </div>
 
         <div class="mb-3">
-            <label for="yrityksenlinkki" class="form-label">Yrityksen Linkki</label>
+            <label for="yrityksenlinkki" class="form-label">Työtarjouksen linkki</label>
             <input type="text" class="form-control" id="yrityksenlinkki" name="yrityksenlinkki">
-        </div>
+        </div><hr>
+
+        <div class="mb-3">        
+    <label for="contact_details" class="form-label">Työtarjouksen yhteys tiedot</label>
+    <textarea class="form-control" id="contact_details" name="contact_details" rows="5" placeholder="Nimi, puhelin, sähköposti,..."></textarea>
+    </div>
+        
+
+
        <div class="mb-3">         
         <button type="submit" class="btn btn-primary">Lähetä Työilmoitus</button>
         <button type="reset" class="btn btn-secondary">Tyhjennä Lomake</button>
