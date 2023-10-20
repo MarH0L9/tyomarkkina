@@ -6,6 +6,7 @@
  <html lang="fi">
     <head>
        <meta charset="UTF-8">
+       <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <link href="css/styles.css" rel="stylesheet">
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +28,7 @@
                 <ul class="navbar-nav ml-auto">
                    <li class="nav-item d-block ">
                       <!-- Muestra el icono de "briefcase" en dispositivos pequeños -->
-                      <a class="nav-link" href="avoinmet_tyopaikat.php"><i class="fa-solid fa-briefcase d-lg-none"></i> Työpaikat</a> <!-- Oculta el icono de "briefcase" en dispositivos grandes -->
+                      <a class="nav-link" href="avoinmet_tyopaikat.php"> Työpaikat</a> <!-- Oculta el icono de "briefcase" en dispositivos grandes -->
                    </li>
                     <?php if(!isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
@@ -35,7 +36,7 @@
                     </li>
                     <?php endif; ?>
                    <li class="nav-item">
-                      <a class="nav-link" href="#">Työhakuvinkit</a>
+                      <a class="nav-link" href="tyohakuvinkit.php">Työhakuvinkit</a>
                    </li>
                    <?php if (isset($_SESSION['user_id'])): ?>
                    <?php if ($_SESSION['user_type'] == 'normal'): ?>
@@ -66,8 +67,7 @@
                 <a href="logout.php" class="btn btn-danger rounded-pill custom-primary-button-out">Kirjaudu Ulos</a>
                 <?php endif; ?>
              </div>
-             <div class="ml-2">
-             </div>
+             
           </div>
        </nav>
     </body>
