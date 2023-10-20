@@ -63,6 +63,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <main>
 <div class="container mt-5">
     <div class="row justify-content-center">
+    <div id="successMessage" class="alert alert-success" role="alert" style="display: none;">
+                Päivitys onnistui. Kentät on päivitetty.
+                </div>  
         <div class="col-md-6">
                 
             <h2><i class="fa-regular fa-edit fa-lm"></i> Muokkaa työtarjousta</h2><hr>
@@ -187,9 +190,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <button type="submit" class="btn btn-warning"><i class="fa-solid fa-wrench fa-lg"></i></i> Päivitä</button>
 </div>
             </form>
-            <div id="successMessage" class="alert alert-success" role="alert" style="display: none;">
-                Päivitys onnistui. Kentät on päivitetty.
-                </div>
         </div>
     </div>
 </div>
@@ -213,7 +213,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         e.preventDefault();
         const formData = new FormData(this);
 
-        $.ajax({
+       $.ajax({
             type: 'POST',
             url: 'paivita_tyotarjous.php',
             data: formData,
@@ -224,6 +224,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 if (data.success) {
                     // Muestra el mensaje de éxito
+                    $('html, body').animate({ scrollTop: 0 }, 'fast');
                     $('#successMessage').slideDown();
 
                     setTimeout(function() {
