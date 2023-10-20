@@ -21,8 +21,20 @@ main {
 
 
 /*Headerin ylempi container*/
+
+.nav-item {
+    
+    background-color: #003e29;
+    margin-top:5px !important;
+    margin: 0 5px; /* Margen a los lados para separarlos */
+    padding: 2px 2px; /* Espacio interno para que no quede muy pegado el texto al borde */
+  
+}
+
+
 .navbar {
-    background-color:#003e29 !important;    
+    background-color:#003e29 !important;
+    align-items: center;    
 }
 
 .nav-link {
@@ -30,7 +42,8 @@ main {
     font-size:22px;
 }
 .nav-link:hover {
-    color:#07a757 !important;
+    color:#a4eea6 !important;
+    
     
 }
 
@@ -124,17 +137,16 @@ main {
 .custom-primary-button-log {
     background-color: #0da358 !important; 
     color: #fff !important;
-    border: 1px !important; 
+    border: 2px solid #0da358 !important; 
     padding: 10px 20px !important; 
-    border-radius: 5px !important; 
-    transition: background-color 0.3s !important; 
+    border-radius: 5px !important;
 }
 
 
 /* Hoover login painikkeelle */
 .custom-primary-button-log:hover {
     background-color: #ade6b9 !important;
-    border-color: #fafafa !important;
+    border: 2px solid #ade6b9 !important;
     color:#0B3B0B !important;
 }
 
@@ -197,7 +209,18 @@ border-color:#037807 !important;
     border: #000000;
 }
 
+/* Yritys page */
 
+.yritys-image-size {
+    width: 50%;  
+    height: auto;
+    object-fit: cover; 
+     
+}
+
+#imageDiv {
+    display: none;
+}
 
 /* tarjouksen yksityiskohtainen sivu */
 /* otsikkotyyli*/
@@ -282,9 +305,60 @@ border-color:#037807 !important;
     margin-top: 10px;
 }
 
+.container-job-image {
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    height: auto; /* O establece una altura específica si quieres, por ejemplo: 300px */
+    
+}
+
+.detail-image {
+    width: 70%;      /* Ocupará todo el ancho del contenedor */
+    height: auto;     /* Ocupará todo el alto del contenedor */
+    object-fit: cover; 
+}
+
+/* Carousel */
+.carousel-control-prev, .carousel-control-next {
+    align-items: center; /* Centrar las flechas verticalmente */
+}
+
+.carousel-control-prev, .carousel-control-next {
+    align-items: center; /* Centrar las flechas verticalmente */
+}
+
+.carousel-inner { 
+    justify-content: center !important;
+    align-items: center !important;
+    height: auto !important;  /* Se asegura de que el contenedor ocupe todo el alto del carrusel */
+}
+
+/*divs del carrusel*/
+.offer-div {
+    margin-left:10%;
+    color:#003e29;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 80%; /* Ajustar el ancho máximo del div como prefieras */
+    background-color: #ffffff; /* Color de fondo para el div de la oferta */
+}
+
+/*image on carousel and generateJobCardIndex($jobData) */
+
 .image-container {
-    max-width: 100%; 
-    height: auto; 
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    height: 200px; /* Puedes ajustar esta altura según tus necesidades */
+    overflow: hidden; /* Esto ocultará cualquier parte de la imagen que exceda el tamaño del contenedor */
+}
+
+.job-image {
+    width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    height: auto; /* Asegura que la imagen no exceda la altura del contenedor */
+    object-fit: cover
 }
 
 
@@ -337,5 +411,27 @@ border-color:#037807 !important;
                 width: 100%; 
                 margin: 0 auto; 
             }
+
+
+            .navbar-collapse {
+                max-width: 100%; /* Ajusta este valor según tus necesidades */
+                margin: 0 auto; /* Centra el menú horizontalmente */
+                margin-right: 10px; /* Añade un margen a la derecha del menú */
+                margin-bottom: 50px;
+            }
+        
+            .custom-primary-button-log {
+                margin-left: 15px; /* Añade un margen a la izquierda del botón */
+            }
+
+            .job-image {
+                width: 100%;      
+                max-height: auto; 
+                object-fit: cover;
+            }
         }
+
+
+
+      
   
