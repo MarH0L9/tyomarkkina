@@ -2,13 +2,14 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-// Incluye el archivo de configuración local y las funciones
+
 include 'config.php';
 include 'functions/functions.php';
 
 $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
 $pdo = new PDO($dsn, $username, $password);
-// Obtén los valores de los filtros desde la solicitud Ajax
+
+// Saa hakuehdot
 $keyword = $_POST['jobSearchText'] ?? '';
 $sijainti = $_POST['sijainti'] ?? '';
 $julkaistu = $_POST['julkaistu'] ?? '';
@@ -19,12 +20,12 @@ $vaatimukset = $_POST['vaatimukset'] ?? '';
 $tehtava = $_POST['tehtava'] ?? '';
 
 
-// Construye la consulta SQL basada en los filtros seleccionados
-$sql = "SELECT * FROM jobs WHERE 1 = 1 AND hyvaksytty = 1"; // Inicializa la consulta
+// Rakentaa SQL-kyselyn
+$sql = "SELECT * FROM jobs WHERE 1 = 1 AND hyvaksytty = 1";
 
-$params = []; // Esta será nuestra matriz de parámetros
+$params = []; // Parametrien arvot
 
-// Agrega condiciones según los filtros seleccionados
+// Lisää parametrit ja SQL-lausekkeet
 if (!empty($keyword)) {
     $sql .= " AND (otsikko LIKE :keyword OR kunta LIKE :keyword OR sijainti LIKE :keyword OR tyokieli LIKE :keyword OR yrityksenNimi LIKE :keyword)";
     $params['keyword'] = '%' . $keyword . '%';
@@ -35,7 +36,7 @@ if (!empty($sijainti)) {
 }
 
 if (!empty($julkaistu)) {
-    $dateLimit = ''; // inicializar
+    $dateLimit = ''; 
     if ($julkaistu === '24h') {
         $dateLimit = date('Y-m-d H:i:s', strtotime('-1 day'));
     } elseif ($julkaistu === '3d') {
@@ -51,11 +52,12 @@ if (!empty($palvelusuhde)) {
     $params['palvelusuhde'] = $palvelusuhde;
 }
 if (!empty($tyokieli)) {
-    // Utiliza el operador LIKE para buscar el idioma en la lista de idiomas
+
+    // 
     $sql .= " AND (tyokieli LIKE :tyokieli OR tyokieli LIKE :tyokieli2 OR tyokieli LIKE :tyokieli3)";
-    $params['tyokieli'] = '%' . $tyokieli . '%';                    // Etsii kieli joka puolella
-    $params['tyokieli2'] = '%' . $tyokieli . ',%';                   //kieli jos on ensinmäinen listalla
-    $params['tyokieli3'] = '%,' . $tyokieli;                        // Kieli jos on viimeinen listalla
+    $params['tyokieli'] = '%' . $tyokieli . '%';                    
+    $params['tyokieli2'] = '%' . $tyokieli . ',%';                  
+    $params['tyokieli3'] = '%,' . $tyokieli;                        
 }
 
 if (!empty($tyoaika)) {
@@ -66,10 +68,10 @@ if (!empty($tehtava)) {
     $sql .= " AND tehtava = :tehtava";
     $params['tehtava'] = $tehtava;
 }
+
 $sql .= " ORDER BY julkaistu DESC";
 
-
-// Ejecuta la consulta SQL
+// Suorittaa SQL kyselyn
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 
