@@ -64,6 +64,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
+                
             <h2><i class="fa-regular fa-edit fa-lm"></i> Muokkaa työtarjousta</h2><hr>
             <form action="paivita_tyotarjous.php" method="POST" class="mt-4" enctype="multipart/form-data">
 
@@ -88,10 +89,31 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <textarea class="form-control" id="tarkkakuvaus" name="tarkkakuvaus"><?php echo $job['tarkkakuvaus']; ?></textarea>
         </div>
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="sijainti" class="form-label" style="font-weight:bold;">Sijainti:</label>
-                    <input class="form-control" id="sijainti" name="sijainti" value="<?php echo $job['sijainti']; ?>" readonly>            
-                </div>
+            <p>Nykyinen sijainti:<strong><?php echo $job['sijainti']; ?> , <?php echo $job['kunta'];?></strong></p>
+                    <div class="col-md-6 mb-3">
+            <label for="sijainti" class="form-label" style="font-weight:bold;">Sijainti</label>
+            
+            <select class="form-select" id="sijainti" name="sijainti">
+                <option value="">Valitse sijainti</option>
+                <?php
+                // Decodificar el JSON de maakunnat y kunnat
+                $jsonString = '...'; // Replace with the full content of the JSON you created earlier
+                $locations = json_decode($jsonString, true);
+
+                if ($locations) {
+                    // Iterate through the maakunnat and their kunnat
+                    foreach ($locations['Maakunnat'] as $maakunta => $kunnat) {
+                        echo '<optgroup label="' . $maakunta . '">';
+                        foreach ($kunnat as $kunta) {
+                            $selected = ($maakunta . '-' . $kunta == $job['sijainti']) ? 'selected' : '';
+                            echo '<option value="' . $maakunta . '-' . $kunta . '" ' . $selected . '>' . $kunta . '</option>';
+                        }
+                        echo '</optgroup>';
+                    }
+                }
+                ?>
+            </select>
+        </div>
 
                 <div class="col-md-6 mb-3">
                     <label for="kunta" class="form-label">Kunta</label>
@@ -151,15 +173,71 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <input type="text" class="form-control" id="yrityksenlinkki" name="yrityksenlinkki" value="<?php echo $job['yrityksenlinkki'];?>">
     </div>   
     </div>
+
+    <div class="row">
+        
+        <div class="row">
+        <div class="col mb-3">
+            <label for="contact_details" class="form-label">Työtarjouksen yhteys tiedot</label>
+            <textarea class="form-control" id="contact_details" name="contact_details" rows="5" placeholder="Nimi, puhelin, sähköposti,..."><?php echo isset($job['contact_details']) ? $job['contact_details'] : ''; ?></textarea>
+        </div>
+        </div>
     <input type="hidden" name="jobId" value="<?php echo $jobId; ?>">             
 <div class="mb-3 text-center" >
 <button type="submit" class="btn btn-warning"><i class="fa-solid fa-wrench fa-lg"></i></i> Päivitä</button>
 </div>
             </form>
+            <div id="successMessage" class="alert alert-success" role="alert" style="display: none;">
+                Päivitys onnistui. Kentät on päivitetty.
+                </div>
         </div>
     </div>
 </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="scripts/haku_filter.js"></script>
+<script src="scripts/individual-filters.js"></script>
+<script src="scripts/filtro.js"></script>
+<script>
+    $(document).ready(function() {
+    $('form').on('submit', function(e) {
+
+        if ($('#sijainti').val() === "") {
+            alert("Valitse sijainti ennen päivitystä.");
+            e.preventDefault();
+            return;
+        } else {
+            $('#sijainti').css('background-color', '');
+        }
+
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: 'paivita_tyotarjous.php',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                const data = JSON.parse(response);
+
+                if (data.success) {
+                    // Muestra el mensaje de éxito
+                    $('#successMessage').slideDown();
+
+                    setTimeout(function() {
+                        window.location.href = 'yrityksen_profiili.php?updated=true';
+                    }, 3000);
+                } else {
+                    // Aquí puedes agregar un mensaje de error similar si lo deseas
+                    alert('Hubo un error al actualizar los datos.');
+                }
+            }
+        });
+    });
+});
+</script>
 <?php include 'footer.html'; ?>
 </body>
 </html>
