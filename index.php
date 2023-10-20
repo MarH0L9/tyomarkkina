@@ -26,7 +26,7 @@
                 echo '<script>
                         setTimeout(function() {
                             window.location.href = "index.php";
-                        }, 2000);
+                        }, 3000);
                     </script>';           
             }
         ?>
@@ -54,9 +54,58 @@
                     </div>
                 </form>
     </div>
-
-
     </div>
+
+    <div class="container mt-5 carusel">
+    <div class="row justify-content-center mt-5">
+    <div class="text-center">
+    <h2 style="color:#0B3B0B">Uusimmat työtarjoukset</h2>
+    </div>
+    <hr>
+    <div class="col-md-8">
+    <div id="offerCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+        <?php
+            require 'config.php';
+
+            $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
+            $pdo = new PDO($dsn, $username, $password);
+            
+            // Consulta para obtener las 9 últimas ofertas
+            $query = "SELECT * FROM jobs WHERE hyvaksytty = 1 ORDER BY julkaistu DESC LIMIT 9";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $first = true;  // Variable para saber si es el primer item del carrusel
+
+            while ($oferta = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '<div class="carousel-item ' . ($first ? 'active' : '') . '">';
+                echo '<div class="offer-div">';
+                echo generateJobCardindex($oferta);  // Usamos la función para generar la tarjeta
+                echo '</div>';
+                echo '</div>';
+                
+                $first = false;
+            }
+        ?>
+        </div>
+        <a class="carousel-control-prev" href="#offerCarousel" role="button" data-slide="prev">
+            <i class="fas fa-chevron-left fa-lg" style="color: black;"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#offerCarousel" role="button" data-slide="next">
+            <i class="fas fa-chevron-right fa-lg" style="color: black;"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+</div>
+</div>
+
+
+
+
+
     <div class="container mt-5"><hr>
     <div class="row mt-5">
         <div class="col-md-6">
