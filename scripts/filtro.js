@@ -54,3 +54,5 @@ $('.filter-select').change(function() {
 $("#sijainti, #julkaistu, #palvelusuhde, #tyokieli, #tyoaika, #vaatimukset, #tehtava").on("input", handleSearchAndFilters);
 
 
+
+

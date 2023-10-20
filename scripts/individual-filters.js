@@ -36,6 +36,8 @@ $('#clearFilters').click(function() {
 
     // Restablecer todos los selectores al valor predeterminado
     $('select').val('');
+    handleSearchAndFilters();
 });
 
 });
+
