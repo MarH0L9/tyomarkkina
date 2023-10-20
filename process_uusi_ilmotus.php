@@ -36,28 +36,31 @@ try {
     $voimassaolopaiva = $_POST['voimassaolopaiva'];
     $vaatimukset = $_POST['vaatimukset'];
     $yrityksenlinkki = $_POST['yrityksenlinkki'];
+    $contact_details = $_POST['contact_details'];
     $antajaid = $_SESSION['user_id'];
 
+    $uploadDir = 'resources/images/jobs/';
      // Procesa la carga de la imagen
      if (!empty($_FILES['kuva']['name'])) {
-        $image_name = 'resources/images/companies/'; // Directorio donde se guardarán las imágenes
-        $image_url  = $uploadDir . basename($_FILES['kuva']['name']);
-         // Verifica si el archivo es una imagen válida
-         $imageFileType = strtolower(pathinfo($uploadedFile, PATHINFO_EXTENSION));
-         $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
-         
-         if (in_array($imageFileType, $allowedExtensions)) {
-             // Mueve el archivo al directorio de carga
-             if (move_uploaded_file($_FILES['kuva']['tmp_name'], $uploadedFile)) {
-                 // La imagen se cargó con éxito, puedes guardar la ruta en la base de datos
-                 $imagePath = $uploadedFile;
-             } else {
-                 $error_message = "Virhe kuvaa ladattaessa.";
-             }
-         } else {
-             $error_message = "Sallitut tiedostotyypit ovat jpg, jpeg, png ja gif.";
-         }
+        $imageFileType = strtolower(pathinfo($_FILES['kuva']['name'], PATHINFO_EXTENSION));
+        $uniqueFileName = uniqid() . '.' . $imageFileType;
+        $uploadedFile = $uploadDir . $uniqueFileName;
 
+           // Verifica si el archivo es una imagen válida
+        $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
+         
+        if (in_array($imageFileType, $allowedExtensions)) {
+            // Mueve el archivo al directorio de carga
+            if (move_uploaded_file($_FILES['kuva']['tmp_name'], $uploadedFile)) {
+                // La imagen se cargó con éxito, puedes guardar la ruta en la base de datos
+                $image_url = $uploadedFile;
+            } else {
+                $error_message = "Virhe kuvaa ladattaessa.";
+            }
+        } else {
+            $error_message = "Sallitut tiedostotyypit ovat jpg, jpeg, png ja gif.";
+        }
+    
     } else {
         // No se cargó una imagen, establece el campo de imagen en NULL
         $image_url = null;
@@ -65,8 +68,8 @@ try {
     
 
     // Valmistele yhteys tietokantaan ja suorita SQL-kysely
-    $sql = "INSERT INTO jobs (otsikko, kuvaus, tarkkakuvaus, yrityksennimi, sijainti, kunta, tehtava, ala, tyoaika, palvelusuhde, palkka, julkaistu, tyokieli, voimassaolopaiva, vaatimukset, yrityksenlinkki, hyvaksytty,antajaid, kuva)
-            VALUES (:otsikko, :kuvaus, :tarkkakuvaus, :yrityksennimi, :sijainti, :kunta, :tehtava, :ala, :tyoaika, :palvelusuhde, :palkka, NOW(), :tyokieli, :voimassaolopaiva, :vaatimukset, :yrityksenlinkki, 0, :antajaid, :kuva)";
+    $sql = "INSERT INTO jobs (otsikko, kuvaus, tarkkakuvaus, yrityksennimi, sijainti, kunta, tehtava, ala, tyoaika, palvelusuhde, palkka, julkaistu, tyokieli, voimassaolopaiva, vaatimukset, yrityksenlinkki, contact_details, hyvaksytty,antajaid, kuva)
+            VALUES (:otsikko, :kuvaus, :tarkkakuvaus, :yrityksennimi, :sijainti, :kunta, :tehtava, :ala, :tyoaika, :palvelusuhde, :palkka, NOW(), :tyokieli, :voimassaolopaiva, :vaatimukset, :yrityksenlinkki, :contact_details, 0, :antajaid, :kuva)";
 
     // Käytä PDO-esivalmistettua lausetta
     $stmt = $pdo->prepare($sql);
@@ -85,6 +88,7 @@ try {
     $stmt->bindParam(':voimassaolopaiva', $voimassaolopaiva);
     $stmt->bindParam(':vaatimukset', $vaatimukset);
     $stmt->bindParam(':yrityksenlinkki', $yrityksenlinkki);
+    $stmt->bindParam(':contact_details', $contact_details);
     $stmt->bindParam(':antajaid', $antajaid);
     $stmt->bindParam(':kuva', $image_url);
     $stmt->execute();
