@@ -1,7 +1,8 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
+ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");  // Redirige al usuario al formulario de inicio de sesión si no ha iniciado sesión
@@ -33,10 +34,11 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 <?php include 'header.php'; ?>
     <?php displaySessionMessage(); ?>
     <body>
+        <main>
     <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2>Oma Profiili</h2><hr>
+        <h2><i class="fa-regular fa-user fa-lm"></i> Profiili</h2><hr>
             <form action="oma_profiili_update.php" method="POST" class="mt-4">
                 <h3>Perustiedot</h3><br>
 
@@ -100,16 +102,18 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
                     <label for="linkedin_url" class="form-label">Linkedin URL</label>
                     <input type="text" class="form-control" id="linkedin_url" name="linkedin_url" value="<?php echo $profile ? $profile['linkedin_url'] : ''; ?>"> 
                 </div>                          
-
+                <div class="mb-3">
                 <div class="text-center">
                 <button type="submit" class="btn btn-primary custom-save">
                     <i class="fa-regular fa-floppy-disk"></i> Tallenna
                 </button>
             </div>
+            </div>
             </form>
         </div>
     </div>
 </div>
+</main>
 <?php include 'footer.html'; ?>
      </body>
      
