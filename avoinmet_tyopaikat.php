@@ -14,6 +14,7 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
     <title>Avoinmet työpaikat</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
