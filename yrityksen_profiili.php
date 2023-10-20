@@ -8,11 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
  
-if(isset($_GET['updated']) && $_GET['updated'] == 'true') {
-    echo '<div class="alert alert-success" role="alert">
-        Päivitys onnistuis.
-    </div>';
-}
 
 include 'functions/functions.php';
 require 'config.php';
@@ -34,59 +29,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $puhelin = $_POST['puhelin'];
     $verkkosivusto = $_POST['verkkosivusto'];
 
-    //Käsittelee kuvan lataamisen
-    if (!empty($_FILES['profile_kuva']['name'])) {
-        $uploadDir = 'resources/images/companies/'; // Hakemisto, johon kuvat tallennetaan
-    $uploadedFile = $uploadDir . basename($_FILES['profile_kuva']['name']);
-        
-        // Tarkista, onko tiedosto kelvollinen kuva
-        $imageFileType = strtolower(pathinfo($uploadedFile, PATHINFO_EXTENSION));
-        $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
-        
-        if (in_array($imageFileType, $allowedExtensions)) {
-            // Siirrä tiedosto lataushakemistoon
-            if (move_uploaded_file($_FILES['profile_kuva']['tmp_name'], $uploadedFile)) {
-                // Kuva ladattiin onnistuneesti, voit tallentaa polun tietokantaan.
-                $imagePath = $uploadedFile;
-            } else {
-                $error_message = "Virhe kuvaa ladattaessa.";
-            }
-        } else {
-            $error_message = "Sallitut tiedostotyypit ovat jpg, jpeg, png ja gif.";
-        }
-    }
-    
+    ////Käsittelee kuvan lataamisen
+if (!empty($_FILES['profile_kuva']['name'])) {
+    $uploadDir = 'resources/images/companies/'; // Hakemisto, johon kuvat tallennetaan
 
-    // Päivitä tietokannan kentät
+    // Obtener la extensión del archivo
+    $imageFileType = strtolower(pathinfo($_FILES['profile_kuva']['name'], PATHINFO_EXTENSION));
+    
+    // Genera un nombre único para el archivo
+    $uniqueFileName = uniqid() . '.' . $imageFileType;
+    $uploadedFile = $uploadDir . $uniqueFileName;
+    
+    // Tarkista, onko tiedosto kelvollinen kuva
+    $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
+    
+    if (in_array($imageFileType, $allowedExtensions)) {
+        // Siirrä tiedosto lataushakemistoon
+        if (move_uploaded_file($_FILES['profile_kuva']['tmp_name'], $uploadedFile)) {
+            // Kuva ladattiin onnistuneesti, voit tallentaa polun tietokantaan.
+            $imagePath = $uploadedFile;
+        } else {
+            $error_message = "Virhe kuvaa ladattaessa.";
+        }
+    } else {
+        $error_message = "Sallitut tiedostotyypit ovat jpg, jpeg, png ja gif.";
+    }
+}
+   
+if (isset($imagePath)) {
     $query = "UPDATE tyonantajat SET yrityksen_nimi = :yrityksen_nimi, Y_tunnus = :Y_tunnus, osoite = :osoite, puhelin = :puhelin, verkkosivusto = :verkkosivusto, profile_kuva = :profile_kuva WHERE user_id = :user_id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':profile_kuva', $imagePath);
-    $stmt->bindParam(':yrityksen_nimi', $yrityksen_nimi);
-    $stmt->bindParam(':Y_tunnus', $Y_tunnus);
-    $stmt->bindParam(':osoite', $osoite);
-    $stmt->bindParam(':puhelin', $puhelin);
-    $stmt->bindParam(':verkkosivusto', $verkkosivusto);
-    $stmt->bindParam(':user_id', $userId);
-
-    if ($stmt->execute()) {
-        // Merkitse päivitys onnistuneeksi
-        $actualizacionExitosa = true;
-    } else {
-        //Jos tapahtuu virhe, se tallentaa virheilmoituksen.
-        $error_message = "Virhe päivitettäessä profiilia.";
-    }
+} else {
+    $query = "UPDATE tyonantajat SET yrityksen_nimi = :yrityksen_nimi, Y_tunnus = :Y_tunnus, osoite = :osoite, puhelin = :puhelin, verkkosivusto = :verkkosivusto WHERE user_id = :user_id";
+    $stmt = $pdo->prepare($query);
 }
 
-// Noudattaa lomakkeella näytettävät yritysprofiilitiedot.
+$stmt->bindParam(':yrityksen_nimi', $yrityksen_nimi);
+$stmt->bindParam(':Y_tunnus', $Y_tunnus);
+$stmt->bindParam(':osoite', $osoite);
+$stmt->bindParam(':puhelin', $puhelin);
+$stmt->bindParam(':verkkosivusto', $verkkosivusto);
+$stmt->bindParam(':user_id', $userId);
+
+if ($stmt->execute()) {
+    $actualizacionExitosa = true;
+} else {
+    $error_message = "Virhe päivitettäessä profiilia.";
+}
+}
+
 $query = "SELECT tp.*, u.email FROM tyonantajat tp
-          JOIN users u ON tp.user_id = u.id
-          WHERE tp.user_id = :user_id";
+      JOIN users u ON tp.user_id = u.id
+      WHERE tp.user_id = :user_id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(':user_id', $userId);
 $stmt->execute();
 $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Muuttuja, jolla tarkistetaan, onko jotain muutettu tietokannassa.
 $modificacionRealizada = false;
 
 // Tarkistaa, onko tietokantaan tehty muutos.
@@ -136,18 +136,25 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
                         
                         <label for="profile_image" class="form-label">Profiilikuva</label><br>
                         <div class="text-center">
-                        <img src="<?php echo isset($profile['profile_kuva']) ? $profile['profile_kuva'] : 'resources/images/companies/placeholder.jpg'; ?>" alt="Profiilikuva" id="profile_image">                     </div>
+                        <img  src="<?php echo isset($profile['profile_kuva']) ? $profile['profile_kuva'] : 'resources/images/companies/placeholder.jpg'; ?>" alt="Profiilikuva" id="profile_image" class="yritys-image-size">   </div>
                         </div>
-                        </div>
+                        </div><br>
+                        <button id="toggleImageDiv" type="button"><i class="fa-solid fa-plus fa-md"></i></button>
+                        <label for="profile_kuva" class="form-label">Selaa uusi Profiili kuva</label>
 
-                        <div class="mb-3">
-                            <label for="profile_kuva" class="form-label">Selaa uusi Kuva</label>
+                        <div class="mb-3" id="imageDiv">                    
+                            
                             <input type="file" class="form-control" id="profile_kuva" name="profile_kuva">
                         </div>
-                        <div class="mb-3">
+                        <br>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
                             <label for="email" class="form-label">Sähköposti</label>
                             <input type="text" class="form-control" id="email" name="email" value="<?php echo $profile ? $profile['email'] : ''; ?>" readonly>
                         </div>
+                        </div>
+                        
+                        <div class="row mb-3">
                         <div class="col-md-6 mb-3">
                             <label for="yrityksen_nimi" class="form-label">Yrityksen Nimi</label>
                             <input type="text" class="form-control" id="yrityksen_nimi" name="yrityksen_nimi" value="<?php echo $profile ? $profile['yrityksen_nimi'] : ''; ?>">
@@ -157,14 +164,15 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
                             <label for="Y_tunnus" class="form-label">Y-Tunnus</label>
                             <input type="text" class="form-control" id="Y_tunnus" name="Y_tunnus" value="<?php echo $profile ? $profile['Y_tunnus'] : ''; ?>">
                         </div>
-                        <div class="text-end">
-                            <a href="reset_password.php" class="btn btn-primary btn-sm active " role="button" aria-pressed="true" ><i class="fa-regular fa-pen-to-square fa-lg"></i></i> Vaihda Salasana</a>
                         </div>
-                    </div>
-                    <div class="mb-3">
+                       
+                    <div class="row mb-3">
+                        <div class="col-md-12">
                         <label for="osoite" class="form-label">Osoite</label>
                         <input type="text" class="form-control" id="osoite" name="osoite" value="<?php echo $profile ? $profile['osoite'] : ''; ?>">
+                        </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="puhelin" class="form-label">Puhelin</label>
@@ -176,6 +184,10 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
                             <input type="text" class="form-control" id="verkkosivusto" name="verkkosivusto" value="<?php echo $profile ? $profile['verkkosivusto'] : ''; ?>">
                         </div>
                     </div>
+                    <div class="text-end">
+                            <a href="reset_password.php" class="btn btn-primary btn-sm active " role="button" aria-pressed="true" ><i class="fa-regular fa-pen-to-square fa-lg"></i></i> Vaihda Salasana</a>
+                        </div>
+                    
                     <div class="mb-3">
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary custom-save">
@@ -198,16 +210,17 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
                                         <p>Vimeinen hakupäivä: <?php echo $anuncio['voimassaolopaiva']; ?></p>
                                 <div class="row"> 
                                         <div class="col">                            
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#jobModal<?php echo $anuncio['id']; ?>">
+                                    <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#jobModal<?php echo $anuncio['id']; ?>">
                                         Tarkista työtarjous
                                     </button>
                                     </div>
                                     <div class="col"> 
-                                    <a href="muokkaa_tyotarjous.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-warning btn-sm">Muokkaa</a>
+                                    <a href="muokkaa_tyotarjous.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-warning btn-md">Muokkaa</a>
                                     </div>
                                     <div class="col">
-                                    <a href="poista_oferta.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-danger btn-sm">Poista</a>
+                                    <a href="poista_oferta.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-danger btn-md">Poista</a>
                                     </div>
+                                </div>
                                 </div>
                                 </div>
                                 <!-- Modal tarjouksen yksityiskohtien näyttämistä varten -->
@@ -247,6 +260,7 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Toiminto, joka piilottaa onnistumisviestin tietyn ajan kuluttua.
         function hideSuccessMessage() {
@@ -268,10 +282,28 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
             }
         }
 
+        
+
+
         // Kutsuu funktioita viestien piilottamiseksi, kun sivu latautuu.
         window.addEventListener('load', hideSuccessMessage);
         window.addEventListener('load', hideErrorMessage);
+        
+        $(document).ready(function() {
+        // Oculta el mensaje de éxito después de 5 segundos
+        $('#successMessage').delay(3000).fadeOut('slow');
 
+        $('#toggleImageDiv').click(function() {
+            $('#imageDiv').toggle();
+
+            // Cambia el texto del botón
+            if ($('#imageDiv').is(":visible")) {
+                $(this).html('<i class="fa-solid fa-minus fa-md"></i>');
+            } else {
+                $(this).html('<i class="fa-solid fa-plus fa-md"></i>');
+            }
+        });
+    });
         
     </script>
     <?php include 'footer.html'; ?>
