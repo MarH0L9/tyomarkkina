@@ -1,4 +1,16 @@
 <?php
+echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Approval</title>
+    <!-- CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+</head>
+<body>';
+
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,6 +24,11 @@ exit();
 }
 
 require '../config.php';
+
+echo '<div class="alert alert-success" role="alert" style="margin-left:30%; margin-right:30%; margin-top:10%;">
+        Ilmoitus on hyväksytty ja se on aktiivinen. Paina ok.<br>
+        <a href="../admin_panel.php" class="btn btn-primary ml-3">OK</a>
+    </div>';
 
 if (!isset($_GET['job_id'])) {
     die("Virhe: Ilmoituksen ID puuttuu.");
@@ -27,14 +44,10 @@ try {
     $stmt->bindParam(':job_id', $job_id, PDO::PARAM_INT);
     $stmt->execute();
 
-    echo "<script>
-            alert('Ilmoitus on hyväksytty ja se on aktiivinen.');
-            setTimeout(function(){
-                window.location.href = '../admin_panel.php';
-            }, 1000);
-          </script>";
-
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
+
+echo '</body>
+</html>';
 ?>
