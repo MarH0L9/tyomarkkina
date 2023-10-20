@@ -2,16 +2,27 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-// Asegurarte de que solo un administrador pueda acceder a esta página
+// Tarkista onko user_type asetettu ja onko se admin. Jos ei, ohjaa kirjautumissivulle
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
    header("Location: /login.php");
    exit();
 }
 
+// Tarkista onko käyttäjä ollut aktiivinen viimeisen 30 minuutin aikana
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+    // Viimeinen toiminta oli yli 30 minuuttia sitten
+    session_unset();     // Poista kaikki sessiomuuttujat
+    session_destroy();   // Poista sessio
+    header("Location: /login.php");
+    exit();
+}
+// Päivitä viimeinen aktiviteetti
+$_SESSION['last_activity'] = time();
+
 require 'config.php';
 $pdo = new PDO($dsn, $username, $password);
 
-// Obtener anuncios no aprobados
+// Hae kaikki työtarjoukset, jotka eivät ole vielä hyväksytty
 $query = "SELECT * FROM jobs WHERE hyvaksytty = 0";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
@@ -58,7 +69,7 @@ $unapprovedUsers = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
                 <strong>Yrityksen nimi:</strong> <?php echo $user['yrityksen_nimi']; ?><br>
                 <strong>Email:</strong> <?php echo $user['email']; ?><br>
                 <strong>Y-tunnus:</strong> <?php echo $user['Y_tunnus']; ?><br>
-                <!-- Botón para aprobar el usuario -->
+                <!-- -->
                 <a href="approves/approve_yritys.php?user_id=<?php echo $user['id']; ?>" class="btn btn-success btn-sm">Hyväksy</a>
                 <a href="approves/reject_yritys.php?user_id=<?php echo $user['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirmDelete();">Ei hyväksyä</a>
             </div>   
@@ -70,10 +81,10 @@ $unapprovedUsers = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
         
-            <!-- Aquí puedes listar cuentas pendientes y agregar botones o formularios para aprobarlas -->
+            
         <div class="col-md-6">
             <h3>Työtarjoukset jotka pitää hyvaksyä:</h3><hr>
-            <!-- Lista  -->
+            
             <?php if($unapprovedJobs): ?>
                 <div class="offer-list">
                 
@@ -82,17 +93,17 @@ $unapprovedUsers = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
                            <h5> <?php echo $job['otsikko']; ?></h5>
                             <p> <?php echo $job['yrityksennimi']; ?></p>
                             <p> <?php echo $job['kuvaus']; ?></p>
-                            <!-- Botón para mostrar los detalles de la oferta -->
+                            
                             <div class="d-flex justify-content-between">
                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#jobModal<?php echo $job['id']; ?>">
                                 Tarkista työtarjous
                             </button>
-                            <!-- Botón para aprobar el anuncio -->
+                            
                             <a href="approves/approve_jobs.php?job_id=<?php echo $job['id']; ?>" class="btn btn-success btn-sm">Hyväksy</a>
                             <a href="approves/reject_jobs.php?job_id=<?php echo $job['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirmDelete();">Ei hyväksyä</a>
 
                         </div>
-                        <!-- Modal para mostrar los detalles de la oferta -->
+                        <!-- Modal -->
                         <div class="modal fade" id="jobModal<?php echo $job['id']; ?>" tabindex="-1" aria-labelledby="jobModalLabel<?php echo $job['id']; ?>" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -112,7 +123,8 @@ $unapprovedUsers = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
                                         <p><strong>Työkieli:</strong> <?php echo $job['tyokieli']; ?></p>
                                         <p><strong>Voimassa:</strong> <?php echo $job['voimassaolopaiva']; ?></p>
                                         <p><strong>Yrityksen linkki:</strong> <?php echo $job['yrityksenlinkki']; ?></p>
-                                        <!-- Añade más campos si es necesario -->
+                                        <p><strong>Työtarjouksen yhteys tiedot:</strong> <?php echo $job['contact_details']; ?></p>
+                                        
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sulje</button>
