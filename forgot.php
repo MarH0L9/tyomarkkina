@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         // 
         $message = '<div class="alert alert-success" role="alert">Jos tähän sähköpostiosoitteeseen liittyy tili, lähetetään viesti, jossa kerrotaan, miten kirjautumissalasana palautetaan.</div>';
-
+        
     } 
 ?>
 
@@ -91,7 +91,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="email" class="form-label">Sähköpostiosotie</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
+            <div class="text-center">
             <button type="submit" class="btn btn-primary"> Läheta</button>
+            </div>
         </form>
     </div>
     </div>
