@@ -7,7 +7,7 @@ require 'config.php';
 $title = 'Kirjaudu sisään';
 $css = 'css/styles.css';
 
-// Verificar si la cookie "remembered_user" está presente
+// Tarkistaa onko käyttäjä valinnut "Muista minut" -valintaruudun
 if (isset($_COOKIE['remembered_user']) && !isset($_SESSION['user_id'])) {
     $rememberedUserID = $_COOKIE['remembered_user'];
 }
@@ -25,31 +25,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Email = $_POST['email'];
     $Password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE email = :email"; // Solo verifica el correo electrónico aquí primero.
+    $query = "SELECT * FROM users WHERE email = :email"; // Tarkistaa onko sähköposti olemassa
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':email', $Email);
     $stmt->execute();
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verificar si la casilla "Recuérdame" está marcada
+    // Tarkistaa onko käyttäjä valinnut "Muista minut" -valintaruudun
     if (isset($_POST['rememberMe'])) {
-        // Establecer una cookie para recordar al usuario durante un período de tiempo (por ejemplo, 30 días)
+        // Jos valintaruutu on valittu, luo evästeen, joka vanhenee 7 päivän kuluttua
         setcookie('remembered_user', $user['id'], time() + 7 * 24 * 60 * 60, '/');
     } elseif (isset($_COOKIE['remembered_user']) && !isset($_SESSION['user_id'])) {
-        // Si la casilla "Recuérdame" no está marcada, pero la cookie existe, elimina la cookie
+        // Jos valintaruutua ei ole valittu, mutta eväste on olemassa, poista eväste
         setcookie('remembered_user', '', time() - 3600, '/');
     }
 
     if ($user && password_verify($Password, $user['pwd'])) {
-        // Resto de tu código de inicio de sesión
-        if($user['is_admin'] == 1) { /*tarkistaa onko admin*/
-            $_SESSION['is_admin'] = true;
-            header("Location: admin_panel.php");
-            exit();
-        } else {
-            $_SESSION['is_admin'] = false;
-        }
+
+        // Tarkistaa onko käyttäjä admin
+
+       
         if($user['user_type'] == 'yritys') {
             $businessQuery = "SELECT hyvaksytty FROM tyonantajat WHERE user_id = :user_id";
             $businessStmt = $pdo->prepare($businessQuery);
@@ -70,11 +66,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_type'] = $user['user_type'];
             $_SESSION['login_success'] = true;
-        }
+        }       
+
     } else {
-        $message = '<div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle"></i> Sähköposti tai salasana on virheellinen.</div>';
+        $message = '<div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle"></i> Sähköposti tai salasana on virheellinen. Kokeile udestaan.</div>';
     }
 }
+
+/* Jos halutaan että on joku maximi login attemps, tässä esimerkki:
+  if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] > $lockout_duration)) {
+        unset($_SESSION['login_attempts'], $_SESSION['lockout_time']);
+    }
+  if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] > $lockout_duration)) {
+    unset($_SESSION['login_attempts'], $_SESSION['lockout_time']);
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -97,25 +103,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         window.location.href = "index.php";
                     }, 2000);
                 </script>';
-                unset($_SESSION['login_success']);  // Elimina la variable de sesión después de mostrar el mensaje
+                unset($_SESSION['login_success']);  // Poistaa session var kuin käyttäjä on kirjautunut sisään
                 }
             ?>
+            <?php echo $message; ?>
 <div class="container mt-5">
+
     <div class="row justify-content-center">
-        <div class="col-md-6 shadow-box d-flex justify-content-center">
+        <div class="col-md-8 shadow-box d-flex justify-content-center">
+        
             
     <fieldset>
             <legend>Kirjaudu sisään </legend><hr>
             
             <form action="login.php" method="POST">
                 <!-- Email input -->
-                <div class="form-outline mb-4">
+                <div class="row mb-3">
                 <label class="form-label" for="email">Sähköposti</label>
                     <input type="email" class="form-control"  style="width:100%;" id="email" name="email" required>
                     
                 </div>
                 <!-- Password input -->
-                <div class="form-outline mb-4r">
+                <div class="row mb-3">
                 <label class="form-label" for="password">Salasana</label>
                     <input type="password" class="form-control "  id="password" name="password" required>                    
                 </div>
