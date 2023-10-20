@@ -3,6 +3,7 @@
     <title>Työtarjouksen tiedot</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css"> <!-- Agrega tus estilos CSS personalizados aquí si es necesario -->
@@ -29,21 +30,21 @@
                     $stmt = $pdo->prepare("SELECT * FROM jobs WHERE id = :id");
                     $stmt->bindParam(':id', $offer_id, PDO::PARAM_INT);
                     $stmt->execute();
-
                     if ($stmt->rowCount() > 0) {
                         // Työtarjouksen tiedot
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                        echo '<h1 class="title-bg">' . $row['otsikko'] . '</h1>';
+                        echo '<h1 class="title-bg">' . $row['otsikko'] . ' - ' . $row['sijainti'] . '</h1>';
                         echo '<hr>';
-                        echo '<div class="image-container">';
-                        if (!empty($row['kuva'])) {
-                            echo '<img src="' . $row['kuva'] . '" alt="Kuva">';
-                        } else {
-                            echo '<p>No hay imagen disponible.</p>';
+                        
+                        if (!empty($row['kuva'])){
+                            
+                            echo '<div class="container-job-image">';
+                            echo '<img src="' . $row['kuva'] . '" alt="Kuva" class="detail-image">';
+                            echo '</div>';
+                            echo '<hr>';                            
                         }
-                        echo '</div>';
-                        echo '<hr>';
-                        echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong>Sijainti:</strong> ' . $row['sijainti'] . ', ' . $row['kunta'] . '</p>';
+                        
+                        echo '<p><i class="fas fa-map-marker-alt" style="color: #0f0f10;"></i><strong> Sijainti:</strong> ' . $row['sijainti'] . ', ' . $row['kunta'] . '</p>';
                         echo '<p class="company-icon"><strong>Yrityksen Nimi:</strong> ' . $row['yrityksennimi'] . '</p>';
                         echo '<div class="row">';
                         echo '<div class="col-md-6 date-icon"><strong>Julkaistu:</strong> ' . date('d.m.Y', strtotime($row['julkaistu'])) . '</div>';
@@ -56,11 +57,23 @@
                         echo '<p>' . nl2br($row['tarkkakuvaus']) . '</p>';
                         echo '<p><strong>Vaatimukset:</strong></p>';
                         echo '<p>' . nl2br($row['vaatimukset']) . '</p>';
+                        if (!empty($row['palkka'])) {
+                            echo '<p><strong>Palkka:</strong> ' . $row['palkka'] . ' €/KK </p>';
+                        }
+                        if (!empty($row['contact_details'])) {
+                            echo '<hr>';
+                            echo '<p><strong>Työtarjouksen yhteys tiedot:</strong></p>';
+                            echo '<p>' . nl2br($row['contact_details']) . '</p>';
+                        }
                         if (!empty($row['yrityksenlinkki'])) {
                             if (!empty($row['yrityksenlinkki'])) {
                                 echo '<div class="mb-3">';
                                 echo '<div class="text-center">';
-                                echo '<a href="' . $row['yrityksenlinkki'] . '" target="_blank" class="btn btn-primary"><i class="fa-regular fa-square-check fa-lg"></i> Hae työpaikkaa</a>';
+                                    $url = $row['yrityksenlinkki'];
+                                    if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+                                        $url = "http://" . $url;
+                                    }
+                                    echo '<a href="' . $url . '" target="_blank" class="btn btn-primary"><i class="fa-regular fa-square-check fa-lg"></i> Hae työpaikkaa</a>';
                                 echo '</div>';
                                 echo '</div>';
                             }
