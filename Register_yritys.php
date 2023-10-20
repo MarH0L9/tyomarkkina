@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row justify-content-center">
             
         <div class="col-md-6">
-        <legend>Yrityksen Rekisteröinti</legend> 
+        <legend>Yrityksen Rekisteröinti</legend><hr> 
         
         <form action="register_yritys.php" method="POST" class="needs-validation" id="registrationFormYritys" novalidate>
                 <!-- Campos de registro para empresas aquí. Estos pueden variar dependiendo de los requerimientos, aquí hay un ejemplo -->
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="email" class="form-label">Sähköposti*</label>
                     <input type="email" class="form-control" id="email" name="email" required>
                     <div class="invalid-feedback">
-                        Anna kelvollinen sähköpostiosoite.
+                        Anna kelvollinen sähköpostiosoite email@email.
                     </div>
                 </div>
 
