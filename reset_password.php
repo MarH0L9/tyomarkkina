@@ -68,8 +68,10 @@ if (isset($_POST['submit'])) {
                     <label for="repeat_password" class="form-label">Uusi salasana uudelleen:</label>
                     <input type="password" class="form-control" name="repeat_password" required>
                 </div>
-                <div class="mb-3 text-center"> <!-- Esta línea centra el botón en el medio del formulario. -->
+                <div class="mb-3"> <!-- Esta línea centra el botón en el medio del formulario. -->
+                    <div class="text-center">
                     <button type="submit" name="submit" class="btn btn-primary">Vaihda</button>
+                </div>
                 </div>
             </form>
         </div>
