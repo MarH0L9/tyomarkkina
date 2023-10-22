@@ -5,6 +5,10 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require 'config.php';
 
+  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'yritys') {
+        echo '<div class="alert alert-danger" role="alert">Pääsy kielletty. Vain "yritys"-käyttäjät voivat katsoa tätä sivua.</div>';
+        exit;
+    }
 $jobId = $_GET['job_id'];
 
 $pdo = new PDO($dsn, $username, $password);
