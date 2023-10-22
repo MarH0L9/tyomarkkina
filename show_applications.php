@@ -30,7 +30,7 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'header.php'; ?>
     <div class="container mt-5">
     <div class="row justify-content-center">
-        <h2>Applications for Job ID: <?php echo $jobId; ?></h2>
+        <h2>Hakemukset lähetetty Job ID: <?php echo $jobId; ?></h2>
           
         
         <table class="table table-hover">
