@@ -70,7 +70,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
         <div class="container mt-5" style="margin-top: 10px;">
+    
+        
+        <div class="container mt-5" style="margin-top: 10px;">
+        <div class="row  justify-content-center">
+        <div class="col-md-6">
+        <div class="alert alert-info text-center" role="alert">
         <p>Oletko Yksityishenkilö?<a href="register.php">Luo tili tästä</a></p>
+        </div>
+        </div>
+        </div>
         
         <div class="row justify-content-center">
             
@@ -134,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="mb-3">
                     <div class="text-center">
-                    <button class="btn btn-primary" type="submit">Luo yritys tili</button>
+                    <button class="btn btn-primary" type="submit">Rekisteröi yritys tili</button>
                     </div>
                 </div>
             </form>

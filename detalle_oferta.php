@@ -66,17 +66,21 @@
                             echo '<p>' . nl2br($row['contact_details']) . '</p>';
                         }
                         if (!empty($row['yrityksenlinkki'])) {
-                            if (!empty($row['yrityksenlinkki'])) {
-                                echo '<div class="mb-3">';
-                                echo '<div class="text-center">';
-                                    $url = $row['yrityksenlinkki'];
-                                    if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
-                                        $url = "http://" . $url;
-                                    }
-                                    echo '<a href="' . $url . '" target="_blank" class="btn btn-primary"><i class="fa-regular fa-square-check fa-lg"></i> Hae työpaikkaa</a>';
-                                echo '</div>';
-                                echo '</div>';
+                            echo '<div class="mb-3">';
+                            echo '<div class="text-center">';
+                            $url = $row['yrityksenlinkki'];
+                            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+                                $url = "http://" . $url;
                             }
+                            echo '<a href="' . $url . '" target="_blank" class="btn btn-primary"><i class="fa-regular fa-square-check fa-lg"></i> Hae työpaikkaa</a>';
+                            echo '</div>';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="mb-3">';
+                            echo '<div class="text-center">';
+                            echo '<a href="aplication_form.php?job_id=' . $row['id'] . '" class="btn btn-primary"><i class="fa-regular fa-square-check fa-lg"></i> Hae työpaikkaa</a>';
+                            echo '</div>';
+                            echo '</div>';
                         }
                     
                     } else {

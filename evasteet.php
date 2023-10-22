@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <title>Työportaalin Evästeet</title>
@@ -12,6 +13,8 @@
         <?php include 'header.php'; ?> <!-- Agrega tu encabezado o barra de navegación aquí si es necesario -->
     </header>
     <main>
+    <div class="container mx-auto mt-5">
+    <div class="row justify-content-center mt-5">
         <section class="cookie-section">
             <h1>Työportaalin Evästeet</h1>
             <p>
@@ -35,6 +38,8 @@
             </p>
             <!-- Puedes agregar más contenido y estructura según tus necesidades -->
         </section>
+    </div>
+    </div>
     </main>
     <footer>
         <?php include 'footer.html'; ?> <!-- Agrega tu pie de página aquí si es necesario -->

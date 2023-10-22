@@ -75,9 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
         <div class="container mt-5" style="margin-top: 10px;">
-        <div class="row">
-        
-        <p>Oletko Yritys?<a href="Register_yritys.php">Luo tili tästä</a></p>
+        <div class="row  justify-content-center">
+        <div class="col-md-6">
+        <div class="alert alert-info text-center" role="alert">
+        <p>Oletko Yritys?<a href="Register_yritys.php" > Luo tili tästä</a></p>
+        </div>
+        </div>
         </div>
         <div class="row justify-content-center">
             

@@ -69,6 +69,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <div class="col-md-6">
                 
             <h2><i class="fa-regular fa-edit fa-lm"></i> Muokkaa työtarjousta</h2><hr>
+            
             <form action="paivita_tyotarjous.php" method="POST" class="mt-4" enctype="multipart/form-data">
 
             <div class="mb-3">
@@ -185,11 +186,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <textarea class="form-control" id="contact_details" name="contact_details" rows="5" placeholder="Nimi, puhelin, sähköposti,..."><?php echo isset($job['contact_details']) ? $job['contact_details'] : ''; ?></textarea>
         </div>
         </div>
-    <input type="hidden" name="jobId" value="<?php echo $jobId; ?>">             
+    <input type="hidden" name="jobId" value="<?php echo $jobId; ?>">      
+         
 <div class="mb-3 text-center" >
 <button type="submit" class="btn btn-warning"><i class="fa-solid fa-wrench fa-lg"></i></i> Päivitä</button>
 </div>
             </form>
+            
         </div>
     </div>
 </div>
@@ -213,7 +216,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         e.preventDefault();
         const formData = new FormData(this);
 
-       $.ajax({
+        $.ajax({
             type: 'POST',
             url: 'paivita_tyotarjous.php',
             data: formData,

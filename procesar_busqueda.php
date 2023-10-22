@@ -69,6 +69,11 @@ if (!empty($tehtava)) {
     $params['tehtava'] = $tehtava;
 }
 
+
+//Jos halutaan vaan ensinmäiset 5 tulosta
+// $offset = (int)($_POST['offset'] ?? 0);  // Convertir a entero
+//$sql .= " ORDER BY julkaistu DESC LIMIT 5 OFFSET $offset"; 
+
 $sql .= " ORDER BY julkaistu DESC";
 
 // Suorittaa SQL kyselyn

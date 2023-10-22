@@ -37,35 +37,37 @@
     
         <h5 class="title">Ilmoituksen tiedot</h5>
         <div class="mb-3">
-            <label for="kuva" class="form-label">Kuva (Valinnainen)</label>
+            <label for="kuva" class="form-label">Kuva (Valinnainen):</label>
             <input type="file" class="form-control" id="kuva" name="kuva">
         </div>
 
 
         <div class="mb-3">
-            <label for="otsikko" class="form-label">Otsikko</label>
-            <input type="text" class="form-control" id="otsikko" name="otsikko" required>
+            <label for="otsikko" class="form-label">Otsikko:</label>
+            <input type="text" class="form-control" id="otsikko" name="otsikko" style="width:60%;" required>
         </div>
 
         <div class="mb-3">
-            <label for="kuvaus" class="form-label">Kuvaus</label>
+            <label for="kuvaus" class="form-label">Kuvaus:</label>
             <textarea class="form-control"  id="kuvaus" name="kuvaus" rows="3" required></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="tarkkakuvaus" class="form-label">Tarkka Kuvaus</label>
+            <label for="tarkkakuvaus" class="form-label">Tarkka Kuvaus:</label>
             <textarea class="form-control" id="tarkkakuvaus" name="tarkkakuvaus"  rows="10" required></textarea>
         </div>
         
 
         <div class="mb-3">
-            <label for="yrityksennimi" class="form-label">Yrityksen Nimi</label>
-            <input type="text" class="form-control" id="yrityksennimi" name="yrityksennimi" required>
+            <label for="yrityksennimi" class="form-label">Yrityksen Nimi:</label>
+            <input type="text" class="form-control" id="yrityksennimi" name="yrityksennimi" style="width:60%;" required>
         </div>
 
-        <div class="mb-3">
+            
+        <div class="row mb-3">
+        <div class="col">
         <label for="sijainti" class="form-label" style="font-weight:bold;">Valitse sijainti:</label>
-            <select class="form-select" id="sijainti" name="sijainti">
+            <select class="form-select" id="sijainti" name="sijainti" style="width:100%;">
                 <?php
                 // Decodificar el JSON de maakunnat y kunnat
                 $jsonString = '...'; // Korvaa aiemmin luodun JSON-tiedoston koko sisällön.
@@ -85,13 +87,15 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="kunta" class="form-label">Kunta</label>
-            <input type="text" class="form-control" placeholder="esim: Espoo" id="kunta" name="kunta" required>
+        <div class="col">
+            <label for="kunta" class="form-label">Kunta:</label>
+            <input type="text" class="form-control" placeholder="esim: Espoo" id="kunta" name="kunta" style="width:80%;" required>
         </div>
+        </div>
+
         <div class="mb-3">
-            <label for="tehtava" class="form-label">Tehtävä</label>
-            <select class="form-select" id="tehtava" name="tehtava">:
+            <label for="tehtava" class="form-label">Tehtävä:</label>
+            <select class="form-select" id="tehtava" name="tehtava" style="width:60%;">:
                 <option value="Asennus, huolto ja kunnossapito">Asennus, huolto ja kunnossapito</option>
                 <option value="Asiakaspalvelu">Asiakaspalvelu</option>
                 <option value="Asiantuntijatyö ja konsultointi">Asiantuntijatyö ja konsultointi</option>
@@ -120,21 +124,22 @@
         </div>
 
         <div class="mb-3">
-            <label for="ala" class="form-label">Ala</label>
-            <input type="text" placeholder="esim: IT" class="form-control" id="ala" name="ala" required>
+            <label for="ala" class="form-label">Ala:</label>
+            <input type="text" placeholder="esim: IT" class="form-control" id="ala" name="ala" style="width:30%;" required>
         </div>
 
-        <div class="mb-3">
-            <label for="tyoaika" class="form-label">Työaika</label>
-            <select class="form-select" id="tyoaika" name="tyoaika">:
+        <div class="row mb-3">
+            <div class="col">
+            <label for="tyoaika" class="form-label" >Työaika:</label>
+            <select class="form-select" id="tyoaika" name="tyoaika"  style="width:50%;" >:
                 <option value="Kokoaikainen">Kokoaikainen</option>
                 <option value="Osa-aikainen">Osa-aikainen</option>
             </select>
         </div>
 
-        <div class="mb-3">
+        <div class="col">
         <label for="palvelusuhde" class="form-label"  style="font-weight:bold;" >Palvelusuhde:</label>
-            <select class="form-select" id="palvelusuhde" name="palvelusuhde" required>
+            <select class="form-select" id="palvelusuhde" name="palvelusuhde"  style="width:50%;" required>
                 <option value="tyosuhde">Työsuhde</option>
                 <option value="virkasuhde">Virkasuhde</option>
                 <option value="vuokratyo">Vuokratyö</option>
@@ -146,14 +151,15 @@
                 <option value="Muu">Muu</option>
             </select>
         </div>
-
-        <div class="mb-3">
-            <label for="palkka" class="form-label">Palkka</label>
-            <input type="number" placeholder="esim: 2500" class="form-control" id="palkka" name="palkka" step="0.01" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Työn kieli</label>
+            <label for="palkka" class="form-label">Palkka:</label>
+            <input type="number" placeholder="esim: 2500" class="form-control" id="palkka" name="palkka" style="width:30%;" step="0.01" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Työn kieli:</label>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="tyokieli[]" id="Suomi" value="Suomi">
                 <label class="form-check-label" for="Suomi">Suomi</label>
@@ -185,28 +191,28 @@
         </div>
 
         <div class="mb-3">
-            <label for="voimassaolopaiva" class="form-label">Viimeinen Hakupäivä</label>
-            <input type="date" class="form-control" id="voimassaolopaiva" name="voimassaolopaiva" required>
+            <label for="voimassaolopaiva" class="form-label" >Viimeinen Hakupäivä:</label>
+            <input type="date" class="form-control" id="voimassaolopaiva" name="voimassaolopaiva"  style="width:30%;" required>
         </div>
 
         <div class="mb-3">
-            <label for="vaatimukset" class="form-label">Vaatimukset</label>
+            <label for="vaatimukset" class="form-label">Vaatimukset:</label>
             <textarea class="form-control" id="vaatimukset" name="vaatimukset" rows="4" required></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="yrityksenlinkki" class="form-label">Työtarjouksen linkki</label>
-            <input type="text" class="form-control" id="yrityksenlinkki" name="yrityksenlinkki">
-        </div><hr>
+            <label for="yrityksenlinkki" class="form-label">Työtarjouksen linkki:</label>
+            <input type="text" class="form-control" placeholder="Jos et laita oman yrityksen linkki, niin hakijat lähettä hakulomakket meidän kautta..." id="yrityksenlinkki" name="yrityksenlinkki">
+        </div>
 
         <div class="mb-3">        
-    <label for="contact_details" class="form-label">Työtarjouksen yhteys tiedot</label>
+    <label for="contact_details" class="form-label">Työtarjouksen yhteys tiedot:</label>
     <textarea class="form-control" id="contact_details" name="contact_details" rows="5" placeholder="Nimi, puhelin, sähköposti,..."></textarea>
     </div>
         
 
 
-       <div class="mb-3">         
+       <div class="mb-3 tex-center">         
         <button type="submit" class="btn btn-primary">Lähetä Työilmoitus</button>
         <button type="reset" class="btn btn-secondary">Tyhjennä Lomake</button>
         </div>

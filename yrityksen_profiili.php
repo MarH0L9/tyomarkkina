@@ -213,12 +213,16 @@ $anuncios = $stmtAnuncios->fetchAll(PDO::FETCH_ASSOC);
                                     <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#jobModal<?php echo $anuncio['id']; ?>">
                                         Tarkista työtarjous
                                     </button>
+                                    
                                     </div>
                                     <div class="col"> 
                                     <a href="muokkaa_tyotarjous.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-warning btn-md">Muokkaa</a>
                                     </div>
                                     <div class="col">
                                     <a href="poista_oferta.php?id=<?php echo $anuncio['id']; ?>" class="btn btn-danger btn-md">Poista</a>
+                                    </div>
+                                    <div class="col">
+                                    <a href="show_applications.php?job_id=<?php echo $anuncio['id']; ?>" class="btn btn-info btn-md" target="_blank">Hakemukset</a>
                                     </div>
                                 </div>
                                 </div>

@@ -34,44 +34,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Tarkistaa onko käyttäjä valinnut "Muista minut" -valintaruudun
     if (isset($_POST['rememberMe'])) {
-        // Jos valintaruutu on valittu, luo evästeen, joka vanhenee 7 päivän kuluttua
+        // Si la casilla está marcada, crea una cookie que caduca en 7 días
         setcookie('remembered_user', $user['id'], time() + 7 * 24 * 60 * 60, '/');
     } elseif (isset($_COOKIE['remembered_user']) && !isset($_SESSION['user_id'])) {
-        // Jos valintaruutua ei ole valittu, mutta eväste on olemassa, poista eväste
+        // Si no se marca la casilla pero la cookie existe, elimina la cookie
         setcookie('remembered_user', '', time() - 3600, '/');
     }
 
     if ($user && password_verify($Password, $user['pwd'])) {
 
-        // Tarkistaa onko käyttäjä admin
+        if($user['is_verified'] == 0) {
+            $message = '<div class="alert alert-warning" role="alert">Tilisi ei ole aktivoitu, tarkista sähköpostisi ja aktivoi tilisi saamastasi linkistä.</div>';
+        } else {       
+            if($user['user_type'] == 'yritys') {
+                $businessQuery = "SELECT hyvaksytty FROM tyonantajat WHERE user_id = :user_id";
+                $businessStmt = $pdo->prepare($businessQuery);
+                $businessStmt->bindParam(':user_id', $user['id']);
+                $businessStmt->execute();
+                $businessUser = $businessStmt->fetch(PDO::FETCH_ASSOC);
 
-       
-        if($user['user_type'] == 'yritys') {
-            $businessQuery = "SELECT hyvaksytty FROM tyonantajat WHERE user_id = :user_id";
-            $businessStmt = $pdo->prepare($businessQuery);
-            $businessStmt->bindParam(':user_id', $user['id']);
-            $businessStmt->execute();
-            $businessUser = $businessStmt->fetch(PDO::FETCH_ASSOC);
-
-            if($businessUser['hyvaksytty'] == 1) {
+                if($businessUser['hyvaksytty'] == 1) {
+                    session_regenerate_id(true);  
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_type'] = $user['user_type'];
+                    $_SESSION['login_success'] = true;
+                } else {
+                    $message = '<div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle"></i> Tiliäsi ei ole vielä hyväksytty. Ota yhteyttä tukeen.</div>';
+                }
+            } else {
                 session_regenerate_id(true);  
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_type'] = $user['user_type'];
                 $_SESSION['login_success'] = true;
-            } else {
-                $message = '<div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle"></i> Tiliäsi ei ole vielä hyväksytty. Ota yhteyttä tukeen.</div>';
-            }
-        } else {
-            session_regenerate_id(true);  
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_type'] = $user['user_type'];
-            $_SESSION['login_success'] = true;
-        }       
+            }   
+        }    
 
     } else {
         $message = '<div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle"></i> Sähköposti tai salasana on virheellinen. Kokeile udestaan.</div>';
     }
 }
+
 
 /* Jos halutaan että on joku maximi login attemps, tässä esimerkki:
   if (isset($_SESSION['lockout_time']) && (time() - $_SESSION['lockout_time'] > $lockout_duration)) {
@@ -153,4 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include 'footer.html'; ?>
 
 </body>
+
+
 </html>

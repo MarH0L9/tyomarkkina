@@ -62,7 +62,7 @@
     <h2 style="color:#0B3B0B">Uusimmat työtarjoukset</h2>
     </div>
     <hr>
-    <div class="col-md-8">
+    <div class="col-md-8"><br>
     <div id="offerCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
         <?php
@@ -71,17 +71,17 @@
             $dsn = "mysql:host=$server;port=$port;dbname=$database;charset=utf8mb4";
             $pdo = new PDO($dsn, $username, $password);
             
-            // Consulta para obtener las 9 últimas ofertas
+            // SQL query jossa haetaan 9 uusinta työpaikkaa
             $query = "SELECT * FROM jobs WHERE hyvaksytty = 1 ORDER BY julkaistu DESC LIMIT 9";
             $stmt = $pdo->prepare($query);
             $stmt->execute();
 
-            $first = true;  // Variable para saber si es el primer item del carrusel
+            $first = true;  // Ensimmäinen työpaikka on aktiivinen
 
             while ($oferta = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<div class="carousel-item ' . ($first ? 'active' : '') . '">';
                 echo '<div class="offer-div">';
-                echo generateJobCardindex($oferta);  // Usamos la función para generar la tarjeta
+                echo generateJobCardindex($oferta);  // Generoidaan työpaikkakortti
                 echo '</div>';
                 echo '</div>';
                 
@@ -109,8 +109,8 @@
     <div class="container mt-5"><hr>
     <div class="row mt-5">
         <div class="col-md-6">
-            <h2>TE-palveluiden Oma asiointi</h2>
-            <p>Oma asioinnissa voit asioida TE-palveluiden kanssa. Voit ilmoittautua työnhakijaksi, ilmoittaa muutoksesta työtilanteessasi tai hakea starttirahaa. Työnantajana voit hakea palkkatukea ja tehdä maksatushakemuksen.</p>
+            <h2 style="color:#0B3B0B;">TE-palveluiden Oma asiointi</h2>
+            <p style="color: #033f21;">Oma asioinnissa voit asioida TE-palveluiden kanssa. Voit ilmoittautua työnhakijaksi, ilmoittaa muutoksesta työtilanteessasi tai hakea starttirahaa. Työnantajana voit hakea palkkatukea ja tehdä maksatushakemuksen.</p>
         </div>
         <div class="col-md-6">
             <!-- Imagen -->
@@ -122,14 +122,14 @@
     <div class="row mt-5">
     <div class="col-md-6 col-sm-12 mb-3 custom-card">
         <a href="https://asiointi.mol.fi/omaasiointi/" target="_blank" style="display: block;">
-            <span>Oma Asiointi - Henkilöasiakkaat</span>
-            <i class="fa-solid fa-arrow-up-right-from-square" style="color: #000000; float: right;"></i>
+            <span style="color:#0B3B0B;">Oma Asiointi - Henkilöasiakkaat</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"  style="color:#0B3B0B; float: right;"></i>
         </a>
     </div>
     <div class="col-md-6 col-sm-12 mb-3 custom-card">
         <a href="https://asiointi.mol.fi/tomas/aloitussivu.jsf?kieli=fi" target="_blank" style="display: block;">
-            <span>Oma Asiointi Yritykset</span>
-            <i class="fa-solid fa-arrow-up-right-from-square" style="color: #000000; float: right;"></i>
+            <span style="color:#0B3B0B;">Oma Asiointi Yritykset</span>
+            <i class="fa-solid fa-arrow-up-right-from-square" style="color:#0B3B0B; float: right;"></i>
         </a>
     </div>
 </div>

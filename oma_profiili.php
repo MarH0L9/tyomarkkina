@@ -110,9 +110,50 @@ $profile = $stmt->fetch(PDO::FETCH_ASSOC);
             </div>
             </div>
             </form>
+
+           <hr>
+           <h3>Omat hakemukset</h3><br>
+
+            <?php
+            // Consulta para obtener todas las ofertas a las que ha aplicado el usuario
+            $query_jobs = "SELECT jobs.id AS job_id, jobs.otsikko, jobs.kuvaus, jobs.sijainti, jobs.voimassaolopaiva, applications.application_date 
+               FROM jobs 
+               JOIN applications ON jobs.id = applications.job_id 
+               WHERE applications.applicant_id = :applicant_id";
+            $stmt_jobs = $pdo->prepare($query_jobs);
+            $stmt_jobs->bindParam(':applicant_id', $userId);
+            $stmt_jobs->execute();
+
+            $applied_jobs = $stmt_jobs->fetchAll(PDO::FETCH_ASSOC);
+            ?>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Otsikko ja sijainti</th>
+                        <th>Kuvaus</th>
+                        <th>Hakemus lähetetty</th>
+                        <th>Haku Päättyy</th>
+                        <!-- Agrega aquí más columnas si lo deseas -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($applied_jobs as $job) : ?>
+                        <tr>
+                            <td><?php echo $job['otsikko'] . " - " . $job['sijainti']; ?></td>
+                            <td><?php echo $job['kuvaus']; ?></td>
+                            <td><?php echo $job['application_date']; ?></td>
+                            <td><?php echo $job['voimassaolopaiva']; ?></td>
+                            <!-- Agrega aquí más datos si lo deseas -->
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table> 
         </div>
     </div>
 </div>
+
+
 </main>
 <?php include 'footer.html'; ?>
      </body>
