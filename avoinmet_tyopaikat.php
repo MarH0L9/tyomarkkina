@@ -141,7 +141,7 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
         
         <div class="row mt-5">
         <div class="col-md-12 text-center">              
-        <button id="clearFilters" type="button" class="btn btn-danger" style="margin-bottom: 20px;">Poista Filtterit</button>
+        <button id="clearFilters" type="button" class="btn btn-danger" style="margin-bottom: 20px;">Poista Suodattimet</button>
         </div>        
             <div class="col-md-12" id="active-filters">
             </div>
