@@ -73,7 +73,7 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
             </select>
         </div>
         <div class="col-md-2">
-             <label for="tehtava" class="form-label">Kaikki</label>
+             <label for="tehtava" class="form-label">Tehtävä:</label>
                  <select class="form-select" id="tehtava" name="tehtava">:
                     <option value="">Kaikki</option>
                     <option value="Asennus, huolto ja kunnossapito">Asennus, huolto ja kunnossapito</option>
