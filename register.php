@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row justify-content-center">
             
         <div class="col-md-6">
-        <legend>Rekisteröinti</legend> 
+        <legend>Rekisteröinti</legend><hr>
         
             <form action="register.php" method="POST" class="needs-validation" id="registrationForm" novalidate>
                 <div class="mb-3">
