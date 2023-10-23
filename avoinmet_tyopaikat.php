@@ -149,8 +149,10 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
     
-        <div class="row mt-5" id="searchResults" style="margin-bottom: 20px;">
+    <div class="row mt-5" >
+        <div class="row  justify-content-center " id="searchResults" style="margin-bottom: 20px;">     
         </div>
+    </div>
     
 </div>
 
