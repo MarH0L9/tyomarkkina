@@ -127,21 +127,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="etunimi" class="form-label">Etunimi*</label>
                 <input type="text" class="form-control" id="etunimi" name="etunimi" required pattern="^[A-Za-z\s]+$">
                 <div class="invalid-feedback">
-                    Kirjoita sinun etunimi.
+                   Kirjoita oikein sinun etunimi (vain kirjaimia).
                 </div>
             </div>
             <div class="mb-3">
                 <label for="sukunimi" class="form-label">Sukunimi*</label>
                 <input type="text" class="form-control" id="sukunimi" name="sukunimi" required pattern="^[A-Za-z\s]+$">
                 <div class="invalid-feedback">
-                    Kirjoita oikein sinun etunimi (vain kirjaimia).
+                    Kirjoita oikein sinun sukunimi (vain kirjaimia).
                 </div>
             </div>
             <div class="mb-3">
                 <label for="puhelin" class="form-label">Puhelin</label>
                 <input type="puh" class="form-control" id="puhelin" name="puhelin" >
                 <div class="invalid-feedback">
-                Kirjoita oikein sinun sukunimi (vain kirjaimia).
+                
                 </div>
             </div>
 
