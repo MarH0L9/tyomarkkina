@@ -38,15 +38,13 @@
             <h1 style="color:#0B3B0B">Tervetuloa Työportaaliin</h1>
             <h3 style="color:#0B3B0B; background-color:#a4eea6; padding:5px;">Täältä voit löytää uuden työpaikkasi ja teleportata sinne!</h3>
         </div>
-        
-            <div class="contenido">
-                <div class="text-center">
-                    <h1 style="color:#088A4B">Avoinmet Työpaikat</h1>
-                </div>           
-        </div>
     </div>
 
     <div class="container mt-5 search">
+                <div class="contenido">
+                <div class="text-center">
+                    <h1 style="color:#088A4B">Avoinmet Työpaikat</h1>
+                </div> 
                 <form action="avoinmet_tyopaikat.php" method="GET">
                     <div class="input-group index">
                         <input type="search" name="jobSearchText" class="form-control custom-border" placeholder="Kirjoita Ammatti tai työtehtävä" aria-label="Search" aria-describedby="search-addon" />
