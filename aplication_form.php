@@ -4,6 +4,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+if (!isset($_SESSION['user_id'])) {
+    // Käyttäjä ei ole kirjautunut sisään, ohjataan kirjautumissivulle
+    header("Location: login.php"); 
+    exit();
+}
+
 include 'config.php';
 
 $userId = $_SESSION['user_id'];
