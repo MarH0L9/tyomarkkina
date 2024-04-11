@@ -1,0 +1,17 @@
+{
+    "name": "marco/tyomarkkina_test2",
+    "autoload": {
+        "psr-4": {
+            "Marco\\TyomarkkinaTest2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MarH0L",
+            "email": "surfero66@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    }
+}

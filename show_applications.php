@@ -1,14 +1,16 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
     } 
 
-require 'config.php';
+    require 'config.php';
 
-  if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'yritys') {
+    if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'yritys') {
         echo '<div class="alert alert-danger" role="alert">Pääsy kielletty. Vain "yritys"-käyttäjät voivat katsoa tätä sivua.</div>';
         exit;
     }
+
 $jobId = $_GET['job_id'];
 
 $pdo = new PDO($dsn, $username, $password);
@@ -34,7 +36,7 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'header.php'; ?>
     <div class="container mt-5">
     <div class="row justify-content-center">
-        <h2>Hakemukset lähetetty Job ID: <?php echo $jobId; ?></h2>
+        <h2>Applications for Job ID: <?php echo $jobId; ?></h2>
           
         
         <table class="table table-hover">

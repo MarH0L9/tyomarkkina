@@ -1,9 +1,4 @@
 <?php
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 require 'config.php';
 
 $applicationId = $_GET['application_id'];

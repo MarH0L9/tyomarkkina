@@ -11,7 +11,7 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <title>Avoimmet työpaikat</title>
+    <title>Avoinmet työpaikat</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="resources/images/logo/favicon.ico">
@@ -73,7 +73,7 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
             </select>
         </div>
         <div class="col-md-2">
-             <label for="tehtava" class="form-label">Tehtävä:</label>
+             <label for="tehtava" class="form-label">Kaikki</label>
                  <select class="form-select" id="tehtava" name="tehtava">:
                     <option value="">Kaikki</option>
                     <option value="Asennus, huolto ja kunnossapito">Asennus, huolto ja kunnossapito</option>
@@ -141,7 +141,7 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
         
         <div class="row mt-5">
         <div class="col-md-12 text-center">              
-        <button id="clearFilters" type="button" class="btn btn-danger" style="margin-bottom: 20px;">Poista Suodattimet</button>
+        <button id="clearFilters" type="button" class="btn btn-danger" style="margin-bottom: 20px;">Poista Filtterit</button>
         </div>        
             <div class="col-md-12" id="active-filters">
             </div>
@@ -149,10 +149,8 @@ $searchTerm = isset($_GET['jobSearchText']) ? $_GET['jobSearchText'] : '';
 
     <!-- Resultados de la búsqueda debajo de los filtros -->
     
-    <div class="row mt-5" >
-        <div class="row  justify-content-center " id="searchResults" style="margin-bottom: 20px;">     
+        <div class="row mt-5" id="searchResults" style="margin-bottom: 20px;">
         </div>
-    </div>
     
 </div>
 

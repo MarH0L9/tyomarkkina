@@ -4,12 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION['user_id'])) {
-    // Käyttäjä ei ole kirjautunut sisään, ohjataan kirjautumissivulle
-    header("Location: login.php"); 
-    exit();
-}
-
 include 'config.php';
 
 $userId = $_SESSION['user_id'];
@@ -81,7 +75,7 @@ $hasApplied = $stmt->fetchColumn() > 0;
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label">Sähköposti:</label>
+                        <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" name="email" value="<?php echo $userData['Email']; ?>" required>
                         <div class="invalid-feedback">
                             Täytä email kentä.
@@ -107,7 +101,7 @@ $hasApplied = $stmt->fetchColumn() > 0;
                     </div>
 
                     <div class="mb-3">
-                        <label for="viimeinen_tyo" class="form-label">Viimeinen työ/työtehtävä:</label>
+                        <label for="viimeinen_tyo" class="form-label">Viimeinen työpaikka:</label>
                         <input type="text" class="form-control" name="viimeinen_tyo" value="<?php echo $userData['viimeisin_tyotehtava']; ?>" required>
                         <div class="invalid-feedback">
                             Täytä viimeinen työpaikka kentä.
@@ -130,7 +124,7 @@ $hasApplied = $stmt->fetchColumn() > 0;
                     </div>
 
                     <div class="mb-3">
-                        <label for="aloitus" class="form-label">Milloin voisit aloittaa?:</label>
+                        <label for="aloitus" class="form-label">Milloin voisit aloittaa:</label>
                         <input type="date" class="form-control" name="aloitus" required>
                         <div class="invalid-feedback">
                             Valitse aloitus päivä.
