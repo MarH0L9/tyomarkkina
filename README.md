@@ -102,3 +102,31 @@ Näytä ja muokkaa julkaistuja työtarjouksia.</p>
 <ul>
 <li class="has-line-data" data-line-start="44" data-line-end="45">Azure tarjoaa luotettavaa ja skaalautuvaa hostingia (Omnialta sain hosting)</li>
 </ul>
+
+--------------------------------------------------
+<h2>Pictures:</h2>
+
+<h4>Homepage</h4>
+
+![T2](https://github.com/MarH0L9/tyomarkkina/assets/143179277/6b0ed2c5-16d8-4793-9ba1-acd910510ed6)
+
+
+<h4>Työpaikat:</h4>
+
+![T3](https://github.com/MarH0L9/tyomarkkina/assets/143179277/49bfa0bd-ff08-45b6-ad3f-cad7df220e90)
+
+<h4>Työnkuvaus:</h4>
+
+![t4](https://github.com/MarH0L9/tyomarkkina/assets/143179277/479dfc4b-6d95-49ab-a153-0d38962ce950)
+
+<h4>Oma-profiili:</h4>
+
+![t5](https://github.com/MarH0L9/tyomarkkina/assets/143179277/76dbbe10-1aad-4a5a-b004-dfcab4d1f80a)
+
+<h4>Admin panel (only for admins):</h4>
+
+![t6](https://github.com/MarH0L9/tyomarkkina/assets/143179277/29cb0f8a-6524-4b74-85bc-1df102937b3a)
+
+
+
+
