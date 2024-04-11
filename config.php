@@ -10,7 +10,7 @@ $database = getenv('DB_DATABASE');
 
 
 if (empty($server) || empty($port) || empty($username) || empty($password) || empty($database)) {
-    die("La configuración de la base de datos no está completa.");
+    die("Database connection is not working.");
 }
 
 //Omnian Azuren yhteys
