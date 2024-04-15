@@ -150,12 +150,11 @@ function checkSessionClosed() {
     return null;
 }
 
-// Función para mostrar un mensaje de éxito
+
 function showSuccessMessage($message) {
     echo '<div class="alert alert-success" role="alert">' . $message . '</div>';
 }
 
-// Función para mostrar un mensaje de error
 function showErrorMessage($message) {
     echo '<div class="alert alert-danger" role="alert">' . $message . '</div>';
 }
